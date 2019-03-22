@@ -1,2 +1,0 @@
-16:35:31.978 [http-nio-8080-exec-10] INFO  com.mzkj.salary.controller.template.TemplateController.list(TemplateController.java:113) - 赵巍查看薪资模板表
-16:35:57.207 [http-nio-8080-exec-1] WARN  org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver.handleHttpRequestMethodNotSupported(DefaultHandlerExceptionResolver.java:250) - Request method 'GET' not supported

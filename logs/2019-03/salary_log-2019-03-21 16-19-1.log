@@ -1,2 +1,0 @@
-16:18:39.747 [http-nio-8080-exec-2] INFO  com.mzkj.salary.controller.template.TemplateController.delete(TemplateController.java:65) - admin删除薪资模板表
-16:18:50.174 [http-nio-8080-exec-1] INFO  com.mzkj.salary.controller.template.TemplateController.delete(TemplateController.java:65) - admin删除薪资模板表
