@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.salary.mapper.template.TemplateMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		TB_TEMPLATE
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		f.USER_ID,	
+		f.TEMPLATE_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		USER_ID,	
+		TEMPLATE_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{USER_ID},	
+		#{TEMPLATE_ID}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.fh.util.PageData">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.fh.util.PageData">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			TEMPLATE_ID = #{TEMPLATE_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.fh.util.PageData">
+		update
+		<include refid="tableName"></include>
+		set 
+			USER_ID = #{USER_ID},
+			TEMPLATE_ID = TEMPLATE_ID
+		where 
+			TEMPLATE_ID = #{TEMPLATE_ID}
+	</update>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.fh.util.PageData" resultType="com.fh.util.PageData">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+	
+</mapper>

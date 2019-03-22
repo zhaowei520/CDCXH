@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<Configuration status="trace">
+    <!--变量配置-->
+    <Properties>
+        <property name="LOG_HOME">logs/</property>
+        <property name="FILE_NAME">salary_log</property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n" />
+        </Console>
+        <!--写入到文件-->
+        <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd HH-mm}-%i.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <!--根记录全部输出到控制台上-->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingRandomAccessFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

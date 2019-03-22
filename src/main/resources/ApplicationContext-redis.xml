@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">  
+        <property name="connectionFactory"   ref="connectionFactory" />  
+    </bean>   
+    
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" 
+     p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"  p:pool-config-ref="poolConfig"/> 
+     -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" /> 
+        <property name="testOnReturn" value="${redis.testOnReturn}" />
+        <property name="testWhileIdle" value="${redis.testWhileIdle}" />
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <property name="minIdle" value="${redis.minIdle}" />
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}" />
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}" /> 
+        <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}" /> 
+    </bean>  
+    
+     <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+        <constructor-arg ref="poolConfig"/>
+        <constructor-arg value="${redis.host}"/>
+        <constructor-arg type="int" value="${redis.port}"/>
+        <constructor-arg type="int" value="${redis.timeout}"/>
+        <constructor-arg type="java.lang.String" value="${redis.pass}"/>
+        <constructor-arg type="int" value="${redis.dbindex}"/>
+    </bean>
+    
+    <bean id="redisClient" class="com.mzkj.salary.redis.RedisClient">
+        <constructor-arg name="jedisPool" ref="jedisPool"/>
+        <property name="expire" value="${redis.default.expire}"/>
+    </bean>
+</beans>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="redisCacheManager" class="org.crazycake.shiro.RedisCacheManager">
+        <property name="keyPrefix" value="shiro_redis_session:"/>
+        <property name="redisManager" ref="redisClient"/>
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="ShiroRealm"/>
+        <property name="cacheManager" ref="redisCacheManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <!-- 項目自定义的Realm -->
+    <bean id="ShiroRealm" class="com.mzkj.salary.shiro.ShiroRealm">
+        <property name="cacheManager" ref="redisCacheManager"/>
+    </bean>
+
+    <!--redisSessionDAO-->
+    <bean id="redisSessionDAO"
+          class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO"></bean>
+
+
+    <!--simpleCookie,不定义在集群环境下会出现There is no session with id ....-->
+    <bean id="simpleCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg name="name" value="custom.session"/>
+        <property name="path" value="/*"/>
+    </bean>
+
+    <!--sessionManager-->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="redisSessionDAO"/>
+        <property name="sessionIdCookie" ref="simpleCookie"/>
+    </bean>
+
+    <!-- Shiro Filter -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+
+        <property name="loginUrl" value="http://localhost:8081/login_toLogin"/>
+
+        <property name="successUrl" value="/main/index"/>
+
+        <property name="unauthorizedUrl" value="/login/login_toLogin"/>
+        <property name="filters">
+            <map>
+                <entry key="user" value-ref="MyUserFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /login/login_toLogin     = anon
+                /swagger-ui.html         = user
+                /** = authc
+            </value>
+        </property>
+    </bean>
+    <bean id="MyUserFilter" class="com.mzkj.salary.shiro.MyUserFilter"/>
+</beans>
