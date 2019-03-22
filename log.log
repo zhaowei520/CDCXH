@@ -1,0 +1,11 @@
+[INFO ] 2019-03-19 09:07:02,104 com.mzkj.salary.Application - Starting Application on 123asdqwd-PC with PID 7240 (started by Administrator in D:\IntelliJ IDEA 2017\workspace\Hands-On-Full-Stack-Development-with-Spring-Boot-2.0-and-React-master\Chapter04)
+[DEBUG] 2019-03-19 09:07:02,105 com.mzkj.salary.Application - Running with Spring Boot v2.0.1.RELEASE, Spring v5.0.5.RELEASE
+[INFO ] 2019-03-19 09:07:02,105 com.mzkj.salary.Application - No active profile set, falling back to default profiles: default
+[INFO ] 2019-03-19 09:07:07,150 com.mzkj.salary.Application - Started Application in 5.269 seconds (JVM running for 6.932)
+[INFO ] 2019-03-19 09:09:22,458 com.mzkj.salary.Application - Starting Application on 123asdqwd-PC with PID 4612 (started by Administrator in D:\IntelliJ IDEA 2017\workspace\Hands-On-Full-Stack-Development-with-Spring-Boot-2.0-and-React-master\Chapter04)
+[DEBUG] 2019-03-19 09:09:22,458 com.mzkj.salary.Application - Running with Spring Boot v2.0.1.RELEASE, Spring v5.0.5.RELEASE
+[INFO ] 2019-03-19 09:09:22,459 com.mzkj.salary.Application - No active profile set, falling back to default profiles: default
+[INFO ] 2019-03-19 09:09:27,204 com.mzkj.salary.Application - Started Application in 5.016 seconds (JVM running for 6.488)
+[INFO ] 2019-03-19 09:13:55,271 com.mzkj.salary.Application - Starting Application on 123asdqwd-PC with PID 2060 (started by Administrator in D:\IntelliJ IDEA 2017\workspace\Hands-On-Full-Stack-Development-with-Spring-Boot-2.0-and-React-master\Chapter04)
+[INFO ] 2019-03-19 09:13:55,272 com.mzkj.salary.Application - No active profile set, falling back to default profiles: default
+[INFO ] 2019-03-19 09:14:00,246 com.mzkj.salary.Application - Started Application in 5.454 seconds (JVM running for 6.419)

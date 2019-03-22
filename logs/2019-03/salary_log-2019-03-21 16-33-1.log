@@ -1,0 +1,2 @@
+16:33:09.293 [http-nio-8080-exec-6] WARN  org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver.handleHttpRequestMethodNotSupported(DefaultHandlerExceptionResolver.java:250) - Request method 'DELETE' not supported
+16:33:12.048 [http-nio-8080-exec-7] INFO  com.mzkj.salary.controller.template.TemplateController.list(TemplateController.java:113) - admin查看薪资模板表

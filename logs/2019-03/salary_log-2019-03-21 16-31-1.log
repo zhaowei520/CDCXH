@@ -1,0 +1,5 @@
+16:31:26.820 [http-nio-8080-exec-2] INFO  org.apache.juli.logging.DirectJDKLog.log(DirectJDKLog.java:180) - Initializing Spring FrameworkServlet 'dispatcherServlet'
+16:31:26.832 [http-nio-8080-exec-2] INFO  org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:494) - FrameworkServlet 'dispatcherServlet': initialization started
+16:31:26.851 [http-nio-8080-exec-2] INFO  org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:509) - FrameworkServlet 'dispatcherServlet': initialization completed in 19 ms
+16:31:26.863 [http-nio-8080-exec-2] INFO  org.apache.shiro.session.mgt.AbstractValidatingSessionManager.enableSessionValidation(AbstractValidatingSessionManager.java:230) - Enabling session validation scheduler...
+16:31:27.153 [http-nio-8080-exec-2] INFO  com.mzkj.salary.controller.template.TemplateController.save(TemplateController.java:43) - admin查询薪资模板表
