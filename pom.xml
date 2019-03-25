@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mzkj</groupId>
-    <artifactId>salary</artifactId>
+    <artifactId>CDCXH</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>salary</name>
+    <name>CDCXH</name>
     <description>salary project for Spring Boot</description>
 
     <parent>
@@ -24,7 +24,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <!-- docker镜像前缀名-->
-        <docker.image.prefix>salary</docker.image.prefix>
+        <docker.image.prefix>CDCXH</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -124,9 +124,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--<configuration>-->
-                    <!--<mainClass>com.mzkj.salary.Application</mainClass>-->
-                <!--</configuration>-->
+                <configuration>
+                    <mainClass>com.mzkj.salary.Application</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
