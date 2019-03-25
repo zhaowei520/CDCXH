@@ -33,7 +33,7 @@
         <constructor-arg type="int" value="${redis.dbindex}"/>
     </bean>
     
-    <bean id="redisClient" class="com.mzkj.salary.redis.RedisClient">
+    <bean id="redisClient" class="com.mzkj.redis.RedisClient">
         <constructor-arg name="jedisPool" ref="jedisPool"/>
         <property name="expire" value="${redis.default.expire}"/>
     </bean>

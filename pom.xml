@@ -125,7 +125,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.mzkj.salary.Application</mainClass>
+                    <mainClass>com.mzkj.Application</mainClass>
                 </configuration>
             </plugin>
         </plugins>
