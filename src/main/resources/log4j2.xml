@@ -15,7 +15,8 @@
         <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd HH-mm}-%i.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1"/>
+                <!--当日志大小达到50兆字节以及当前日期与日志的开始日期不匹配时滚动日志的策略-->
+                <TimeBasedTriggeringPolicy />
                 <SizeBasedTriggeringPolicy size="50 MB"/>
             </Policies>
             <DefaultRolloverStrategy max="20"/>
