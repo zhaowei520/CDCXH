@@ -32,7 +32,7 @@ import java.util.List;
 public class CarController {
 
     private static Logger logger = LogManager.getLogger(CarController.class);
-    String menuUrl = "car/list.do"; //菜单地址(权限用)
+    String menuUrl = "car/list.do"; //菜单地址(权限用 )
 
     @Autowired
     private CarManager carService;
