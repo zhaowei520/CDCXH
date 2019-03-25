@@ -1,4 +1,4 @@
-# salary
+# 主要涉及技术
 springboot
 redis
 mybatis
