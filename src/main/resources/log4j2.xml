@@ -12,16 +12,34 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n" />
         </Console>
         <!--写入到文件-->
-        <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd HH-mm}-%i.log">
+        <RollingFile  name="RollingRandomAccessFile" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd HH-mm}-%i.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
             <Policies>
                 <!--当日志大小达到50兆字节以及当前日期与日志的开始日期不匹配时滚动日志的策略-->
-                <TimeBasedTriggeringPolicy />
                 <SizeBasedTriggeringPolicy size="50 MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="20"/>
-        </RollingRandomAccessFile>
+            <!--<DefaultRolloverStrategy max="20"/>-->
+        </RollingFile >
     </Appenders>
+    <appender name="INFO"
+              class="com.zlz.utils.DatedFileAppender">
+    <param name="Encoding" value="UTF-8" />
+    <!-- 事件日志文件存放在log/info目录下 -->
+    <param name="File" value="${root}/WEB-INF/log/%yyyy/%mm/%dd/info.log" />
+    <!-- 重启后追加到旧文件 -->
+    <param name="Append" value="true" />
+    <!-- 按天分割文件 -->
+    <!--  param name="DatePattern" value=".yyyy-MM-dd" /-->
+    <!-- 配置日志格式 -->
+    <layout class="org.apache.log4j.PatternLayout">
+        <param name="ConversionPattern" value="%c %d -- %p -- %m%n" />
+    </layout>
+    <!-- 配置过滤器，此文件只输出INFO信息 -->
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+        <param name="LevelMin" value="INFO" />
+        <param name="LevelMax" value="INFO" />
+    </filter>
+    </appender>
     <Loggers>
         <!--根记录全部输出到控制台上-->
         <Root level="info">
