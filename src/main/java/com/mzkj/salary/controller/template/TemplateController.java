@@ -40,8 +40,8 @@ public class TemplateController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @ApiOperation(value = "查询template", notes = "保存template")
-    public Result<PageData> save() throws Exception {
+    @ApiOperation(value = "保存template", notes = "保存template")
+    public Result<PageData> save() {
         logger.info(Jurisdiction.getUsername() + "查询薪资模板表");
         Result<PageData> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
@@ -57,6 +57,7 @@ public class TemplateController extends BaseController {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
+            result.setMsg(e.getMessage());
         }
         return result;
     }
@@ -67,7 +68,7 @@ public class TemplateController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public Result<PageData> delete() throws Exception {
+    public Result<PageData> delete() {
         logger.info(Jurisdiction.getUsername() + "删除薪资模板表");
         Result<PageData> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
@@ -82,6 +83,7 @@ public class TemplateController extends BaseController {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
+            result.setMsg(e.getMessage());
         }
         return result;
     }
@@ -92,7 +94,7 @@ public class TemplateController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public Result<PageData> edit() throws Exception {
+    public Result<PageData> edit() {
         logger.info(Jurisdiction.getUsername() + "修改薪资模板表");
         Result<PageData> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
@@ -107,6 +109,7 @@ public class TemplateController extends BaseController {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
+            result.setMsg(e.getMessage());
         }
         return result;
     }
@@ -117,7 +120,7 @@ public class TemplateController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Result<List<PageData>> list() throws Exception {
+    public Result<List<PageData>> list() {
         logger.info(Jurisdiction.getUsername() + "查看薪资模板表");
         Result<List<PageData>> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "cha")) {
@@ -133,6 +136,7 @@ public class TemplateController extends BaseController {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
+            result.setMsg(e.getMessage());
         }
         return result;
     }
