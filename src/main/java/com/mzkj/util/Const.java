@@ -25,4 +25,10 @@ public class Const {
     public static final String SESSION_allmenuList = "allmenuList"; // 全部菜单
     public static final String SESSION_QX = "QX"; // 主职角色权限
     public static final String SESSION_QX2 = "QX2"; // 副职角色权限
+
+    // 状态
+    public static final int STATUS_0 = 0;
+    public static final int STATUS_1 = 1;
+    public static final int STATUS_2 = 2;
+    public static final int STATUS_3 = 3;
 }
