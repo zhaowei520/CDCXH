@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,17 +40,25 @@ public class LoginIndexController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public Result<List<Menu>> index() {
         Result<List<Menu>> result = new Result<>();
-        PageData pd = new PageData();
-        pd.put("MENU_ID", "0");
-        try {
-            List<Menu> menuList = menuService.listAllMenuQx(pd);
+        Session session = Jurisdiction.getSession();
+        List<Menu> menuList = (List<Menu>) session.getAttribute(
+            Jurisdiction.getUsername() + Const.SESSION_allmenuList);
+        //过滤菜单
+        menuList = selectTypeMenuByMenuClassification(menuList);
             result.setData(menuList);
-        } catch (Exception e) {
-            logger.error(e.toString(), e);
-            result.setStatus(HttpCode.ERROR.getCode());
-            result.setSuccess(false);
-            result.setMsg(e.getMessage());
-        }
         return result;
+    }
+
+    private List<Menu> selectTypeMenuByMenuClassification(List<Menu> menuList) {
+        List<Menu> menuNewList = new ArrayList<>();
+        if(menuList != null && menuList.size() > 0){
+            for (Menu menu:menuList) {
+                //过滤,只需要springboot项目的菜单
+                if(Const.STATUS_2 == menu.getMENU_CLASSIFICATION()){
+                    menuNewList.add(menu);
+                }
+            }
+        }
+        return menuNewList;
     }
 }

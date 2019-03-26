@@ -23,7 +23,7 @@ public class Menu implements Serializable {
     private String MENU_ICON;  //图标
     private String MENU_TYPE;  //类型
     private String MENU_STATE;  //菜单状态
-    private String MENU_CLASSIFICATION;    //菜单分类
+    private int MENU_CLASSIFICATION;    //菜单分类
     private String target;
     private String TENANT_ID_;
     private Menu parentMenu;
@@ -134,11 +134,11 @@ public class Menu implements Serializable {
         TENANT_ID_ = tENANT_ID_;
     }
 
-    public String getMENU_CLASSIFICATION() {
+    public int getMENU_CLASSIFICATION() {
         return MENU_CLASSIFICATION;
     }
 
-    public void setMENU_CLASSIFICATION(String MENU_CLASSIFICATION) {
+    public void setMENU_CLASSIFICATION(int MENU_CLASSIFICATION) {
         this.MENU_CLASSIFICATION = MENU_CLASSIFICATION;
     }
 }
