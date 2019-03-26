@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.menu.MenuMapper">
+
+    <resultMap type="com.fh.entity.system.Menu" id="menuResultMap">
+        <id column="MENU_ID" property="MENU_ID"/>
+        <result column="MENU_NAME" property="MENU_NAME"/>
+        <result column="MENU_URL" property="MENU_URL"/>
+        <result column="PARENT_ID" property="PARENT_ID"/>
+        <result column="MENU_ORDER" property="MENU_ORDER"/>
+        <result column="MENU_ICON" property="MENU_ICON"/>
+        <result column="MENU_TYPE" property="MENU_TYPE"/>
+        <result column="TENANT_ID_" property="TENANT_ID_"/>
+        <result column="MENU_CLASSIFICATION" property="MENU_CLASSIFICATION"/>
+    </resultMap>
+
+    <!--表名 -->
+    <sql id="tableName">
+		SYS_MENU
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		MENU_ID,
+ 		MENU_NAME,
+ 		MENU_URL,
+ 		PARENT_ID,
+ 		MENU_ICON,
+ 		MENU_ORDER,
+ 		MENU_STATE,
+ 		TENANT_ID_,
+ 		MENU_TYPE,
+ 		MENU_CLASSIFICATION
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{MENU_ID},
+ 		#{MENU_NAME},
+ 		#{MENU_URL},
+ 		#{PARENT_ID},
+ 		#{MENU_ICON},
+ 		#{MENU_ORDER},
+ 		#{MENU_STATE},
+ 		#{TENANT_ID_},
+ 		#{MENU_TYPE},
+ 		#{MENU_CLASSIFICATION}
+	</sql>
+
+    <!--通过ID获取其子一级菜单 -->
+    <select id="listSubMenuByParentId" parameterType="com.fh.util.PageData" resultMap="menuResultMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where PARENT_ID = #{parentId} and MENU_CLASSIFICATION = 2
+        order by (MENU_ORDER+0)
+    </select>
+
+</mapper>
