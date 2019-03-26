@@ -49,6 +49,15 @@ public class LoginIndexController {
         return result;
     }
 
+    @RequestMapping(value = "/login_toLogin", method = RequestMethod.GET)
+    public Result<PageData> login_toLogin() {
+        Result<PageData> result = new Result<>();
+        result.setMsg("session失效，请重新oa登录");
+        result.setSuccess(false);
+        result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+        return result;
+    }
+
     private List<Menu> selectTypeMenuByMenuClassification(List<Menu> menuList) {
         List<Menu> menuNewList = new ArrayList<>();
         if(menuList != null && menuList.size() > 0){
