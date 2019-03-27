@@ -2,20 +2,21 @@ package com.mzkj.controller.template;
 
 import java.util.List;
 
-import com.mzkj.controller.base.BaseController;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
 import com.mzkj.util.enums.HttpCode;
 import com.mzkj.vo.Result;
+import com.mzkj.vo.Template.TemplateQueryVo;
+import com.mzkj.vo.Template.TemplateVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.fh.util.PageData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import com.mzkj.service.template.TemplateManager;
 
 /**
@@ -26,7 +27,7 @@ import com.mzkj.service.template.TemplateManager;
 @RestController
 @RequestMapping(value = "/template")
 @Api(tags = "TemplateController", description = "薪资模板表接口")
-public class TemplateController extends BaseController {
+public class TemplateController {
 
     private static Logger logger = LogManager.getLogger(TemplateController.class);
     String menuUrl = "template/list.do"; //菜单地址(权限用)
@@ -36,28 +37,27 @@ public class TemplateController extends BaseController {
     /**
      * 保存
      *
-     * @param
-     * @throws Exception
+     * @param  templateVo
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ApiOperation(value = "保存template", notes = "保存template")
-    public Result<PageData> save() {
+    public Result<TemplateVo> save(TemplateVo templateVo) {
         logger.info(Jurisdiction.getUsername() + "查询薪资模板表");
-        Result<PageData> result = new Result<>();
+        Result<TemplateVo> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
-        PageData pd = this.getPageData();
-        pd.put("TEMPLATE_ID", UuidUtil.get32UUID());  //主键
+        templateVo.setTEMPLATE_ID(UuidUtil.get32UUID());
         try {
-            templateService.save(pd);
+            templateVo = templateService.save(templateVo);
+            result.setData(templateVo);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
-            result.setMsg(e.getMessage());
+            result.setMsg(e.toString());
         }
         return result;
     }
@@ -65,25 +65,24 @@ public class TemplateController extends BaseController {
     /**
      * 删除
      *
-     * @throws Exception
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public Result<PageData> delete() {
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除template", notes = "删除template")
+    public Result delete(@PathVariable("id") String TEMPLATE_ID) {
         logger.info(Jurisdiction.getUsername() + "删除薪资模板表");
-        Result<PageData> result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
+        Result result = new Result();
+        if (!Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
-        PageData pd = this.getPageData();
         try {
-            templateService.delete(pd);
+            templateService.delete(TEMPLATE_ID);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
-            result.setMsg(e.getMessage());
+            result.setMsg(e.toString());
         }
         return result;
     }
@@ -91,25 +90,24 @@ public class TemplateController extends BaseController {
     /**
      * 修改
      *
-     * @throws Exception
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public Result<PageData> edit() {
+    @ApiOperation(value = "修改template", notes = "修改template")
+    public Result<TemplateVo> edit(TemplateVo templateVo) {
         logger.info(Jurisdiction.getUsername() + "修改薪资模板表");
-        Result<PageData> result = new Result<>();
+        Result<TemplateVo> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
-        PageData pd = this.getPageData();
         try {
-            templateService.edit(pd);
+            templateService.templateVo(templateVo);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
-            result.setMsg(e.getMessage());
+            result.setMsg(e.toString());
         }
         return result;
     }
@@ -117,26 +115,25 @@ public class TemplateController extends BaseController {
     /**
      * 列表
      *
-     * @throws Exception
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Result<List<PageData>> list() {
+    @ApiOperation(value = "分页查询template", notes = "分页查询template")
+    public Result<PageInfo<TemplateQueryVo>> list(TemplateQueryVo templateVo) {
         logger.info(Jurisdiction.getUsername() + "查看薪资模板表");
-        Result<List<PageData>> result = new Result<>();
+        Result<PageInfo<TemplateQueryVo>> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "cha")) {
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
-        PageData pd = this.getPageData();
         try {
-            List<PageData> varList = templateService.list(pd);
+            PageInfo<TemplateQueryVo> varList = templateService.list(templateVo);
             result.setData(varList);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
-            result.setMsg(e.getMessage());
+            result.setMsg(e.toString());
         }
         return result;
     }

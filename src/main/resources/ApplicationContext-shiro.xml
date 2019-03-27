@@ -41,11 +41,11 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
 
-        <property name="loginUrl" value="http://localhost:8081/login_toLogin"/>
+        <property name="loginUrl" value="/index/login_toLogin"/>
 
         <property name="successUrl" value="/main/index"/>
 
-        <property name="unauthorizedUrl" value="/login/login_toLogin"/>
+        <property name="unauthorizedUrl" value="/index/login_toLogin"/>
         <property name="filters">
             <map>
                 <entry key="user" value-ref="MyUserFilter"/>
@@ -53,7 +53,7 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
-                /login/login_toLogin     = anon
+                /index/login_toLogin     = anon
                 /swagger-ui.html         = user
                 /** = authc
             </value>
