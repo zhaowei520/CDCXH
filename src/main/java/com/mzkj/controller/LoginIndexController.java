@@ -9,6 +9,7 @@ import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.enums.HttpCode;
 import com.mzkj.vo.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
@@ -38,6 +39,7 @@ public class LoginIndexController {
     private MenuManager menuService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @ApiOperation(value = "默认index", notes = "默认index")
     public Result<List<Menu>> index() {
         Result<List<Menu>> result = new Result<>();
         Session session = Jurisdiction.getSession();
@@ -50,6 +52,7 @@ public class LoginIndexController {
     }
 
     @RequestMapping(value = "/login_toLogin", method = RequestMethod.GET)
+    @ApiOperation(value = "权限认证失败", notes = "权限认证失败")
     public Result<PageData> login_toLogin() {
         Result<PageData> result = new Result<>();
         result.setMsg("session失效，请重新oa登录");

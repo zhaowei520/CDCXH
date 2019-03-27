@@ -56,7 +56,7 @@
 	</update>
 	
 	<!-- 列表(全部) -->
-	<select id="list" parameterType="com.fh.util.PageData" resultType="com.fh.util.PageData">
+	<select id="list" parameterType="com.mzkj.bean.TemplateBean" resultType="com.mzkj.bean.TemplateBean">
 		select
 		<include refid="Field"></include>
 		from 

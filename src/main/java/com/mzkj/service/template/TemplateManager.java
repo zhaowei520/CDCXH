@@ -1,7 +1,8 @@
 package com.mzkj.service.template;
 
-import com.github.pagehelper.Page;
-import com.fh.util.PageData;
+import com.github.pagehelper.PageInfo;
+import com.mzkj.vo.Template.TemplateQueryVo;
+import com.mzkj.vo.Template.TemplateVo;
 
 /** 
  * 说明： 薪资模板表接口
@@ -12,28 +13,28 @@ import com.fh.util.PageData;
 public interface TemplateManager{
 
 	/**新增
-	 * @param pd
+	 * @param templateVo
 	 * @throws Exception
 	 */
-	public void save(PageData pd)throws Exception;
+	public TemplateVo save(TemplateVo templateVo)throws Exception;
 	
 	/**删除
-	 * @param pd
+	 * @param TEMPLATE_ID
 	 * @throws Exception
 	 */
-	public void delete(PageData pd)throws Exception;
+	public void delete(String TEMPLATE_ID)throws Exception;
 	
 	/**修改
-	 * @param pd
+	 * @param templateVo
 	 * @throws Exception
 	 */
-	public void edit(PageData pd)throws Exception;
+	public void templateVo(TemplateVo templateVo)throws Exception;
 	
 	/**列表
-	 * @param pd
+	 * @param templateVo
 	 * @throws Exception
 	 */
-	public Page<PageData> list(PageData pd)throws Exception;
+	public PageInfo<TemplateQueryVo> list(TemplateQueryVo templateVo)throws Exception;
 	
 }
 
