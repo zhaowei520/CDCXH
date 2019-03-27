@@ -15,7 +15,7 @@ import java.util.Properties;
 
 @SpringBootApplication
 @PropertySource(value = "classpath:redis.properties")
-@ImportResource(locations = {"classpath:ApplicationContext-redis.xml","classpath:ApplicationContext-shiro.xml"})
+@ImportResource(locations = {"classpath:ApplicationContext-redis.xml","classpath:ApplicationContext-shiro.xml","classpath:ApplicationContext-transaction.xml"})
 public class Application extends SpringBootServletInitializer {
 
     @Override
