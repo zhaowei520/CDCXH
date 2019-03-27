@@ -72,7 +72,7 @@ public class TemplateController {
         logger.info(Jurisdiction.getUsername() + "删除薪资模板表");
         Result result = new Result();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
-            result.setMsg("没有操作权限，请联系管理员！");
+            result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
