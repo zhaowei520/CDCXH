@@ -75,13 +75,13 @@ public class TemplateService implements TemplateManager {
      */
     @Override
     public PageInfo<TemplateQueryVo> list(TemplateQueryVo templateVo) throws Exception {
-        PageInfo<TemplateQueryVo> templatePageVo = new PageInfo<>();
-        PageUtil.startPage(templateVo.getPageIndex(), templateVo.getPageSise());
-        TemplateBean templateBean = ConvertUtil.objectCopyParams(templateVo, TemplateBean.class);
-        List<TemplateBean> templatePageBean = templateMapper.list(templateBean);
+        //将vo转DO并将分页信息传到pageHelper
+        TemplateBean templateBean =PageUtil.startPageAndObjectCopyParams(templateVo,TemplateBean.class);
+        List<TemplateBean> templatePageBean = templateMapper.list(templateBean);//
         PageInfo<TemplateBean> pageInfo = new PageInfo<>(templatePageBean);
-        templatePageVo = ConvertUtil.objectCopyParams(pageInfo, templatePageVo.getClass());
-        return templatePageVo;
+        //将DO转vo
+        PageInfo<TemplateQueryVo> templatePageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
+        return templatePageVo;//
     }
 
 }

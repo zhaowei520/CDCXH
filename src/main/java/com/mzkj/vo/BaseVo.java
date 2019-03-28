@@ -11,27 +11,26 @@ import io.swagger.annotations.ApiModelProperty;
  */
 public class BaseVo {
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @ApiModelProperty(value="第几页",name="pageIndex",example="1")
-    private Integer pageIndex = 1;
+    @ApiModelProperty(value="第几页",name="pageNum",example="1")
+    private Integer pageNum = 1;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @ApiModelProperty(value="每页数量",name="pageSise",example="10")
-    private Integer pageSise = 10;
+    @ApiModelProperty(value="每页数量",name="pageSize",example="10")
+    private Integer pageSize = 10;
 
-    public Integer getPageIndex() {
-        return pageIndex;
+    public Integer getPageNum() {
+        return pageNum;
     }
 
-    public void setPageIndex(Integer pageIndex) {
-        this.pageIndex = pageIndex;
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
     }
 
-    public Integer getPageSise() {
-        return pageSise;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setPageSise(Integer pageSise) {
-        this.pageSise = pageSise;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
-
 }
