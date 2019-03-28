@@ -1,7 +1,5 @@
-package com.mzkj.vo.Template;
+package com.mzkj.vo.template;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.pagehelper.Page;
 import com.mzkj.vo.BaseVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

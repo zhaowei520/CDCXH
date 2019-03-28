@@ -7,11 +7,10 @@ import com.mzkj.bean.TemplateBean;
 import com.mzkj.mapper.template.TemplateMapper;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.PageUtil;
-import com.mzkj.vo.Template.TemplateQueryVo;
-import com.mzkj.vo.Template.TemplateVo;
+import com.mzkj.vo.template.TemplateQueryVo;
+import com.mzkj.vo.template.TemplateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.github.pagehelper.PageHelper;
 
 import com.mzkj.service.template.TemplateManager;
 
@@ -60,7 +59,7 @@ public class TemplateService implements TemplateManager {
      * @throws Exception
      */
     @Override
-    public void templateVo(TemplateVo templateVo) throws Exception {
+    public void edit(TemplateVo templateVo) throws Exception {
         String templateVoJson = JSON.toJSONString(templateVo);
         TemplateBean templateBean =
             JSON.parseObject(templateVoJson, new TypeReference<TemplateBean>() {

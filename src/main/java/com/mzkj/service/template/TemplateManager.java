@@ -1,8 +1,8 @@
 package com.mzkj.service.template;
 
 import com.github.pagehelper.PageInfo;
-import com.mzkj.vo.Template.TemplateQueryVo;
-import com.mzkj.vo.Template.TemplateVo;
+import com.mzkj.vo.template.TemplateQueryVo;
+import com.mzkj.vo.template.TemplateVo;
 
 /** 
  * 说明： 薪资模板表接口
@@ -28,7 +28,7 @@ public interface TemplateManager{
 	 * @param templateVo
 	 * @throws Exception
 	 */
-	public void templateVo(TemplateVo templateVo)throws Exception;
+	public void edit(TemplateVo templateVo)throws Exception;
 	
 	/**列表
 	 * @param templateVo
