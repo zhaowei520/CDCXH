@@ -70,18 +70,18 @@ public class TemplateService implements TemplateManager {
     /**
      * 列表
      *
-     * @param templateVo
+     * @param testQueryVo
      * @throws Exception
      */
     @Override
-    public PageInfo<TemplateQueryVo> list(TemplateQueryVo templateVo) throws Exception {
+    public PageInfo<TemplateQueryVo> list(TemplateQueryVo testQueryVo) throws Exception {
         //将vo转DO并将分页信息传到pageHelper
-        TemplateBean templateBean =PageUtil.startPageAndObjectCopyParams(templateVo,TemplateBean.class);
-        List<TemplateBean> templatePageBean = templateMapper.list(templateBean);//
+        TemplateBean templateBean =PageUtil.startPageAndObjectCopyParams(testQueryVo,TemplateBean.class);
+        List<TemplateBean> templatePageBean = templateMapper.list(templateBean);
         PageInfo<TemplateBean> pageInfo = new PageInfo<>(templatePageBean);
         //将DO转vo
         PageInfo<TemplateQueryVo> templatePageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
-        return templatePageVo;//
+        return templatePageVo;
     }
 
 }
