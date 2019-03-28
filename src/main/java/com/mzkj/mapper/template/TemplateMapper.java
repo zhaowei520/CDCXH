@@ -1,10 +1,6 @@
 package com.mzkj.mapper.template;
 
-import com.fh.util.PageData;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.TemplateBean;
-import com.mzkj.vo.Template.TemplateVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

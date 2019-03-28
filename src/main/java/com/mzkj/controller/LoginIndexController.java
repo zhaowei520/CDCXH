@@ -35,9 +35,6 @@ public class LoginIndexController {
 
     private static Logger logger = LogManager.getLogger(LoginIndexController.class);
 
-    @Autowired
-    private MenuManager menuService;
-
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     @ApiOperation(value = "默认index", notes = "默认index")
     public Result<List<Menu>> index() {

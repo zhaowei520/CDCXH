@@ -1,4 +1,4 @@
-package com.mzkj.vo.Template;
+package com.mzkj.vo.template;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

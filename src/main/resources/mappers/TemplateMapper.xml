@@ -26,7 +26,7 @@
 	</sql>
 	
 	<!-- 新增-->
-	<insert id="save" parameterType="com.fh.util.PageData">
+	<insert id="save" parameterType="com.mzkj.bean.TemplateBean">
 		insert into 
 	<include refid="tableName"></include>
 		(
@@ -37,7 +37,7 @@
 	</insert>
 	
 	<!-- 删除-->
-	<delete id="delete" parameterType="com.fh.util.PageData">
+	<delete id="delete" parameterType="com.mzkj.bean.TemplateBean">
 		delete from
 		<include refid="tableName"></include>
 		where 
@@ -45,7 +45,7 @@
 	</delete>
 	
 	<!-- 修改 -->
-	<update id="edit" parameterType="com.fh.util.PageData">
+	<update id="edit" parameterType="com.mzkj.bean.TemplateBean">
 		update
 		<include refid="tableName"></include>
 		set 

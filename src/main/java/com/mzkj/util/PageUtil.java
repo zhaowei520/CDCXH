@@ -37,7 +37,7 @@ public class PageUtil {
      * param VoObject 源Vo对象，target目标类模板
      * Date 2019-03-28 10:36
      */
-    public static <T> T startPage(Object VoObject,Class<T> target){
+    public static <T> T startPageAndObjectCopyParams(Object VoObject,Class<T> target){
         PageHelper.startPage(VoObject);
         return ConvertUtil.objectCopyParams(VoObject, target);
     }

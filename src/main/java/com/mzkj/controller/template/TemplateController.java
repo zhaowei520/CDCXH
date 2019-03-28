@@ -1,19 +1,15 @@
 package com.mzkj.controller.template;
 
-import java.util.List;
-
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
 import com.mzkj.util.enums.HttpCode;
 import com.mzkj.vo.Result;
-import com.mzkj.vo.Template.TemplateQueryVo;
-import com.mzkj.vo.Template.TemplateVo;
+import com.mzkj.vo.template.TemplateQueryVo;
+import com.mzkj.vo.template.TemplateVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-import com.fh.util.PageData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +98,7 @@ public class TemplateController {
             return result;
         }
         try {
-            templateService.templateVo(templateVo);
+            templateService.edit(templateVo);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());

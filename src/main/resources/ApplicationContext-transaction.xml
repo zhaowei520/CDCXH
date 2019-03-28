@@ -16,6 +16,7 @@
         <property name="username" value="${username}" />
         <property name="password" value="${password}" />
         <property name="driverClassName" value="${driver-class-name}" />
+        <property name="filters" value="${filters}" />
         <!-- 最大并发连接数 -->
         <property name="maxActive" value="${maxActive}" />
         <!-- 初始化连接数量 -->
