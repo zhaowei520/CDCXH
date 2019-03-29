@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
  * 修改时间：2015、12、11
  */
 public class BaseController {
-	
+
 	private static final long serialVersionUID = 6357869213649815390L;
-	
+
 	/** new PageData对象
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public class BaseController {
 	public Page getPage(){
 		return new Page();
 	}
-	
+
 
 
 }
