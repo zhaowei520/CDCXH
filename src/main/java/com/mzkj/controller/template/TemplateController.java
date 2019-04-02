@@ -9,6 +9,8 @@ import com.mzkj.vo.template.TemplateQueryVo;
 import com.mzkj.vo.template.TemplateVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,8 +39,8 @@ public class TemplateController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ApiOperation(value = "保存template", notes = "保存template")
-    public Result<TemplateVo> save(TemplateVo templateVo) {
-        logger.info(Jurisdiction.getUsername() + "查询薪资模板表");
+    public Result<TemplateVo> save( TemplateVo templateVo) {
+        logger.info(Jurisdiction.getUsername() + "保存薪资模板表");
         Result<TemplateVo> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
             result.setMsg("没有操作权限，请联系管理员");
