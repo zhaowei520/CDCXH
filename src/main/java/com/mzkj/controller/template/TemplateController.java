@@ -62,7 +62,7 @@ public class TemplateController {
      * 删除
      *
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ApiOperation(value = "删除template", notes = "删除template")
     public Result delete(@PathVariable("id") String TEMPLATE_ID) {
         logger.info(Jurisdiction.getUsername() + "删除薪资模板表");
@@ -87,7 +87,7 @@ public class TemplateController {
      * 修改
      *
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @ApiOperation(value = "修改template", notes = "修改template")
     public Result<TemplateVo> edit(TemplateVo templateVo) {
         logger.info(Jurisdiction.getUsername() + "修改薪资模板表");
