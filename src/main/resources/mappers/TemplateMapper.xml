@@ -1,66 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mzkj.mapper.template.TemplateMapper">
-	
-	<!--表名 -->
-	<sql id="tableName">
+
+    <!--表名 -->
+    <sql id="tableName">
 		TB_TEMPLATE
 	</sql>
-	
-	<!-- 字段 -->
-	<sql id="Field">
+
+    <!-- 字段 -->
+    <sql id="Field">
 		f.USER_ID,	
-		f.TEMPLATE_ID
+		f.TEMPLATE_ID,
+		f.TEMPLATE_DATE,
+        f.TEMPLATE_DATETIME,
+        f.TEMPLATE_RADIO,
+        f.TEMPLATE_CHECKBOX,
+        f.TEMPLATE_SELECT,
+        f.TEMPLATE_TEXTAREA,
+        f.FILE_URL
 	</sql>
-	
-	<!-- 字段用于新增 -->
-	<sql id="Field2">
+
+    <!-- 字段用于新增 -->
+    <sql id="Field2">
 		USER_ID,	
-		TEMPLATE_ID
+		TEMPLATE_ID,
+		TEMPLATE_DATE,
+        TEMPLATE_DATETIME,
+        TEMPLATE_RADIO,
+        TEMPLATE_CHECKBOX,
+        TEMPLATE_SELECT,
+        TEMPLATE_TEXTAREA,
+        FILE_URL
 	</sql>
-	
-	<!-- 字段值 -->
-	<sql id="FieldValue">
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
 		#{USER_ID},	
-		#{TEMPLATE_ID}
+		#{TEMPLATE_ID},
+		#{TEMPLATE_DATE},
+        #{TEMPLATE_DATETIME},
+        #{TEMPLATE_RADIO},
+        #{TEMPLATE_CHECKBOX},
+        #{TEMPLATE_SELECT},
+        #{TEMPLATE_TEXTAREA},
+        #{FILE_URL}
 	</sql>
-	
-	<!-- 新增-->
-	<insert id="save" parameterType="com.mzkj.bean.TemplateBean">
-		insert into 
-	<include refid="tableName"></include>
-		(
-	<include refid="Field2"></include>
-		) values (
-	<include refid="FieldValue"></include>
-		)
-	</insert>
-	
-	<!-- 删除-->
-	<delete id="delete" parameterType="com.mzkj.bean.TemplateBean">
-		delete from
-		<include refid="tableName"></include>
-		where 
-			TEMPLATE_ID = #{TEMPLATE_ID}
-	</delete>
-	
-	<!-- 修改 -->
-	<update id="edit" parameterType="com.mzkj.bean.TemplateBean">
-		update
-		<include refid="tableName"></include>
-		set 
-			USER_ID = #{USER_ID},
-			TEMPLATE_ID = TEMPLATE_ID
-		where 
-			TEMPLATE_ID = #{TEMPLATE_ID}
-	</update>
-	
-	<!-- 列表(全部) -->
-	<select id="list" parameterType="com.mzkj.bean.TemplateBean" resultType="com.mzkj.bean.TemplateBean">
-		select
-		<include refid="Field"></include>
-		from 
-		<include refid="tableName"></include> f
-	</select>
-	
+
+    <!-- 新增-->
+    <insert id="save" parameterType="com.mzkj.bean.TemplateBean">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field2"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="com.mzkj.bean.TemplateBean">
+        delete from
+        <include refid="tableName"></include>
+        where
+        TEMPLATE_ID = #{TEMPLATE_ID}
+    </delete>
+
+    <!-- 修改 -->
+    <update id="edit" parameterType="com.mzkj.bean.TemplateBean">
+        update
+        <include refid="tableName"></include>
+        set
+        USER_ID = #{USER_ID},
+        TEMPLATE_DATE= #{TEMPLATE_DATE},
+        TEMPLATE_DATETIME= #{TEMPLATE_DATETIME},
+        TEMPLATE_RADIO= #{TEMPLATE_RADIO},
+        TEMPLATE_CHECKBOX= #{TEMPLATE_CHECKBOX},
+        TEMPLATE_SELECT= #{TEMPLATE_SELECT},
+        TEMPLATE_TEXTAREA= #{TEMPLATE_TEXTAREA},
+        FILE_URL = #{FILE_URL}
+        where
+        TEMPLATE_ID = #{TEMPLATE_ID}
+    </update>
+
+    <!-- 列表(全部) -->
+    <select id="list" parameterType="com.mzkj.bean.TemplateBean"
+            resultType="com.mzkj.bean.TemplateBean">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+    </select>
+
 </mapper>
