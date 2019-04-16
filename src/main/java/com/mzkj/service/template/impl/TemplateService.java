@@ -9,6 +9,7 @@ import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.PageUtil;
 import com.mzkj.vo.template.TemplateQueryVo;
 import com.mzkj.vo.template.TemplateVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +30,6 @@ public class TemplateService implements TemplateManager {
 
     /**
      * 新增
-     *
-     * @param templateVo
-     * @throws Exception
      */
     @Override
     public TemplateVo save(TemplateVo templateVo) throws Exception {
@@ -43,9 +41,6 @@ public class TemplateService implements TemplateManager {
 
     /**
      * 删除
-     *
-     * @param TEMPLATE_ID
-     * @throws Exception
      */
     @Override
     public void delete(String TEMPLATE_ID) throws Exception {
@@ -53,30 +48,37 @@ public class TemplateService implements TemplateManager {
     }
 
     /**
+     * 查看详情
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-03 9:27
+     */
+    @Override
+    public TemplateVo findById(String TEMPLATE_ID) throws Exception {
+        TemplateBean templateBean = templateMapper.findById(TEMPLATE_ID);
+        return ConvertUtil.objectCopyParams(templateBean, TemplateVo.class);
+    }
+
+    /**
      * 修改
-     *
-     * @param templateVo
-     * @throws Exception
      */
     @Override
     public void edit(TemplateVo templateVo) throws Exception {
         String templateVoJson = JSON.toJSONString(templateVo);
         TemplateBean templateBean =
-            JSON.parseObject(templateVoJson, new TypeReference<TemplateBean>() {
-            });
+                JSON.parseObject(templateVoJson, new TypeReference<TemplateBean>() {
+                });
         templateMapper.edit(templateBean);
     }
 
     /**
      * 列表
-     *
-     * @param testQueryVo
-     * @throws Exception
      */
     @Override
     public PageInfo<TemplateQueryVo> list(TemplateQueryVo testQueryVo) throws Exception {
         //将vo转DO并将分页信息传到pageHelper
-        TemplateBean templateBean =PageUtil.startPageAndObjectCopyParams(testQueryVo,TemplateBean.class);
+        TemplateBean templateBean = PageUtil.startPageAndObjectCopyParams(testQueryVo, TemplateBean.class);
         List<TemplateBean> templatePageBean = templateMapper.list(templateBean);
         PageInfo<TemplateBean> pageInfo = new PageInfo<>(templatePageBean);
         //将DO转vo
