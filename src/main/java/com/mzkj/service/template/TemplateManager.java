@@ -23,7 +23,15 @@ public interface TemplateManager{
 	 * @throws Exception
 	 */
 	public void delete(String TEMPLATE_ID)throws Exception;
-	
+
+	/**
+	 * 查看详情
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-03 9:26
+	 */
+	public TemplateVo findById(String TEMPLATE_ID)throws Exception;
 	/**修改
 	 * @param templateVo
 	 * @throws Exception

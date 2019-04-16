@@ -92,5 +92,13 @@
         <include refid="tableName"></include>
         f
     </select>
-
+    <select id="findById" parameterType="String"
+            resultType="com.mzkj.bean.TemplateBean">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        where f.TEMPLATE_ID=#{TEMPLATE_ID}
+    </select>
 </mapper>
