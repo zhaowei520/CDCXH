@@ -35,16 +35,17 @@ public class LoginIndexController {
 
     private static Logger logger = LogManager.getLogger(LoginIndexController.class);
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    @ApiOperation(value = "默认index", notes = "默认index")
+    @RequestMapping(value = "/init_menu", method = RequestMethod.GET)
+    @ApiOperation(value = "获取菜单信息", notes = "获取菜单信息")
     public Result<List<Menu>> index() {
+        logger.info(Jurisdiction.getUsername() + "获取菜单信息");
         Result<List<Menu>> result = new Result<>();
         Session session = Jurisdiction.getSession();
         List<Menu> menuList = (List<Menu>) session.getAttribute(
             Jurisdiction.getUsername() + Const.SESSION_allmenuList);
         //过滤菜单
-        menuList = selectTypeMenuByMenuClassification(menuList);
-            result.setData(menuList);
+        List<Menu> menuSpringBootList = this.selectTypeMenuByMenuClassification(menuList);
+        result.setData(menuSpringBootList);
         return result;
     }
 
@@ -59,15 +60,15 @@ public class LoginIndexController {
     }
 
     private List<Menu> selectTypeMenuByMenuClassification(List<Menu> menuList) {
-        List<Menu> menuNewList = new ArrayList<>();
-        if(menuList != null && menuList.size() > 0){
-            for (Menu menu:menuList) {
+        List<Menu> menuSpringBootList = new ArrayList<>();
+        if (menuList != null && menuList.size() > 0) {
+            for (Menu menu : menuList) {
                 //过滤,只需要springboot项目的菜单
-                if(Const.STATUS_2 == menu.getMENU_CLASSIFICATION()){
-                    menuNewList.add(menu);
+                if (Const.MENU_CLASSIFICATION_SPRINGBOOT == menu.getMENU_CLASSIFICATION()) {
+                    menuSpringBootList.add(menu);
                 }
             }
         }
-        return menuNewList;
+        return menuSpringBootList;
     }
 }

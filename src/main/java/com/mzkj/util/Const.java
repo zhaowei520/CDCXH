@@ -31,4 +31,7 @@ public class Const {
     public static final int STATUS_1 = 1;
     public static final int STATUS_2 = 2;
     public static final int STATUS_3 = 3;
+
+    //菜单系统类型
+    public static final int MENU_CLASSIFICATION_SPRINGBOOT = 2;
 }

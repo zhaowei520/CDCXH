@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * @Description: 作用
+ * @Description: 基础vo
  * @Author: zw
  * @Date: 2019/3/27 16:22
  * @Version: 1.0
