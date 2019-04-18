@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.system.DictionariesMapper">
+
+    <resultMap id="dictionariesMap" type="com.mzkj.bean.DictionariesBean">
+        <id column="DICTIONARIES_ID" javaType="string" property="dictionariesId" />
+            <result column="NAME" javaType="String" property="name"/>
+            <result column="NAME_EN" javaType="String" property="nameEn"/>
+            <result column="BIANMA" javaType="String" property="bianma"/>
+            <result column="ORDER_BY" javaType="Integer" property="orderBy"/>
+            <result column="PARENT_ID" javaType="String" property="parentId"/>
+            <result column="BZ" javaType="String" property="bz"/>
+            <result column="TBSNAME" javaType="String" property="tbsname"/>
+            <result column="TBFIELD" javaType="String" property="tbfield"/>
+            <result column="YNDEL" javaType="String" property="yndel"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+    </resultMap>
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		SYS_DICTIONARIES
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.NAME,	
+		f.NAME_EN,	
+		f.BIANMA,	
+		f.ORDER_BY,	
+		f.PARENT_ID,	
+		f.BZ,	
+		f.TBSNAME,	
+		f.TBFIELD,	
+		f.YNDEL,	
+		f.TENANT_ID_,	
+		f.DICTIONARIES_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		NAME,	
+		NAME_EN,	
+		BIANMA,	
+		ORDER_BY,	
+		PARENT_ID,	
+		BZ,	
+		TBSNAME,	
+		TBFIELD,	
+		YNDEL,	
+		TENANT_ID_,	
+		DICTIONARIES_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{name},
+		#{nameEn},
+		#{bianma},
+		#{orderBy},
+		#{parentId},
+		#{bz},
+		#{tbsname},
+		#{tbfield},
+		#{yndel},
+		#{tenantId},
+		#{dictionariesId}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.DictionariesBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.DictionariesBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			DICTIONARIES_ID = #{dictionariesId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.DictionariesBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			NAME = #{name},
+			NAME_EN = #{nameEn},
+			BIANMA = #{bianma},
+			ORDER_BY = #{orderBy},
+			PARENT_ID = #{parentId},
+			BZ = #{bz},
+			TBSNAME = #{tbsname},
+			TBFIELD = #{tbfield},
+			YNDEL = #{yndel},
+			TENANT_ID_ = #{tenantId},
+			DICTIONARIES_ID = #{dictionariesId}
+		where 
+			DICTIONARIES_ID = #{dictionariesId}
+	</update>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.DictionariesBean" resultMap="dictionariesMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+	
+</mapper>

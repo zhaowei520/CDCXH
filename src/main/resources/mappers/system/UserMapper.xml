@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.system.UserMapper">
+
+    <resultMap id="userMap" type="com.mzkj.bean.UserBean">
+        <id column="USER_ID" javaType="string" property="userId" />
+            <result column="USERNAME" javaType="String" property="username"/>
+            <result column="PASSWORD" javaType="String" property="password"/>
+            <result column="NAME" javaType="String" property="name"/>
+            <result column="RIGHTS" javaType="String" property="rights"/>
+            <result column="ROLE_ID" javaType="String" property="roleId"/>
+            <result column="LAST_LOGIN" javaType="String" property="lastLogin"/>
+            <result column="IP" javaType="String" property="ip"/>
+            <result column="STATUS" javaType="String" property="status"/>
+            <result column="BZ" javaType="String" property="bz"/>
+            <result column="SKIN" javaType="String" property="skin"/>
+            <result column="EMAIL" javaType="String" property="email"/>
+            <result column="NUMBER" javaType="String" property="number"/>
+            <result column="PHONE" javaType="String" property="phone"/>
+            <result column="ROLE_IDS" javaType="String" property="roleIds"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+            <result column="IS_TENANT_ADMIN" javaType="Integer" property="isTenantAdmin"/>
+            <result column="USER_TYPE" javaType="Integer" property="userType"/>
+            <result column="OPEN_ID" javaType="String" property="openId"/>
+    </resultMap>
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		SYS_USER
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.USERNAME,	
+		f.PASSWORD,	
+		f.NAME,	
+		f.RIGHTS,	
+		f.ROLE_ID,	
+		f.LAST_LOGIN,	
+		f.IP,	
+		f.STATUS,	
+		f.BZ,	
+		f.SKIN,	
+		f.EMAIL,	
+		f.NUMBER,	
+		f.PHONE,	
+		f.ROLE_IDS,	
+		f.TENANT_ID_,	
+		f.IS_TENANT_ADMIN,	
+		f.USER_TYPE,	
+		f.OPEN_ID,	
+		f.USER_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		USERNAME,	
+		PASSWORD,	
+		NAME,	
+		RIGHTS,	
+		ROLE_ID,	
+		LAST_LOGIN,	
+		IP,	
+		STATUS,	
+		BZ,	
+		SKIN,	
+		EMAIL,	
+		NUMBER,	
+		PHONE,	
+		ROLE_IDS,	
+		TENANT_ID_,	
+		IS_TENANT_ADMIN,	
+		USER_TYPE,	
+		OPEN_ID,	
+		USER_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{username},
+		#{password},
+		#{name},
+		#{rights},
+		#{roleId},
+		#{lastLogin},
+		#{ip},
+		#{status},
+		#{bz},
+		#{skin},
+		#{email},
+		#{number},
+		#{phone},
+		#{roleIds},
+		#{tenantId},
+		#{isTenantAdmin},
+		#{userType},
+		#{openId},
+		#{userId}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.UserBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.UserBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			USER_ID = #{userId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.UserBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			USERNAME = #{username},
+			PASSWORD = #{password},
+			NAME = #{name},
+			RIGHTS = #{rights},
+			ROLE_ID = #{roleId},
+			LAST_LOGIN = #{lastLogin},
+			IP = #{ip},
+			STATUS = #{status},
+			BZ = #{bz},
+			SKIN = #{skin},
+			EMAIL = #{email},
+			NUMBER = #{number},
+			PHONE = #{phone},
+			ROLE_IDS = #{roleIds},
+			TENANT_ID_ = #{tenantId},
+			IS_TENANT_ADMIN = #{isTenantAdmin},
+			USER_TYPE = #{userType},
+			OPEN_ID = #{openId},
+			USER_ID = #{userId}
+		where 
+			USER_ID = #{userId}
+	</update>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.UserBean" resultMap="userMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+	
+</mapper>

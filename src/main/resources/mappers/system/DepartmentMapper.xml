@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.system.DepartmentMapper">
+
+    <resultMap id="departmentMap" type="com.mzkj.bean.DepartmentBean">
+        <id column="DEPARTMENT_ID" javaType="string" property="departmentId" />
+            <result column="NAME" javaType="String" property="name"/>
+            <result column="NAME_EN" javaType="String" property="nameEn"/>
+            <result column="BIANMA" javaType="String" property="bianma"/>
+            <result column="PARENT_ID" javaType="String" property="parentId"/>
+            <result column="BZ" javaType="String" property="bz"/>
+            <result column="HEADMAN" javaType="String" property="headman"/>
+            <result column="TEL" javaType="String" property="tel"/>
+            <result column="FUNCTIONS" javaType="String" property="functions"/>
+            <result column="ADDRESS" javaType="String" property="address"/>
+            <result column="IS_STATISTICS" javaType="Integer" property="isStatistics"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+    </resultMap>
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		OA_DEPARTMENT
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.NAME,	
+		f.NAME_EN,	
+		f.BIANMA,	
+		f.PARENT_ID,	
+		f.BZ,	
+		f.HEADMAN,	
+		f.TEL,	
+		f.FUNCTIONS,	
+		f.ADDRESS,	
+		f.IS_STATISTICS,	
+		f.TENANT_ID_,	
+		f.DEPARTMENT_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		NAME,	
+		NAME_EN,	
+		BIANMA,	
+		PARENT_ID,	
+		BZ,	
+		HEADMAN,	
+		TEL,	
+		FUNCTIONS,	
+		ADDRESS,	
+		IS_STATISTICS,	
+		TENANT_ID_,	
+		DEPARTMENT_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{name},
+		#{nameEn},
+		#{bianma},
+		#{parentId},
+		#{bz},
+		#{headman},
+		#{tel},
+		#{functions},
+		#{address},
+		#{isStatistics},
+		#{tenantId},
+		#{departmentId}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.DepartmentBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.DepartmentBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			DEPARTMENT_ID = #{departmentId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.DepartmentBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			NAME = #{name},
+			NAME_EN = #{nameEn},
+			BIANMA = #{bianma},
+			PARENT_ID = #{parentId},
+			BZ = #{bz},
+			HEADMAN = #{headman},
+			TEL = #{tel},
+			FUNCTIONS = #{functions},
+			ADDRESS = #{address},
+			IS_STATISTICS = #{isStatistics},
+			TENANT_ID_ = #{tenantId},
+			DEPARTMENT_ID = #{departmentId}
+		where 
+			DEPARTMENT_ID = #{departmentId}
+	</update>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.DepartmentBean" resultMap="departmentMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+	
+</mapper>

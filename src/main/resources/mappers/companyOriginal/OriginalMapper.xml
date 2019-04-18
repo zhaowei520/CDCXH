@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.companyOriginal.OriginalMapper">
+
+    <resultMap id="originalMap" type="com.mzkj.bean.OriginalBean">
+        <id column="ORIGINAL_ID" javaType="string" property="originalId" />
+            <result column="COMPANY_INFORMATION_ID" javaType="String" property="companyInformationId"/>
+            <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+            <result column="ORIGINAL_NAME" javaType="String" property="originalName"/>
+            <result column="ORIGINAL_AMOUNT" javaType="String" property="originalAmount"/>
+            <result column="ORIGINAL_HOLDER" javaType="String" property="originalHolder"/>
+            <result column="ORIGINAL_HOLDER_DEPARTMENT" javaType="String" property="originalHolderDepartment"/>
+            <result column="ORIGINAL_OUT_TO" javaType="String" property="originalOutTo"/>
+            <result column="ORIGINAL_HOLD_STATUS" javaType="String" property="originalHoldStatus"/>
+            <result column="ORIGINAL_OUT_STATUS" javaType="String" property="originalOutStatus"/>
+            <result column="REMARK" javaType="String" property="remark"/>
+            <result column="CREATE_DATE" javaType="String" property="createDate"/>
+            <result column="CREATE_USER" javaType="String" property="createUser"/>
+            <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
+            <result column="UPDATE_USER" javaType="String" property="updateUser"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+    </resultMap>
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		TB_ORIGINAL
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.COMPANY_INFORMATION_ID,	
+		f.COMPANY_NAME,	
+		f.ORIGINAL_NAME,	
+		f.ORIGINAL_AMOUNT,	
+		f.ORIGINAL_HOLDER,	
+		f.ORIGINAL_HOLDER_DEPARTMENT,	
+		f.ORIGINAL_OUT_TO,	
+		f.ORIGINAL_HOLD_STATUS,	
+		f.ORIGINAL_OUT_STATUS,	
+		f.REMARK,	
+		f.CREATE_DATE,	
+		f.CREATE_USER,	
+		f.UPDATE_DATE,	
+		f.UPDATE_USER,	
+		f.TENANT_ID_,	
+		f.ORIGINAL_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		COMPANY_INFORMATION_ID,	
+		COMPANY_NAME,	
+		ORIGINAL_NAME,	
+		ORIGINAL_AMOUNT,	
+		ORIGINAL_HOLDER,	
+		ORIGINAL_HOLDER_DEPARTMENT,	
+		ORIGINAL_OUT_TO,	
+		ORIGINAL_HOLD_STATUS,	
+		ORIGINAL_OUT_STATUS,	
+		REMARK,	
+		CREATE_DATE,	
+		CREATE_USER,	
+		UPDATE_DATE,	
+		UPDATE_USER,	
+		TENANT_ID_,	
+		ORIGINAL_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{companyInformationId},
+		#{companyName},
+		#{originalName},
+		#{originalAmount},
+		#{originalHolder},
+		#{originalHolderDepartment},
+		#{originalOutTo},
+		#{originalHoldStatus},
+		#{originalOutStatus},
+		#{remark},
+		#{createDate},
+		#{createUser},
+		#{updateDate},
+		#{updateUser},
+		#{tenantId},
+		#{originalId}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.OriginalBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.OriginalBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ORIGINAL_ID = #{originalId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.OriginalBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			ORIGINAL_NAME = #{originalName},
+			ORIGINAL_HOLDER = #{originalHolder},
+			ORIGINAL_HOLDER_DEPARTMENT = #{originalHolderDepartment},
+			ORIGINAL_OUT_TO = #{originalOutTo},
+			ORIGINAL_HOLD_STATUS = #{originalHoldStatus},
+			ORIGINAL_OUT_STATUS = #{originalOutStatus},
+			REMARK = #{remark},
+			CREATE_DATE = #{createDate},
+			CREATE_USER = #{createUser},
+			UPDATE_DATE = #{updateDate},
+			UPDATE_USER = #{updateUser},
+			TENANT_ID_ = #{tenantId},
+			ORIGINAL_ID = #{originalId}
+		where 
+			ORIGINAL_ID = #{originalId}
+	</update>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.OriginalBean" resultMap="originalMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+	
+</mapper>
