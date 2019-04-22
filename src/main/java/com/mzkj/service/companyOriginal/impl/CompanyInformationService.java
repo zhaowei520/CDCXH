@@ -1,11 +1,15 @@
 package com.mzkj.service.companyOriginal.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.CompanyInformationBean;
 import com.mzkj.util.Const;
 import com.mzkj.util.ConvertUtil;
+import com.mzkj.util.DateUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
+import com.mzkj.vo.BaseVo;
 import com.mzkj.vo.companyOriginal.CompanyInformationQueryVo;
 import com.mzkj.vo.companyOriginal.CompanyInformationVo;
 
@@ -17,6 +21,7 @@ import com.github.pagehelper.PageHelper;
 import com.mzkj.service.companyOriginal.CompanyInformationManager;
 import com.mzkj.mapper.companyOriginal.CompanyInformationMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +43,8 @@ public class CompanyInformationService implements CompanyInformationManager {
         CompanyInformationBean companyinformationBean = ConvertUtil.objectCopyParams(companyinformationVo, CompanyInformationBean.class);
         //设置租户ID
         companyinformationBean.setTenantId(Jurisdiction.getTenant());
+        companyinformationBean.setCreateUser(Jurisdiction.getUsername());
+        companyinformationBean.setCreateDate(DateUtil.getTime());
         companyinformationMapper.save(companyinformationBean);
         companyinformationVo = ConvertUtil.objectCopyParams(companyinformationBean, CompanyInformationVo.class);
         return companyinformationVo;
@@ -59,6 +66,8 @@ public class CompanyInformationService implements CompanyInformationManager {
         CompanyInformationBean companyinformationBean = ConvertUtil.objectCopyParams(companyinformationVo, CompanyInformationBean.class);
         //设置租户ID
         companyinformationBean.setTenantId(Jurisdiction.getTenant());
+        companyinformationBean.setUpdateUser(Jurisdiction.getUsername());
+        companyinformationBean.setUpdateDate(DateUtil.getTime());
         companyinformationMapper.edit(companyinformationBean);
     }
 
@@ -72,11 +81,12 @@ public class CompanyInformationService implements CompanyInformationManager {
         //设置租户ID
         companyinformationBean.setTenantId(Jurisdiction.getTenant());
         List<CompanyInformationBean> companyinformationPageBean = companyinformationMapper.list(companyinformationBean);
-        PageInfo<CompanyInformationBean> pageInfo = new PageInfo<>(companyinformationPageBean);
-        //将DO转vo
-        PageInfo<CompanyInformationQueryVo> companyinformationPageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
-        return companyinformationPageVo;
+        //DO转VO
+        List<CompanyInformationQueryVo> informationQueryVoList = (List<CompanyInformationQueryVo>) ConvertUtil.castListObjectToTargetList(companyinformationPageBean,CompanyInformationQueryVo.class);
+        PageInfo<CompanyInformationQueryVo> pageInfo = new PageInfo<>(informationQueryVoList);
+        return pageInfo;
     }
+
 
 }
 

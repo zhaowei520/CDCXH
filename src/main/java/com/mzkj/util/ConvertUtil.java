@@ -2,6 +2,9 @@ package com.mzkj.util;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
+import com.mzkj.vo.BaseVo;
+
+import java.util.List;
 
 /**
  * @Description: vo转do
@@ -47,5 +50,16 @@ public class ConvertUtil {
         String jsonStr = JSON.toJSONString(obj);
         return JSON.parseObject(jsonStr, target);
     }
-
+    /**
+     * 将List<source> 转成List<Target>
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-18 16:00
+     */
+    public static List<? extends BaseVo> castListObjectToTargetList(List listObject, Class<? extends BaseVo> target) {
+        String listObjectString = JSON.toJSONString(listObject); // List转json
+        List<? extends BaseVo> result = JSON.parseArray(listObjectString,target);
+        return result;
+    }
 }

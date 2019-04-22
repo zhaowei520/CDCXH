@@ -13,7 +13,7 @@
         <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
         <result column="UPDATE_USER" javaType="String" property="updateUser"/>
         <result column="TENANT_ID_" javaType="String" property="tenantId"/>
-        <collection property="originalBeanList" ofType="com.mzkj.bean.OriginalBean">
+        <collection property="originalList" ofType="com.mzkj.bean.OriginalBean">
             <id column="ORIGINAL_ID" javaType="string" property="originalId"/>
             <result column="COMPANY_INFORMATION_ID" javaType="String"
                     property="companyInformationId"/>

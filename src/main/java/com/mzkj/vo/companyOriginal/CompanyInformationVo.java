@@ -17,15 +17,7 @@ public class CompanyInformationVo {
     private String updateDate;
     private String updateUser;
     private String tenantId;
-    private List<OriginalVo> originalVoList;
 
-    public List<OriginalVo> getOriginalVoList() {
-        return originalVoList;
-    }
-
-    public void setOriginalVoList(List<OriginalVo> originalVoList) {
-        this.originalVoList = originalVoList;
-    }
 
     public String getCompanyInformationId() {
         return companyInformationId;

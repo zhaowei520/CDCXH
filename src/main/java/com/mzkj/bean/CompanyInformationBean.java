@@ -13,17 +13,17 @@ import java.util.List;
  */
 public class CompanyInformationBean extends CompanyInformation{
 
-    private List<OriginalBean> originalBeanList;
+    private List<OriginalBean> originalList;
     private String originalHolderDepartment;
     private String originalHolder;
     private String originalOutStatus;
 
-    public List<OriginalBean> getOriginalBeanList() {
-        return originalBeanList;
+    public List<OriginalBean> getOriginalList() {
+        return originalList;
     }
 
-    public void setOriginalBeanList(List<OriginalBean> originalBeanList) {
-        this.originalBeanList = originalBeanList;
+    public void setOriginalList(List<OriginalBean> originalList) {
+        this.originalList = originalList;
     }
 
     public String getOriginalHolderDepartment() {

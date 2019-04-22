@@ -2,6 +2,8 @@ package com.mzkj.vo.companyOriginal;
 
 import com.mzkj.vo.BaseVo;
 
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -17,7 +19,25 @@ public class CompanyInformationQueryVo extends BaseVo {
     private String originalHolder;
     private String originalHolderDepartment;
     private String originalOutStatus;
+    private List<OriginalQueryVo> originalList;
+    private String originalListString;
+    private String remark;
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getOriginalListString() {
+        return originalListString;
+    }
+
+    public void setOriginalListString(String originalListString) {
+        this.originalListString = originalListString;
+    }
 
     public String getCompanyInformationId() {
         return companyInformationId;
@@ -57,6 +77,14 @@ public class CompanyInformationQueryVo extends BaseVo {
 
     public void setOriginalOutStatus(String originalOutStatus) {
         this.originalOutStatus = originalOutStatus;
+    }
+
+    public List<OriginalQueryVo> getOriginalList() {
+        return originalList;
+    }
+
+    public void setOriginalList(List<OriginalQueryVo> originalList) {
+        this.originalList = originalList;
     }
 }
 

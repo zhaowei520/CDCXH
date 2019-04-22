@@ -91,6 +91,10 @@
         from
         <include refid="tableName"></include>
         f
+        where 1=1
+        <if test="TEMPLATE_DATE!=null and TEMPLATE_DATE!=''">
+            and f.TEMPLATE_DATE LIKE CONCAT(CONCAT('%', #{TEMPLATE_DATE}),'%')
+        </if>
     </select>
     <select id="findById" parameterType="String"
             resultType="com.mzkj.bean.TemplateBean">
@@ -100,5 +104,6 @@
         <include refid="tableName"></include>
         f
         where f.TEMPLATE_ID=#{TEMPLATE_ID}
+
     </select>
 </mapper>
