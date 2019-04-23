@@ -34,4 +34,10 @@ public class Const {
 
     //菜单系统类型
     public static final int MENU_CLASSIFICATION_SPRINGBOOT = 2;
+
+    //原件流转状态
+    public static final String ORIGINAL_OUT_STATUS_1 ="ORIGINAL_OUT_STATUS_1";//出库中
+    public static final String ORIGINAL_OUT_STATUS_2 ="ORIGINAL_OUT_STATUS_2";//入库
+    public static final String ORIGINAL_OUT_STATUS_3 ="ORIGINAL_OUT_STATUS_3";//待借入
+    public static final String ORIGINAL_OUT_STATUS_4 ="ORIGINAL_OUT_STATUS_4";//被驳回
 }

@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.CompanyInformationBean;
+import com.mzkj.bean.OriginalBean;
+import com.mzkj.domain.Original;
+import com.mzkj.mapper.companyOriginal.OriginalMapper;
 import com.mzkj.util.Const;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.DateUtil;
@@ -34,6 +37,8 @@ public class CompanyInformationService implements CompanyInformationManager {
 
     @Autowired
     private CompanyInformationMapper companyinformationMapper;
+    @Autowired
+    private OriginalMapper originalMapper;
 
     /**
      * 新增
@@ -81,10 +86,36 @@ public class CompanyInformationService implements CompanyInformationManager {
         //设置租户ID
         companyinformationBean.setTenantId(Jurisdiction.getTenant());
         List<CompanyInformationBean> companyinformationPageBean = companyinformationMapper.list(companyinformationBean);
+        selectOriginalByInformationBeanList(companyinformationPageBean);
+        PageInfo<CompanyInformationQueryVo> pageInfo = new PageInfo(companyinformationPageBean);
         //DO转VO
         List<CompanyInformationQueryVo> informationQueryVoList = (List<CompanyInformationQueryVo>) ConvertUtil.castListObjectToTargetList(companyinformationPageBean,CompanyInformationQueryVo.class);
-        PageInfo<CompanyInformationQueryVo> pageInfo = new PageInfo<>(informationQueryVoList);
+        pageInfo.setList(informationQueryVoList);
         return pageInfo;
+    }
+
+    /**
+     * 根据传入的CompanyInformationBean 查询对应的原件List
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-23 14:56
+     */
+    public void selectOriginalByInformationBeanList(List<CompanyInformationBean> CompanyInformationBeanList) throws Exception {
+        for (CompanyInformationBean companyInformationBean:CompanyInformationBeanList) {
+            List<OriginalBean> originalBeans=originalMapper.findByCompanyInformationId(companyInformationBean.getCompanyInformationId());
+            if (originalBeans != null && originalBeans.size() > 0) {
+                companyInformationBean.setOriginalList(originalBeans);
+            }
+        }
+    }
+
+    @Override
+    public CompanyInformationVo findById(String CompanyInformationId) throws Exception {
+        CompanyInformationBean companyInformationBean = new CompanyInformationBean();
+        companyInformationBean =companyinformationMapper.findById(CompanyInformationId);
+        CompanyInformationVo companyinformationVo = ConvertUtil.objectCopyParams(companyInformationBean, CompanyInformationVo.class);
+        return companyinformationVo;
     }
 
 

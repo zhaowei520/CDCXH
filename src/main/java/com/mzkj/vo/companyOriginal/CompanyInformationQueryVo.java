@@ -21,7 +21,16 @@ public class CompanyInformationQueryVo extends BaseVo {
     private String originalOutStatus;
     private List<OriginalQueryVo> originalList;
     private String originalListString;
+    private String originalInformation;//原件流转信息
     private String remark;
+
+    public String getOriginalInformation() {
+        return originalInformation;
+    }
+
+    public void setOriginalInformation(String originalInformation) {
+        this.originalInformation = originalInformation;
+    }
 
     public String getRemark() {
         return remark;

@@ -135,5 +135,16 @@
 		from 
 		<include refid="tableName"></include> f
 	</select>
-	
+
+	<select id="findByCompanyInformationId" parameterType="String" resultMap="originalMap">
+		select
+		o.ORIGINAL_ID,o.COMPANY_INFORMATION_ID,
+		o.ORIGINAL_NAME,o.ORIGINAL_AMOUNT,
+		o.ORIGINAL_HOLDER,o.ORIGINAL_HOLDER_DEPARTMENT,
+		o.ORIGINAL_OUT_TO,o.ORIGINAL_HOLD_STATUS,
+		o.ORIGINAL_OUT_STATUS
+		from
+		<include refid="tableName"></include> o
+		where o.COMPANY_INFORMATION_ID = #{companyInformationId}
+	</select>
 </mapper>
