@@ -95,6 +95,22 @@
         <if test="TEMPLATE_DATE!=null and TEMPLATE_DATE!=''">
             and f.TEMPLATE_DATE LIKE CONCAT(CONCAT('%', #{TEMPLATE_DATE}),'%')
         </if>
+        <if test="queryCodition != null and queryCodition != ''">
+            and (
+            f.TEMPLATE_DATE LIKE CONCAT(CONCAT('%', #{queryCodition}),'%')
+            or
+            f.USER_ID LIKE CONCAT(CONCAT('%', #{queryCodition}),'%')
+            or
+            f.TEMPLATE_DATETIME LIKE CONCAT(CONCAT('%', #{queryCodition}),'%')
+            or
+            f.TEMPLATE_RADIO LIKE CONCAT(CONCAT('%', #{queryCodition}),'%')
+            or
+            f.TEMPLATE_CHECKBOX LIKE CONCAT(CONCAT('%', #{queryCodition}),'%')
+            or
+            f.TEMPLATE_SELECT LIKE CONCAT(CONCAT('%', #{queryCodition}),'%')
+            or
+            f.TEMPLATE_TEXTAREA LIKE CONCAT(CONCAT('%', #{queryCodition}),'%'))
+        </if>
     </select>
     <select id="findById" parameterType="String"
             resultType="com.mzkj.bean.TemplateBean">

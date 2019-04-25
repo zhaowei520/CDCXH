@@ -113,5 +113,22 @@
 		from 
 		<include refid="tableName"></include> f
 	</select>
-	
+	<!--根据编码获取子集-->
+	<select id="findByBianma" parameterType="com.mzkj.bean.DictionariesBean" resultMap="dictionariesMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include> f
+		where f.BIANMA=#{bianma}
+	</select>
+
+
+	<select id="findChildListByParentId" parameterType="String" resultMap="dictionariesMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include> f
+		where
+		PARENT_ID = #{parentId}
+	</select>
 </mapper>

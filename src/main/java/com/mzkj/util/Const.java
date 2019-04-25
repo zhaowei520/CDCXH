@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  * 常量定义
  *
@@ -36,8 +37,20 @@ public class Const {
     public static final int MENU_CLASSIFICATION_SPRINGBOOT = 2;
 
     //原件流转状态
-    public static final String ORIGINAL_OUT_STATUS_1 ="ORIGINAL_OUT_STATUS_1";//出库中
-    public static final String ORIGINAL_OUT_STATUS_2 ="ORIGINAL_OUT_STATUS_2";//入库
-    public static final String ORIGINAL_OUT_STATUS_3 ="ORIGINAL_OUT_STATUS_3";//待借入
-    public static final String ORIGINAL_OUT_STATUS_4 ="ORIGINAL_OUT_STATUS_4";//被驳回
+    public static final String ORIGINAL_OUT_STATUS_1 = "ORIGINAL_OUT_STATUS_1";//出库中
+    public static final String ORIGINAL_OUT_STATUS_2 = "ORIGINAL_OUT_STATUS_2";//入库
+    public static final String ORIGINAL_OUT_STATUS_3 = "ORIGINAL_OUT_STATUS_3";//待借入
+    public static final String ORIGINAL_OUT_STATUS_4 = "ORIGINAL_OUT_STATUS_4";//被驳回
+
+    //原件持有状态
+    public static final String ORIGINAL_HOLD_STATUS_0 = "ORIGINAL_HOLD_STATUS_0";//无
+    public static final String ORIGINAL_HOLD_STATUS_1 = "ORIGINAL_HOLD_STATUS_1";//在客户处
+    public static final String ORIGINAL_HOLD_STATUS_2 = "ORIGINAL_HOLD_STATUS_2";//在公司内部
+
+    //原件操作类型
+    public static final String LOAN_OUT = "loanOut";
+    public static final String LOAN_OUT_CONFIRMED = "loanOutConfirmed";
+    public static final String REJECT = "reject";
+    public static final String LOAN_IN = "loanIn";
+
 }

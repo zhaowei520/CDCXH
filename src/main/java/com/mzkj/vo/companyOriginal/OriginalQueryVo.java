@@ -29,6 +29,34 @@ public class OriginalQueryVo extends BaseVo {
     private String updateUser;
     private String tenantId;
 
+    private boolean hasLoanOutAuthorized = false;//借出权限
+    private boolean hasLoanInAuthorized = false;//主动借入权限
+    private boolean hasLoanOutConfirmed = false;//是否显示确认按钮
+
+    public boolean isHasLoanOutConfirmed() {
+        return hasLoanOutConfirmed;
+    }
+
+    public void setHasLoanOutConfirmed(boolean hasLoanOutConfirmed) {
+        this.hasLoanOutConfirmed = hasLoanOutConfirmed;
+    }
+
+    public boolean isHasLoanOutAuthorized() {
+        return hasLoanOutAuthorized;
+    }
+
+    public void setHasLoanOutAuthorized(boolean hasLoanOutAuthorized) {
+        this.hasLoanOutAuthorized = hasLoanOutAuthorized;
+    }
+
+    public boolean isHasLoanInAuthorized() {
+        return hasLoanInAuthorized;
+    }
+
+    public void setHasLoanInAuthorized(boolean hasLoanInAuthorized) {
+        this.hasLoanInAuthorized = hasLoanInAuthorized;
+    }
+
     public String getOriginalId() {
         return originalId;
     }

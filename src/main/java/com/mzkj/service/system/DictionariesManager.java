@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.mzkj.vo.system.DictionariesQueryVo;
 import com.mzkj.vo.system.DictionariesVo;
 
+import java.util.List;
+
 /** 
  * 说明： 字典接口
  * 创建人：CDCXH
@@ -35,6 +37,14 @@ public interface DictionariesManager{
 	 * @throws Exception
 	 */
 	public PageInfo<DictionariesQueryVo> list(DictionariesQueryVo dictionariesQueryVo)throws Exception;
-	
+
+	/**
+	 * 通过编码查询子集
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-24 11:05
+	 */
+	public List<DictionariesQueryVo> findChildlListByBianma(String bianma)throws Exception;
 }
 

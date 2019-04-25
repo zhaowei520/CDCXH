@@ -18,6 +18,16 @@ public class TemplateQueryVo extends BaseVo {
     String USER_ID;
     @ApiModelProperty(value="日期",name="TEMPLATE_DATE",example="2019-05-24")
     String TEMPLATE_DATE;
+    @ApiModelProperty(value="模糊查询条件",name="queryCodition",example="")
+    String queryCodition;
+
+    public String getQueryCodition() {
+        return queryCodition;
+    }
+
+    public void setQueryCodition(String queryCodition) {
+        this.queryCodition = queryCodition;
+    }
 
     public String getTEMPLATE_ID() {
         return TEMPLATE_ID;

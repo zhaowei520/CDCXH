@@ -127,13 +127,58 @@
 		where 
 			ORIGINAL_ID = #{originalId}
 	</update>
-	
+	<!-- 借出 -->
+	<update id="loanOut" parameterType="com.mzkj.bean.OriginalBean">
+		update
+		<include refid="tableName"></include>
+		set
+		ORIGINAL_OUT_TO = #{originalOutTo},
+		ORIGINAL_OUT_STATUS = #{originalOutStatus}
+		where
+		ORIGINAL_ID = #{originalId}
+	</update>
+    <!--借入-->
+    <update id="loanIn" parameterType="com.mzkj.bean.OriginalBean">
+        update
+        <include refid="tableName"></include>
+        set
+        ORIGINAL_OUT_TO = #{originalOutTo},
+        ORIGINAL_OUT_STATUS = #{originalOutStatus}
+        where
+        ORIGINAL_ID = #{originalId}
+    </update>
+	<!--借入确认-->
+	<update id="loanOutConfirmed" parameterType="com.mzkj.bean.OriginalBean">
+		update
+		<include refid="tableName"></include>
+		set
+		ORIGINAL_HOLDER = #{originalHolder},
+		ORIGINAL_OUT_TO = #{originalOutTo},
+		ORIGINAL_OUT_STATUS = #{originalOutStatus}
+		where
+		ORIGINAL_ID = #{originalId}
+	</update>
+    <!--驳回-->
+    <update id="reject" parameterType="com.mzkj.bean.OriginalBean">
+        update
+        <include refid="tableName"></include>
+        set
+        ORIGINAL_OUT_TO = #{originalOutTo},
+        ORIGINAL_OUT_STATUS = #{originalOutStatus}
+        where
+        ORIGINAL_ID = #{originalId}
+    </update>
 	<!-- 列表(全部) -->
 	<select id="list" parameterType="com.mzkj.bean.OriginalBean" resultMap="originalMap">
 		select
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include> f
+		where 1=1
+		<if test="companyInformationId != null and companyInformationId != ''">
+			and f.COMPANY_INFORMATION_ID = #{companyInformationId}
+		</if>
+
 	</select>
 
 	<select id="findByCompanyInformationId" parameterType="String" resultMap="originalMap">

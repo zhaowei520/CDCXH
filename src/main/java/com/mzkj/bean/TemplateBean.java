@@ -9,5 +9,13 @@ import com.mzkj.domain.Template;
  * @Version: 1.0
  */
 public class TemplateBean extends Template{
+    private String queryCodition;
 
+    public String getQueryCodition() {
+        return queryCodition;
+    }
+
+    public void setQueryCodition(String queryCodition) {
+        this.queryCodition = queryCodition;
+    }
 }

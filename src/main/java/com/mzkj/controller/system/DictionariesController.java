@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.mzkj.service.system.DictionariesManager;
 
+import java.util.List;
+
 /**
  * 说明：字典
  * 创建人：CDCXH
@@ -128,4 +130,27 @@ public class DictionariesController {
 		return result;
 	}
 
+	/**
+	 * 通过编码查询子菜单列表
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-24 11:03
+	 */
+    @RequestMapping(value="/findChildlListByBianma", method = RequestMethod.GET)
+    @ApiOperation(value = "通过编码查询子菜单列表", notes = "通过编码查询子菜单列表")
+    public Result<List<DictionariesQueryVo>> findChildlListByBianma(String bianma) {
+        logger.info(Jurisdiction.getUsername()+"查看字典");
+        Result<List<DictionariesQueryVo>> result = new Result<>();
+        try {
+            List<DictionariesQueryVo>	varList = dictionariesService.findChildlListByBianma(bianma);
+            result.setData(varList);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
 }

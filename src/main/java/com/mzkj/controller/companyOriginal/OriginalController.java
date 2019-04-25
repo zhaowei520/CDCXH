@@ -1,6 +1,7 @@
 package com.mzkj.controller.companyOriginal;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.util.Const;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
 import com.mzkj.util.enums.HttpCode;
@@ -9,6 +10,8 @@ import com.mzkj.vo.companyOriginal.OriginalQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -106,7 +109,7 @@ public class OriginalController {
 	/**列表
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list", method = RequestMethod.POST)
     @ApiOperation(value = "分页查询template", notes = "分页查询template")
 	public Result<PageInfo<OriginalQueryVo>> list(OriginalQueryVo originalQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看公司原件详情");
@@ -127,5 +130,96 @@ public class OriginalController {
         }
 		return result;
 	}
+
+	/**
+	 * 主动借出原件
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-24 15:32
+	 */
+    @RequestMapping(value="/loanOut", method = RequestMethod.POST)
+    @ApiOperation(value = "借出原件", notes = "借出原件")
+    public Result loanOut(OriginalVo originalVo) {
+        logger.info(Jurisdiction.getUsername()+"借出原件");
+        Result result = new Result();
+        try {
+            originalService.loanOut(originalVo);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+    /**
+     * 借出、借入原件确认
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-24 15:32
+     */
+    @RequestMapping(value="/loanOutConfirmed", method = RequestMethod.POST)
+    @ApiOperation(value = "借出原件确认", notes = "借出原件确认")
+    public Result loanOutConfirmed(OriginalVo originalVo) {
+        logger.info(Jurisdiction.getUsername()+"借出原件");
+        Result result = new Result();
+        try {
+            originalService.loanOutConfirmed(originalVo);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 驳回
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-24 16:58
+     */
+    @RequestMapping(value="/reject", method = RequestMethod.POST)
+    @ApiOperation(value = "驳回", notes = "驳回")
+    public Result reject(OriginalVo originalVo) {
+        logger.info(Jurisdiction.getUsername()+"原件驳回");
+        Result result = new Result();
+        try {
+            originalService.reject(originalVo);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 主动借入原件
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-24 15:32
+     */
+    @RequestMapping(value="/loanIn", method = RequestMethod.POST)
+    @ApiOperation(value = "借入原件", notes = "借入原件")
+    public Result loanIn(OriginalVo originalVo) {
+        logger.info(Jurisdiction.getUsername()+"借入原件");
+        Result result = new Result();
+        try {
+            originalService.loanIn(originalVo);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
 
 }
