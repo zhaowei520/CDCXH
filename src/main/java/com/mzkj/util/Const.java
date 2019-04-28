@@ -53,4 +53,14 @@ public class Const {
     public static final String REJECT = "reject";
     public static final String LOAN_IN = "loanIn";
 
+
+    //数据结构
+    public static final String HTML_LEFT_P = "<p>";
+    public static final String  HTML_BR= "<br/>";
+    public static final String HTML_RIGHT_P = "</p>";
+
+    public static final String DATA_FH = ",fh,";
+    public static final String DATA_LEFT_BORDER = "[";
+    public static final String DATA_RIGHT_BORDER = "]";
+
 }

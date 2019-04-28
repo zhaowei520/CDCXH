@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.system.RoleMapper">
+
+    <resultMap id="roleMap" type="com.mzkj.bean.RoleBean">
+        <id column="ROLE_ID" javaType="string" property="roleId"/>
+        <result column="ROLE_NAME" javaType="String" property="roleName"/>
+        <result column="RIGHTS" javaType="String" property="rights"/>
+        <result column="PARENT_ID" javaType="String" property="parentId"/>
+        <result column="ADD_QX" javaType="String" property="addQx"/>
+        <result column="DEL_QX" javaType="String" property="delQx"/>
+        <result column="EDIT_QX" javaType="String" property="editQx"/>
+        <result column="CHA_QX" javaType="String" property="chaQx"/>
+        <result column="RNUMBER" javaType="String" property="rnumber"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+    </resultMap>
+
+
+    <!--表名 -->
+    <sql id="tableName">
+		SYS_ROLE
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		f.ROLE_NAME,	
+		f.RIGHTS,	
+		f.PARENT_ID,	
+		f.ADD_QX,	
+		f.DEL_QX,	
+		f.EDIT_QX,	
+		f.CHA_QX,	
+		f.RNUMBER,	
+		f.TENANT_ID_,	
+		f.ROLE_ID
+	</sql>
+
+    <!-- 字段用于新增 -->
+    <sql id="Field2">
+		ROLE_NAME,	
+		RIGHTS,	
+		PARENT_ID,	
+		ADD_QX,	
+		DEL_QX,	
+		EDIT_QX,	
+		CHA_QX,	
+		RNUMBER,	
+		TENANT_ID_,	
+		ROLE_ID
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{roleName},
+		#{rights},
+		#{parentId},
+		#{addQx},
+		#{delQx},
+		#{editQx},
+		#{chaQx},
+		#{rnumber},
+		#{tenantId},
+		#{roleId}
+	</sql>
+
+    <!-- 新增-->
+    <insert id="save" parameterType="com.mzkj.bean.RoleBean">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field2"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="com.mzkj.bean.RoleBean">
+        delete from
+        <include refid="tableName"></include>
+        where
+        ROLE_ID = #{roleId}
+    </delete>
+
+    <!-- 修改 -->
+    <update id="edit" parameterType="com.mzkj.bean.RoleBean">
+        update
+        <include refid="tableName"></include>
+        set
+        ROLE_NAME = #{roleName},
+        RIGHTS = #{rights},
+        PARENT_ID = #{parentId},
+        ADD_QX = #{addQx},
+        DEL_QX = #{delQx},
+        EDIT_QX = #{editQx},
+        CHA_QX = #{chaQx},
+        RNUMBER = #{rnumber},
+        TENANT_ID_ = #{tenantId},
+        ROLE_ID = #{roleId}
+        where
+        ROLE_ID = #{roleId}
+    </update>
+
+    <!-- 列表(全部) -->
+    <select id="list" parameterType="com.mzkj.bean.RoleBean" resultMap="roleMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+    </select>
+
+
+    <!-- 列表(全部) -->
+    <select id="getRoleByRnumber" resultMap="roleMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        where f.RNUMBER = #{rnumber} and f.TENANT_ID_ = #{tenantId}
+    </select>
+</mapper>

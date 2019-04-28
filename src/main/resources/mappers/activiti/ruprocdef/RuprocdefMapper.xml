@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.activiti.ruprocdef.RuprocdefMapper">
+
+    <resultMap id="ruprocdefMap" type="com.mzkj.bean.RuprocdefBean">
+        <result column="ID_" javaType="String" property="id"/>
+        <result column="PROC_DEF_ID_" javaType="String" property="procDefId"/>
+        <result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+        <result column="EXECUTION_ID_" javaType="String" property="executionId"/>
+        <result column="ACT_ID_" javaType="String" property="actId"/>
+        <result column="TASK_ID_" javaType="String" property="taskId"/>
+        <result column="CALL_PROC_INST_ID_" javaType="String" property="callProcInstId"/>
+        <result column="ACT_NAME_" javaType="String" property="actName"/>
+        <result column="ACT_TYPE_" javaType="String" property="actType"/>
+        <result column="ASSIGNEE_" javaType="String" property="assignee"/>
+        <result column="START_TIME_" javaType="Date" property="startTime"/>
+        <result column="END_TIME_" javaType="Date" property="endTime"/>
+        <result column="DURATION_" javaType="long" property="duration"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+    </resultMap>
+
+    <resultMap id="ruprocdefProcessMap" type="com.mzkj.bean.RuprocdefBean">
+        <result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+        <result column="TASK_ID_" javaType="String" property="taskId"/>
+        <result column="ACT_NAME_" javaType="String" property="actName"/>
+        <result column="ASSIGNEE_" javaType="String" property="assignee"/>
+        <result column="START_TIME_" javaType="Date" property="startTime"/>
+        <result column="END_TIME_" javaType="Date" property="endTime"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="DURATION_" javaType="long" property="duration"/>
+
+        <result column="TEXT_" javaType="String" property="text"/>
+        <result column="DELETE_REASON_" javaType="String" property="deleteReason"/>
+    </resultMap>
+
+
+    <!--表名 -->
+    <sql id="tableName">
+		ACT_HI_ACTINST
+	</sql>
+
+    <!--历史流程变量表 -->
+    <sql id="hivartableName">
+        ACT_HI_VARINST
+    </sql>
+
+    <!--历史流程实例表 -->
+    <sql id="hpvartableName">
+        ACT_HI_PROCINST
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		f.ID_,	
+		f.PROC_DEF_ID_,	
+		f.PROC_INST_ID_,	
+		f.EXECUTION_ID_,	
+		f.ACT_ID_,	
+		f.TASK_ID_,	
+		f.CALL_PROC_INST_ID_,	
+		f.ACT_NAME_,	
+		f.ACT_TYPE_,	
+		f.ASSIGNEE_,	
+		f.START_TIME_,	
+		f.END_TIME_,	
+		f.DURATION_,	
+		f.TENANT_ID_
+	</sql>
+
+    <!-- 字段用于新增 -->
+    <sql id="Field2">
+		ID_,	
+		PROC_DEF_ID_,	
+		PROC_INST_ID_,	
+		EXECUTION_ID_,	
+		ACT_ID_,	
+		TASK_ID_,	
+		CALL_PROC_INST_ID_,	
+		ACT_NAME_,	
+		ACT_TYPE_,	
+		ASSIGNEE_,	
+		START_TIME_,	
+		END_TIME_,	
+		DURATION_,	
+		TENANT_ID_
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{id},
+		#{procDefId},
+		#{procInstId},
+		#{executionId},
+		#{actId},
+		#{taskId},
+		#{callProcInstId},
+		#{actName},
+		#{actType},
+		#{assignee},
+		#{startTime},
+		#{endTime},
+		#{duration},
+		#{tenantId}
+	</sql>
+
+    <!-- 新增-->
+    <insert id="save" parameterType="com.mzkj.bean.RuprocdefBean">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field2"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="com.mzkj.bean.RuprocdefBean">
+        delete from
+        <include refid="tableName"></include>
+        where
+        RUPROCDEF_ID = #{ruprocdefId}
+    </delete>
+
+    <!-- 修改 -->
+    <update id="edit" parameterType="com.mzkj.bean.RuprocdefBean">
+        update
+        <include refid="tableName"></include>
+        set
+        PROC_DEF_ID_ = #{procDefId},
+        PROC_INST_ID_ = #{procInstId},
+        EXECUTION_ID_ = #{executionId},
+        ACT_ID_ = #{actId},
+        TASK_ID_ = #{taskId},
+        CALL_PROC_INST_ID_ = #{callProcInstId},
+        ACT_NAME_ = #{actName},
+        ACT_TYPE_ = #{actType},
+        ASSIGNEE_ = #{assignee},
+        START_TIME_ = #{startTime},
+        END_TIME_ = #{endTime},
+        DURATION_ = #{duration},
+        TENANT_ID_ = #{tenantId},
+        ID_ = #{id}
+        where
+        ID_ = #{id}
+    </update>
+
+    <!-- 列表(全部) -->
+    <select id="list" parameterType="com.mzkj.bean.RuprocdefBean" resultMap="ruprocdefMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+    </select>
+
+
+    <!-- 查看流程记录信息 -->
+    <select id="viewProcess" parameterType="com.mzkj.bean.RuprocdefBean"
+            resultMap="ruprocdefProcessMap">
+        select
+        ht.PROC_INST_ID_,
+        ht.TASK_ID_,
+        ht.ACT_NAME_,
+        ht.ASSIGNEE_,
+        ht.START_TIME_,
+        ht.END_TIME_,
+        ht.DURATION_,
+        ht.TENANT_ID_,
+        hv.TEXT_,
+        hp.DELETE_REASON_
+        from
+        <include refid="tableName"></include>
+        ht
+        left join
+        <include refid="hivartableName"></include>
+        hv
+        on ht.TASK_ID_ = hv.TASK_ID_
+        left join
+        <include refid="hpvartableName"></include>
+        hp
+        ON ht.PROC_DEF_ID_ = hp.PROC_DEF_ID_
+        where 1=1 and ht.ACT_NAME_ is not null
+        and ht.PROC_INST_ID_ = #{procInstId}
+        and hp.PROC_INST_ID_ = #{procInstId}
+        and ht.TENANT_ID_=#{tenantId}
+        order by ht.START_TIME_
+    </select>
+
+</mapper>

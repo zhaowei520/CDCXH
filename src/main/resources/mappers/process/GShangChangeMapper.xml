@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.process.GShangChangeMapper">
+
+    <resultMap id="gShangChangeMap" type="com.mzkj.bean.GShangChangeBean">
+        <id column="GSHANGCHANGE_ID" javaType="string" property="gShangChangeId"/>
+        <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+        <result column="CHANGE_TYPE" javaType="String" property="changeType"/>
+        <result column="CLIENT_SRC" javaType="String" property="clientSrc"/>
+        <result column="BEFORE_CHANGE" javaType="String" property="beforeChange"/>
+        <result column="AFTER_CHANGE" javaType="String" property="afterChange"/>
+        <result column="STAMPS" javaType="String" property="stamps"/>
+        <result column="SIGN_MAN" javaType="String" property="signMan"/>
+        <result column="DEPARTMENT_NAME" javaType="String" property="departmentName"/>
+        <result column="DELEGATE_MAN" javaType="String" property="delegateMan"/>
+        <result column="DELEGATE_TEL" javaType="String" property="delegateTel"/>
+        <result column="EMERGENCY_MAN" javaType="String" property="emergencyMan"/>
+        <result column="EMERGENCY_TEL" javaType="String" property="emergencyTel"/>
+        <result column="CONTRACT_AMOUNT" javaType="Double" property="contractAmount"/>
+        <result column="ADVANCE_AMOUNT" javaType="Double" property="advanceAmount"/>
+        <result column="TAIL_AMOUNT" javaType="Double" property="tailAmount"/>
+        <result column="SIGN_DATE" javaType="String" property="signDate"/>
+        <result column="LAUNCH_DATE" javaType="String" property="launchDate"/>
+        <result column="DEADLINE" javaType="String" property="deadline"/>
+        <result column="CLIENT_REQUIREMENTS" javaType="String" property="clientRequirements"/>
+        <result column="CLIENT_PERSONALITY" javaType="String" property="clientPersonality"/>
+        <result column="CODE" javaType="String" property="code"/>
+        <result column="NOTE" javaType="String" property="note"/>
+        <result column="BUSINESS_TYPES" javaType="String" property="businessTypes"/>
+        <result column="PAYMENT_AMOUNT" javaType="Double" property="paymentAmount"/>
+        <result column="CREATEER" javaType="String" property="createer"/>
+        <result column="COLLECTION_CUSTOMER" javaType="String" property="collectionCustomer"/>
+        <result column="PAYMENT_METHODS" javaType="String" property="paymentMethods"/>
+        <result column="OUTSIDE_EXECUTER" javaType="String" property="outsideExecuter"/>
+        <result column="REGISTER_AREA" javaType="String" property="registerArea"/>
+        <result column="CREATE_DATE" javaType="String" property="createDate"/>
+        <result column="OUTMONAD_DEPT" javaType="String" property="outmonadDept"/>
+        <result column="OUTMONADER" javaType="String" property="outmonader"/>
+        <result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+        <result column="UPDATER" javaType="String" property="updater"/>
+        <result column="UPDATETIME" javaType="String" property="updatetime"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+    </resultMap>
+
+	<resultMap id="gShangChangeProcessMap" type="com.mzkj.bean.GShangChangeBean">
+		<id column="GSHANGCHANGE_ID" javaType="string" property="gShangChangeId"/>
+		<result column="SIGN_MAN" javaType="String" property="signMan"/>
+		<result column="COMPANY_NAME" javaType="String" property="companyName"/>
+		<result column="SIGN_DATE" javaType="String" property="signDate"/>
+		<result column="CREATEER" javaType="String" property="createer"/>
+		<result column="DELEGATE_MAN" javaType="String" property="delegateMan"/>
+		<result column="NOTE" javaType="String" property="note"/>
+		<result column="TENANT_ID_" javaType="String" property="tenantId"/>
+		<result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+		<result column="BUSINESS_TYPES" javaType="String" property="businessTypes"/>
+		<result column="ASSIGNEE_" javaType="String" property="actAssignee"/>
+		<result column="NAME_" javaType="String" property="actName"/>
+	</resultMap>
+    <!--表名 -->
+    <sql id="tableName">
+		TB_GSHANGCHANGE
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		f.COMPANY_NAME,	
+		f.CHANGE_TYPE,	
+		f.CLIENT_SRC,	
+		f.BEFORE_CHANGE,	
+		f.AFTER_CHANGE,	
+		f.STAMPS,	
+		f.SIGN_MAN,	
+		f.DEPARTMENT_NAME,	
+		f.DELEGATE_MAN,	
+		f.DELEGATE_TEL,	
+		f.EMERGENCY_MAN,	
+		f.EMERGENCY_TEL,	
+		f.CONTRACT_AMOUNT,	
+		f.ADVANCE_AMOUNT,	
+		f.TAIL_AMOUNT,	
+		f.SIGN_DATE,	
+		f.LAUNCH_DATE,	
+		f.DEADLINE,	
+		f.CLIENT_REQUIREMENTS,	
+		f.CLIENT_PERSONALITY,	
+		f.CODE,	
+		f.NOTE,	
+		f.BUSINESS_TYPES,	
+		f.PAYMENT_AMOUNT,	
+		f.CREATEER,	
+		f.COLLECTION_CUSTOMER,	
+		f.PAYMENT_METHODS,	
+		f.OUTSIDE_EXECUTER,	
+		f.REGISTER_AREA,	
+		f.CREATE_DATE,	
+		f.OUTMONAD_DEPT,	
+		f.OUTMONADER,	
+		f.PROC_INST_ID_,	
+		f.UPDATER,	
+		f.UPDATETIME,	
+		f.TENANT_ID_,	
+		f.GSHANGCHANGE_ID
+	</sql>
+
+    <!-- 字段用于新增 -->
+    <sql id="Field2">
+		COMPANY_NAME,	
+		CHANGE_TYPE,	
+		CLIENT_SRC,	
+		BEFORE_CHANGE,	
+		AFTER_CHANGE,	
+		STAMPS,	
+		SIGN_MAN,	
+		DEPARTMENT_NAME,	
+		DELEGATE_MAN,	
+		DELEGATE_TEL,	
+		EMERGENCY_MAN,	
+		EMERGENCY_TEL,	
+		CONTRACT_AMOUNT,	
+		ADVANCE_AMOUNT,	
+		TAIL_AMOUNT,	
+		SIGN_DATE,	
+		LAUNCH_DATE,	
+		DEADLINE,	
+		CLIENT_REQUIREMENTS,	
+		CLIENT_PERSONALITY,	
+		CODE,	
+		NOTE,	
+		BUSINESS_TYPES,	
+		PAYMENT_AMOUNT,	
+		CREATEER,	
+		COLLECTION_CUSTOMER,	
+		PAYMENT_METHODS,	
+		OUTSIDE_EXECUTER,	
+		REGISTER_AREA,	
+		CREATE_DATE,	
+		OUTMONAD_DEPT,	
+		OUTMONADER,	
+		PROC_INST_ID_,	
+		UPDATER,	
+		UPDATETIME,	
+		TENANT_ID_,	
+		GSHANGCHANGE_ID
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{companyName},
+		#{changeType},
+		#{clientSrc},
+		#{beforeChange},
+		#{afterChange},
+		#{stamps},
+		#{signMan},
+		#{departmentName},
+		#{delegateMan},
+		#{delegateTel},
+		#{emergencyMan},
+		#{emergencyTel},
+		#{contractAmount},
+		#{advanceAmount},
+		#{tailAmount},
+		#{signDate},
+		#{launchDate},
+		#{deadline},
+		#{clientRequirements},
+		#{clientPersonality},
+		#{code},
+		#{note},
+		#{businessTypes},
+		#{paymentAmount},
+		#{createer},
+		#{collectionCustomer},
+		#{paymentMethods},
+		#{outsideExecuter},
+		#{registerArea},
+		#{createDate},
+		#{outmonadDept},
+		#{outmonader},
+		#{procInstId},
+		#{updater},
+		#{updatetime},
+		#{tenantId},
+		#{gShangChangeId}
+	</sql>
+
+    <!-- 新增-->
+    <insert id="save" parameterType="com.mzkj.bean.GShangChangeBean">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field2"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="com.mzkj.bean.GShangChangeBean">
+        delete from
+        <include refid="tableName"></include>
+        where
+        GSHANGCHANGE_ID = #{gShangChangeId}
+    </delete>
+
+    <!-- 修改 -->
+    <update id="edit" parameterType="com.mzkj.bean.GShangChangeBean">
+        update
+        <include refid="tableName"></include>
+        set
+        COMPANY_NAME = #{companyName},
+        CHANGE_TYPE = #{changeType},
+        CLIENT_SRC = #{clientSrc},
+        BEFORE_CHANGE = #{beforeChange},
+        AFTER_CHANGE = #{afterChange},
+        STAMPS = #{stamps},
+        SIGN_MAN = #{signMan},
+        DEPARTMENT_NAME = #{departmentName},
+        DELEGATE_MAN = #{delegateMan},
+        DELEGATE_TEL = #{delegateTel},
+        EMERGENCY_MAN = #{emergencyMan},
+        EMERGENCY_TEL = #{emergencyTel},
+        CONTRACT_AMOUNT = #{contractAmount},
+        ADVANCE_AMOUNT = #{advanceAmount},
+        TAIL_AMOUNT = #{tailAmount},
+        SIGN_DATE = #{signDate},
+        LAUNCH_DATE = #{launchDate},
+        DEADLINE = #{deadline},
+        CLIENT_REQUIREMENTS = #{clientRequirements},
+        CLIENT_PERSONALITY = #{clientPersonality},
+        CODE = #{code},
+        NOTE = #{note},
+        BUSINESS_TYPES = #{businessTypes},
+        PAYMENT_AMOUNT = #{paymentAmount},
+        CREATEER = #{createer},
+        COLLECTION_CUSTOMER = #{collectionCustomer},
+        PAYMENT_METHODS = #{paymentMethods},
+        OUTSIDE_EXECUTER = #{outsideExecuter},
+        REGISTER_AREA = #{registerArea},
+        CREATE_DATE = #{createDate},
+        OUTMONAD_DEPT = #{outmonadDept},
+        OUTMONADER = #{outmonader},
+        PROC_INST_ID_ = #{procInstId},
+        UPDATER = #{updater},
+        UPDATETIME = #{updatetime},
+        TENANT_ID_ = #{tenantId},
+        GSHANGCHANGE_ID = #{gShangChangeId}
+        where
+        GSHANGCHANGE_ID = #{gShangChangeId}
+    </update>
+
+    <!-- 列表(全部) -->
+    <select id="list" parameterType="com.mzkj.bean.GShangChangeBean" resultMap="gShangChangeMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+    </select>
+
+
+	<!-- 根据创建人查询代理记账流程 -->
+	<select id="listProcessByUser" parameterType="com.mzkj.bean.GShangChangeBean"
+			resultMap="gShangChangeProcessMap">
+		select
+		f.GSHANGCHANGE_ID,
+		f.COMPANY_NAME,
+		f.SIGN_MAN,
+		f.SIGN_DATE,
+		f.DELEGATE_MAN,
+		f.NOTE,
+		f.CREATEER,
+		f.BUSINESS_TYPES,
+		f.PROC_INST_ID_,
+		f.TENANT_ID_,
+		art.ASSIGNEE_,
+		art.NAME_
+		from
+		<include refid="tableName"></include>
+		f
+		LEFT JOIN
+		act_ru_task art ON f.PROC_INST_ID_ = art.PROC_INST_ID_
+		WHERE 1=1
+		<if test="companyName!= null and companyName != ''">
+			and
+			(
+			f.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
+
+			)
+		</if>
+		and f.SIGN_MAN = #{signMan} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
+		order by f.CREATE_DATE
+	</select>
+</mapper>
