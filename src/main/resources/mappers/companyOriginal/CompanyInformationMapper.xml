@@ -13,19 +13,6 @@
         <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
         <result column="UPDATE_USER" javaType="String" property="updateUser"/>
         <result column="TENANT_ID_" javaType="String" property="tenantId"/>
-        <collection property="originalList" ofType="com.mzkj.bean.OriginalBean">
-            <id column="ORIGINAL_ID" javaType="string" property="originalId"/>
-            <result column="COMPANY_INFORMATION_ID" javaType="String"
-                    property="companyInformationId"/>
-            <result column="ORIGINAL_NAME" javaType="String" property="originalName"/>
-            <result column="ORIGINAL_AMOUNT" javaType="String" property="originalAmount"/>
-            <result column="ORIGINAL_HOLDER" javaType="String" property="originalHolder"/>
-            <result column="ORIGINAL_HOLDER_DEPARTMENT" javaType="String"
-                    property="originalHolderDepartment"/>
-            <result column="ORIGINAL_OUT_TO" javaType="String" property="originalOutTo"/>
-            <result column="ORIGINAL_HOLD_STATUS" javaType="String" property="originalHoldStatus"/>
-            <result column="ORIGINAL_OUT_STATUS" javaType="String" property="originalOutStatus"/>
-        </collection>
     </resultMap>
 
 
@@ -108,23 +95,19 @@
         COMPANYINFORMATION_ID = #{companyInformationId}
     </update>
 
-    <!--&lt;!&ndash; 列表(全部) &ndash;&gt;-->
-    <!--<select id="list1" parameterType="com.mzkj.bean.CompanyInformationBean" resultMap="companyInformationMap">-->
-    <!--select-->
-    <!--<include refid="Field"></include>-->
-    <!--from -->
-    <!--<include refid="tableName"></include> f-->
-    <!--</select>-->
+    <!-- 根据ID查询 -->
+    <select id="findById" parameterType="String" resultMap="companyInformationMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include> f
+        WHERE f.COMPANYINFORMATION_ID = #{companyInformationId}
+    </select>
 
     <select id="list" parameterType="com.mzkj.bean.CompanyInformationBean"
             resultMap="companyInformationMap">
         select
-        <include refid="Field"></include>,
-        o.ORIGINAL_ID,o.COMPANY_INFORMATION_ID,
-        o.ORIGINAL_NAME,o.ORIGINAL_AMOUNT,
-        o.ORIGINAL_HOLDER,o.ORIGINAL_HOLDER_DEPARTMENT,
-        o.ORIGINAL_OUT_TO,o.ORIGINAL_HOLD_STATUS,
-        o.ORIGINAL_OUT_STATUS
+        <include refid="Field"></include>
         from
         <include refid="tableName"></include>
         f LEFT JOIN tb_original o on f.COMPANYINFORMATION_ID=o.COMPANY_INFORMATION_ID
@@ -144,6 +127,8 @@
         <if test="originalOutStatus != null and originalOutStatus != ''">
             AND o.ORIGINAL_OUT_STATUS = #{originalOutStatus}
         </if>
+        GROUP BY f.COMPANYINFORMATION_ID
+        order by f.CREATE_DATE desc
 
 
     </select>

@@ -2,6 +2,7 @@ package com.mzkj.controller.companyOriginal;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.domain.Original;
+import com.mzkj.util.Const;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
 import com.mzkj.util.enums.HttpCode;
@@ -12,6 +13,7 @@ import com.mzkj.vo.companyOriginal.CompanyInformationVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -141,6 +143,7 @@ public class CompanyInformationController {
 
     /**
      * 将originals转成string 原件名：人名，原件2，人名2
+     * 设置出库信息
      * return
      * Author luosc
      * param
@@ -149,18 +152,74 @@ public class CompanyInformationController {
     private void constOriginalListToString(PageInfo<CompanyInformationQueryVo> varList) {
         if (varList != null && varList.getList() != null && varList.getList().size() > 0) {
             for (CompanyInformationQueryVo companyInformationQueryVo : varList.getList()) {
-                List<OriginalQueryVo> originalQueryVos=companyInformationQueryVo.getOriginalList();
+                List<OriginalQueryVo> originalQueryVos = companyInformationQueryVo.getOriginalList();
                 if (originalQueryVos != null && originalQueryVos.size() > 0) {
                     String result = "";
+                    String originalOutStatusInformation = "";
                     for (OriginalQueryVo original : originalQueryVos) {
-                        String originalName = original.getOriginalName();
-                        String originalHolder = original.getOriginalHolder();
-                        result += originalName + ":" + originalHolder + ",";
+                        String originalName = original.getOriginalName();//原件名
+                        String originalHolder = original.getOriginalHolder();//原件持有人
+                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)) {
+                            result += originalName + ":" + originalHolder + ",";
+                        } else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_0)) {
+                            //无原件
+                        }else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_1)) {
+                            //在客户处
+                            result+= originalName + ":客户处,";
+                        }
+
+                        //流转状态为 出库中
+                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_1)) {
+                            //如果原件持有人和当前登录人相同
+                            if (!StringUtils.isEmpty(original.getOriginalHolder()) && original.getOriginalHolder().equals(Jurisdiction.getUsername())) {
+                                originalOutStatusInformation += original.getOriginalName() + ":出库中,";
+                            }
+                            //出库对象和当前登录人相同
+                            else if (!StringUtils.isEmpty(original.getOriginalOutTo()) && original.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
+                                originalOutStatusInformation += original.getOriginalName() + ":借入待确认,";
+                            }
+                        }
+                        //待借入
+                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_3)) {
+                            //如果原件持有人和当前登录人相同
+                            if (!StringUtils.isEmpty(original.getOriginalHolder()) && original.getOriginalHolder().equals(Jurisdiction.getUsername())) {
+                                originalOutStatusInformation += original.getOriginalName() + ":借出待确认,";
+                            }
+                            //出库对象和当前登录人相同
+                            else if (!StringUtils.isEmpty(original.getOriginalOutTo()) && original.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
+                                originalOutStatusInformation += original.getOriginalName() + ":待借入,";
+                            }
+                        }
+
                     }
                     companyInformationQueryVo.setOriginalListString(result);
+                    companyInformationQueryVo.setOriginalInformation(originalOutStatusInformation);
                 }
             }
         }
     }
 
+    /**
+     * 根据ID查询
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-23 8:46
+     */
+    @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "根据ID查询CompanyInformation", notes = "根据ID查询CompanyInformation")
+    public Result findCompanyInformationById(@PathVariable("id") String companyInformationId) {
+        logger.info(Jurisdiction.getUsername() + "findById查看原件管理客户信息");
+        Result result = new Result();
+        try {
+            CompanyInformationVo companyInformationVo = companyinformationService.findById(companyInformationId);
+            result.setData(companyInformationVo);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
 }

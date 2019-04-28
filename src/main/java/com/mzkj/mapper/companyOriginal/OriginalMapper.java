@@ -31,12 +31,56 @@ public interface OriginalMapper{
 	 * @throws Exception
 	 */
 	public void edit(OriginalBean originalBean)throws Exception;
-	
+	/**
+	 * 借出
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-24 15:36
+	 */
+	public void loanOut(OriginalBean originalBean)throws Exception;
+
+	/**
+	 * 借入
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-24 17:25
+	 */
+    public void loanIn(OriginalBean originalBean)throws Exception;
+
+	/**
+	 * 借入确认
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-24 15:50
+	 */
+	public void loanOutConfirmed(OriginalBean originalBean)throws Exception;
+
+	/**
+	 * 驳回
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-24 17:02
+	 */
+    public void reject(OriginalBean originalBean)throws Exception;
+
 	/**列表
 	 * @param originalBean
 	 * @throws Exception
 	 */
 	public List<OriginalBean> list(OriginalBean originalBean)throws Exception;
+
+	/**
+	 * 根据公司信息ID查询
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-23 13:59
+	 */
+	public List<OriginalBean> findByCompanyInformationId(String companyInformationId) throws Exception;
 	
 }
 

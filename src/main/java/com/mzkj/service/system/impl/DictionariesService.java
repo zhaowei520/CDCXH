@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.mzkj.service.system.DictionariesManager;
 import com.mzkj.mapper.system.DictionariesMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** 
@@ -72,6 +73,30 @@ public class DictionariesService implements DictionariesManager{
         PageInfo<DictionariesQueryVo> dictionariesPageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
 		return dictionariesPageVo;
 	}
-	
+
+	/**
+	 * 根据编码获取菜单子集
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-24 11:09
+	 */
+	@Override
+	public List<DictionariesQueryVo> findChildlListByBianma(String bianma) throws Exception {
+		DictionariesBean dictionariesBean = new DictionariesBean();
+		dictionariesBean.setBianma(bianma);
+		//通过编码查询菜单
+		DictionariesBean dictionarieBean = dictionariesMapper.findByBianma(dictionariesBean);
+		//通过parentId查询
+		List<DictionariesBean> dictionariesBeans = dictionariesMapper.findChildListByParentId(dictionarieBean.getDictionariesId());
+		List<DictionariesQueryVo> dictionariesQueryVoList = new ArrayList<>();
+
+		for (DictionariesBean dictionariesBean1:dictionariesBeans
+			 ) {
+			dictionariesQueryVoList.add(ConvertUtil.objectCopyParams(dictionariesBean1, DictionariesQueryVo.class));
+		}
+		return dictionariesQueryVoList;
+	}
+
 }
 

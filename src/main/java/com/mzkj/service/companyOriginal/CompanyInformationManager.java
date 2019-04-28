@@ -19,10 +19,10 @@ public interface CompanyInformationManager{
 	public CompanyInformationVo save(CompanyInformationVo companyinformationVo)throws Exception;
 	
 	/**删除
-	 * @param COMPANYINFORMATION_ID
+	 * @param CompanyInformationId
 	 * @throws Exception
 	 */
-	public void delete(String COMPANYINFORMATION_ID)throws Exception;
+	public void delete(String CompanyInformationId)throws Exception;
 	
 	/**修改
 	 * @param companyinformationVo
@@ -35,6 +35,16 @@ public interface CompanyInformationManager{
 	 * @throws Exception
 	 */
 	public PageInfo<CompanyInformationQueryVo> list(CompanyInformationQueryVo companyinformationQueryVo)throws Exception;
-	
+
+
+	/**
+	 * 根据ID查询
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-23 8:47
+	 */
+	public CompanyInformationVo findById(String CompanyInformationId)throws Exception;
+
 }
 
