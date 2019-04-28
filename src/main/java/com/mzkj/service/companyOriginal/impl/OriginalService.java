@@ -172,21 +172,15 @@ public class OriginalService implements OriginalManager {
         //将vo转DO并将分页信息传到pageHelper
         OriginalBean originalBean = PageUtil.startPageAndObjectCopyParams(originalQueryVo, OriginalBean.class);
         List<OriginalBean> originalPageBean = originalMapper.list(originalBean);
-        PageInfo<OriginalBean> pageInfo = new PageInfo<>(originalPageBean);
+        PageInfo<OriginalQueryVo> pageInfo = new PageInfo(originalPageBean);
 
-        //PageInfo<OriginalQueryVo> originalPageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
-        originalPageBean = pageInfo.getList();
-        List<OriginalQueryVo> originalQueryVoList = new ArrayList<>();
-        //将DO转vo
-        for (OriginalBean originalBean1 : originalPageBean
-                ) {
-            originalQueryVoList.add(ConvertUtil.objectCopyParams(originalBean1, OriginalQueryVo.class));
-        }
-        PageInfo<OriginalQueryVo> originalPageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
-        originalPageVo.setList(originalQueryVoList);
+        //DO转VO
+        List<OriginalQueryVo> originalQueryVoList = (List<OriginalQueryVo>) ConvertUtil.castListObjectToTargetList(originalPageBean,OriginalQueryVo.class);
+        pageInfo.setList(originalQueryVoList);
+
         //初始化当前登录人的权限
-        initAuthorizedAndCastDicBianmaToName(originalPageVo);
-        return originalPageVo;
+        initAuthorizedAndCastDicBianmaToName(pageInfo);
+        return pageInfo;
     }
 
     /**
@@ -201,13 +195,6 @@ public class OriginalService implements OriginalManager {
             List<OriginalQueryVo> originalQueryVoList = originalPageVo.getList();
             for (OriginalQueryVo originalQueryVo : originalQueryVoList
                     ) {
-                //将持有状态编码转成name
-                if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus())) {
-                    DictionariesBean dictionariesBean= new DictionariesBean();
-                    dictionariesBean.setBianma(originalQueryVo.getOriginalHoldStatus());
-                    dictionariesBean = dictionariesMapper.findByBianma(dictionariesBean);
-                    originalQueryVo.setOriginalHoldStatus(dictionariesBean.getName());
-                }
                 //如果原件持有状态为在公司内部时才执行
                 if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus()) && originalQueryVo.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_2)) {
                     //判断原件持有人和当前登录人是否相同
@@ -233,6 +220,13 @@ public class OriginalService implements OriginalManager {
                             }
                         }
                     }
+                }
+                //将持有状态编码转成name
+                if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus())) {
+                    DictionariesBean dictionariesBean= new DictionariesBean();
+                    dictionariesBean.setBianma(originalQueryVo.getOriginalHoldStatus());
+                    dictionariesBean = dictionariesMapper.findByBianma(dictionariesBean);
+                    originalQueryVo.setOriginalHoldStatus(dictionariesBean.getName());
                 }
             }
         }
