@@ -19,7 +19,15 @@ public interface OriginalMapper{
 	 * @throws Exception
 	 */
 	public void save(OriginalBean originalBean)throws Exception;
-	
+
+	/**
+	 * findById
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-25 15:27
+	 */
+	public OriginalBean findById(OriginalBean originalBean)throws Exception;
 	/**删除
 	 * @param ORIGINAL_ID
 	 * @throws Exception

@@ -181,6 +181,15 @@
 
 	</select>
 
+	<select id="findById" parameterType="com.mzkj.bean.OriginalBean" resultMap="originalMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include> f
+		where ORIGINAL_ID = #{originalId}
+
+	</select>
+
 	<select id="findByCompanyInformationId" parameterType="String" resultMap="originalMap">
 		select
 		o.ORIGINAL_ID,o.COMPANY_INFORMATION_ID,

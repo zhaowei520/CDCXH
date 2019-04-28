@@ -152,6 +152,11 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include> f
+		where f.TENANT_ID_=#{tenantId}
+		<if test="name != null and name != ''">
+			and f.NAME like CONCAT(CONCAT('%',#{name}),'%')
+		</if>
+        ORDER BY convert(f.`NAME` using gbk)
 	</select>
 	
 </mapper>

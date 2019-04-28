@@ -17,6 +17,14 @@ public interface OriginalManager {
     public OriginalVo save(OriginalVo originalVo) throws Exception;
 
     /**
+     * 根据ID查询
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-25 15:26
+     */
+    public OriginalQueryVo findById(OriginalQueryVo originalQueryVo) throws Exception;
+    /**
      * 删除
      */
     public void delete(String ORIGINAL_ID) throws Exception;

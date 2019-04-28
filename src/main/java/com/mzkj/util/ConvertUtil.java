@@ -57,9 +57,9 @@ public class ConvertUtil {
      * param
      * Date 2019-04-18 16:00
      */
-    public static List<? extends BaseVo> castListObjectToTargetList(List listObject, Class<? extends BaseVo> target) {
+    public static List<?> castListObjectToTargetList(List listObject, Class<?> target) {
         String listObjectString = JSON.toJSONString(listObject); // List转json
-        List<? extends BaseVo> result = JSON.parseArray(listObjectString,target);
+        List<?> result = JSON.parseArray(listObjectString,target);
         return result;
     }
 }
