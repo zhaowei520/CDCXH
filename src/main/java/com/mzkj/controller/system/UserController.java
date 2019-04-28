@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.mzkj.service.system.UserManager;
 
+import java.util.List;
+
 /**
  * 说明：用户管理
  * 创建人：CDCXH
@@ -127,5 +129,27 @@ public class UserController {
         }
 		return result;
 	}
-
+    /**
+     * 获取所有user
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-25 10:54
+     */
+    @RequestMapping(value="/listAll", method = RequestMethod.POST)
+    @ApiOperation(value = "userList不分页", notes = "userList不分页")
+    public Result<List<UserQueryVo>> listAll(UserQueryVo userQueryVo) {
+        logger.info(Jurisdiction.getUsername()+"查看所有用户列表");
+        Result<List<UserQueryVo>> result = new Result<>();
+        try {
+            List<UserQueryVo>	varList = userService.listAll(userQueryVo);
+            result.setData(varList);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
 }

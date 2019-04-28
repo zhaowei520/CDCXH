@@ -106,6 +106,31 @@ public class OriginalController {
 		return result;
 	}
 
+	/**
+	 * 根据ID查询
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-25 15:22
+	 */
+    @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "根据ID查询original", notes = "根据ID查询original")
+    public Result<OriginalQueryVo> findById(@PathVariable("id") String originalId) {
+        logger.info(Jurisdiction.getUsername()+"根据ID查询original");
+        Result<OriginalQueryVo> result = new Result<>();
+        OriginalQueryVo originalQueryVo = new OriginalQueryVo();
+        originalQueryVo.setOriginalId(originalId);
+        try {
+            originalQueryVo = originalService.findById(originalQueryVo);
+            result.setData(originalQueryVo);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.toString());
+        }
+        return result;
+    }
 	/**列表
 	 * @throws Exception
 	 */

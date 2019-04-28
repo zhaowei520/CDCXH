@@ -3,6 +3,7 @@ package com.mzkj.service.system.impl;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.UserBean;
 import com.mzkj.util.ConvertUtil;
+import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
 import com.mzkj.vo.system.UserQueryVo;
 import com.mzkj.vo.system.UserVo;
@@ -13,9 +14,10 @@ import com.github.pagehelper.PageHelper;
 import com.mzkj.service.system.UserManager;
 import com.mzkj.mapper.system.UserMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** 
  * 说明： 用户管理
  * 创建人：CDCXH
  * 创建时间：2019-04-18
@@ -86,6 +88,32 @@ public class UserService implements UserManager {
         UserVo userVo = ConvertUtil.objectCopyParams(userBean, UserVo.class);
         return userVo;
     }
+
+		return userPageVo;
+	}
+
+	/**
+	 * 获取所有用户
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-25 11:04
+	 */
+	@Override
+	public List<UserQueryVo> listAll(UserQueryVo userQueryVo) throws Exception {
+		//将vo转DO
+		UserBean userBean = ConvertUtil.objectCopyParams(userQueryVo, UserBean.class);
+		userBean.setTenantId(Jurisdiction.getTenant());
+		List<UserBean> userBeanList = userMapper.list(userBean);
+		//将DO转VO
+		List<UserQueryVo> userQueryVoList = new ArrayList<>();
+		for (UserBean userBean1:userBeanList
+			 ) {
+			UserQueryVo queryVo = ConvertUtil.objectCopyParams(userBean1, UserQueryVo.class);
+			userQueryVoList.add(queryVo);
+		}
+		return userQueryVoList;
+	}
 
 }
 

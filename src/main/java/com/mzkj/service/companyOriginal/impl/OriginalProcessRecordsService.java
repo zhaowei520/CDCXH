@@ -3,6 +3,7 @@ package com.mzkj.service.companyOriginal.impl;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.OriginalProcessRecordsBean;
 import com.mzkj.util.ConvertUtil;
+import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
 import com.mzkj.vo.companyOriginal.OriginalProcessRecordsQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalProcessRecordsVo;
@@ -34,6 +35,7 @@ public class OriginalProcessRecordsService implements OriginalProcessRecordsMana
     @Override
     public OriginalProcessRecordsVo save(OriginalProcessRecordsVo originalprocessrecordsVo) throws Exception {
         OriginalProcessRecordsBean originalprocessrecordsBean = ConvertUtil.objectCopyParams(originalprocessrecordsVo, OriginalProcessRecordsBean.class);
+        originalprocessrecordsBean.setTenantId(Jurisdiction.getTenant());
         originalprocessrecordsMapper.save(originalprocessrecordsBean);
         originalprocessrecordsVo = ConvertUtil.objectCopyParams(originalprocessrecordsBean, OriginalProcessRecordsVo.class);
         return originalprocessrecordsVo;

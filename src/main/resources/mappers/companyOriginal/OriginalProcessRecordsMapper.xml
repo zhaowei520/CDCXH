@@ -116,6 +116,8 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include> f
+		where f.ORIGINAL_ID =#{originalId}
+		ORDER BY f.CREATE_DATE desc
 	</select>
 	
 </mapper>

@@ -5,6 +5,8 @@ import com.mzkj.bean.UserBean;
 import com.mzkj.vo.system.UserQueryVo;
 import com.mzkj.vo.system.UserVo;
 
+import java.util.List;
+
 /**
  * 说明： 用户管理接口
  * 创建人：CDCXH
@@ -51,5 +53,14 @@ public interface UserManager {
      * @throws Exception
      */
     public UserVo findByUsername(String username) throws Exception;
+
+   / **
+        * 查询所有用户
+	 * return
+       * Author luosc
+	 * param
+	 * Date 2019-04-25 10:56
+        */
+    public List<UserQueryVo> listAll(UserQueryVo userQueryVo)throws Exception;
 }
 

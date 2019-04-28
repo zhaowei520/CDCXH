@@ -1,11 +1,14 @@
 package com.mzkj.service.companyOriginal.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.mzkj.bean.DictionariesBean;
 import com.mzkj.bean.OriginalBean;
 import com.mzkj.bean.OriginalProcessRecordsBean;
-import com.mzkj.domain.Original;
+import com.mzkj.mapper.companyOriginal.CompanyInformationMapper;
+import com.mzkj.mapper.companyOriginal.OriginalMapper;
 import com.mzkj.mapper.companyOriginal.OriginalProcessRecordsMapper;
+import com.mzkj.mapper.system.DictionariesMapper;
+import com.mzkj.service.companyOriginal.OriginalManager;
 import com.mzkj.util.Const;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.DateUtil;
@@ -19,13 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.github.pagehelper.PageHelper;
-
-import com.mzkj.service.companyOriginal.OriginalManager;
-import com.mzkj.mapper.companyOriginal.OriginalMapper;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +37,10 @@ public class OriginalService implements OriginalManager {
     private OriginalMapper originalMapper;
     @Autowired
     private OriginalProcessRecordsMapper originalProcessRecordsMapper;
+    @Autowired
+    private DictionariesMapper dictionariesMapper;
+    @Autowired
+    private CompanyInformationMapper companyInformationMapper;
 
     /**
      * 新增
@@ -52,11 +53,28 @@ public class OriginalService implements OriginalManager {
             originalBean.setOriginalHolder(Jurisdiction.getUsername());
             originalBean.setOriginalHolderDepartment(Jurisdiction.getDEPARTMENT_ID());
         }
+        //公司名称
+        originalBean.setCompanyName(companyInformationMapper.findById(originalBean.getCompanyInformationId()).getCompanyName());
+
         originalBean.setTenantId(Jurisdiction.getTenant());
         originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_2);//原件流转状态设为入库
         originalMapper.save(originalBean);
         originalVo = ConvertUtil.objectCopyParams(originalBean, OriginalVo.class);
         return originalVo;
+    }
+
+    /**
+     * 根据ID查询
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-25 15:26
+     */
+    @Override
+    public OriginalQueryVo findById(OriginalQueryVo originalQueryVo) throws Exception {
+        OriginalBean originalBean = ConvertUtil.objectCopyParams(originalQueryVo, OriginalBean.class);
+        originalBean = originalMapper.findById(originalBean);
+        return ConvertUtil.objectCopyParams(originalBean, OriginalQueryVo.class);
     }
 
     /**
@@ -73,6 +91,7 @@ public class OriginalService implements OriginalManager {
     @Override
     public void edit(OriginalVo originalVo) throws Exception {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
+        originalBean.setTenantId(Jurisdiction.getTenant());
         originalMapper.edit(originalBean);
     }
 
@@ -166,7 +185,7 @@ public class OriginalService implements OriginalManager {
         PageInfo<OriginalQueryVo> originalPageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
         originalPageVo.setList(originalQueryVoList);
         //初始化当前登录人的权限
-        initAuthorized(originalPageVo);
+        initAuthorizedAndCastDicBianmaToName(originalPageVo);
         return originalPageVo;
     }
 
@@ -177,11 +196,18 @@ public class OriginalService implements OriginalManager {
      * param
      * Date 2019-04-24 14:11
      */
-    private void initAuthorized(PageInfo<OriginalQueryVo> originalPageVo) {
+    private void initAuthorizedAndCastDicBianmaToName(PageInfo<OriginalQueryVo> originalPageVo) throws Exception {
         if (originalPageVo != null && originalPageVo.getList() != null && originalPageVo.getList().size() > 0) {
             List<OriginalQueryVo> originalQueryVoList = originalPageVo.getList();
             for (OriginalQueryVo originalQueryVo : originalQueryVoList
                     ) {
+                //将持有状态编码转成name
+                if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus())) {
+                    DictionariesBean dictionariesBean= new DictionariesBean();
+                    dictionariesBean.setBianma(originalQueryVo.getOriginalHoldStatus());
+                    dictionariesBean = dictionariesMapper.findByBianma(dictionariesBean);
+                    originalQueryVo.setOriginalHoldStatus(dictionariesBean.getName());
+                }
                 //如果原件持有状态为在公司内部时才执行
                 if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus()) && originalQueryVo.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_2)) {
                     //判断原件持有人和当前登录人是否相同
