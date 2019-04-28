@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.process.TallyMapper">
+
+    <resultMap id="tallyMap" type="com.mzkj.bean.TallyBean">
+        <id column="TALLY_ID" javaType="string" property="tallyId" />
+            <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+            <result column="COMPANY_LANDLINE" javaType="String" property="companyLandline"/>
+            <result column="COMPANY_TYPE" javaType="String" property="companyType"/>
+            <result column="LEGAL_REPRESENTATIVE" javaType="String" property="legalRepresentative"/>
+            <result column="LEGAL_REPRESENTATIVE_TEL" javaType="String" property="legalRepresentativeTel"/>
+            <result column="SUPERVISOR" javaType="String" property="supervisor"/>
+            <result column="SUPERVISOR_TEL" javaType="String" property="supervisorTel"/>
+            <result column="SHAREHOLDERS" javaType="String" property="shareholders"/>
+            <result column="EMERGENCY_CONTACT" javaType="String" property="emergencyContact"/>
+            <result column="EMERGENCY_TEL" javaType="String" property="emergencyTel"/>
+            <result column="REGISTER_AREA" javaType="String" property="registerArea"/>
+            <result column="REGISTER_ADDRESS" javaType="String" property="registerAddress"/>
+            <result column="BEGIN_DATE" javaType="String" property="beginDate"/>
+            <result column="REAL_ADDRESS" javaType="String" property="realAddress"/>
+            <result column="ADDRESS_TYPE" javaType="String" property="addressType"/>
+            <result column="SCOPE_BUSINESS" javaType="String" property="scopeBusiness"/>
+            <result column="REGISTERED_CAPITAL" javaType="Double" property="registeredCapital"/>
+            <result column="DUE_DATE" javaType="String" property="dueDate"/>
+            <result column="IS_PAID" javaType="String" property="isPaid"/>
+            <result column="EIN_NO" javaType="String" property="einNo"/>
+            <result column="NATIONAL_TAX_PASSWORD" javaType="String" property="nationalTaxPassword"/>
+            <result column="LAND_TAX_PASSWORD" javaType="String" property="landTaxPassword"/>
+            <result column="NATIONAL_TAX_MANAGER" javaType="String" property="nationalTaxManager"/>
+            <result column="NATIONAL_TAX_MANAGER_TEL" javaType="String" property="nationalTaxManagerTel"/>
+            <result column="LAND_TAX_MANAGER" javaType="String" property="landTaxManager"/>
+            <result column="LAND_TAX_MANAGER_TEL" javaType="String" property="landTaxManagerTel"/>
+            <result column="ANNUAL_REPORT_CODE" javaType="String" property="annualReportCode"/>
+            <result column="STAMP_COUNT" javaType="Integer" property="stampCount"/>
+            <result column="ACCOUNT" javaType="String" property="account"/>
+            <result column="INITIAL_BANK" javaType="String" property="initialBank"/>
+            <result column="BROUGHT_TO_ACCOUNT" javaType="String" property="broughtToAccount"/>
+            <result column="RETURN_PRINTING_METHOD" javaType="String" property="returnPrintingMethod"/>
+            <result column="CUSTOMER_SOURCE" javaType="String" property="customerSource"/>
+            <result column="SALE_DEPARTMENT" javaType="String" property="saleDepartment"/>
+            <result column="SIGN_PERSON" javaType="String" property="signPerson"/>
+            <result column="ACCOUNTING_DEPARTMENT" javaType="String" property="accountingDepartment"/>
+            <result column="BOOKKEEPER" javaType="String" property="bookkeeper"/>
+            <result column="UNIT_PRICE" javaType="Double" property="unitPrice"/>
+            <result column="BOOKS_YEAR_CHARGE" javaType="Double" property="booksYearCharge"/>
+            <result column="CHARGE_CYCLE" javaType="String" property="chargeCycle"/>
+            <result column="OTHER_SERVICE_CHARGES" javaType="Double" property="otherServiceCharges"/>
+            <result column="CONTRACT_PERIOD" javaType="String" property="contractPeriod"/>
+            <result column="CONTRACT_CODE" javaType="String" property="contractCode"/>
+            <result column="ENSURE_DELEGATE" javaType="String" property="ensureDelegate"/>
+            <result column="PRICE" javaType="Double" property="price"/>
+            <result column="CUSTOMER_FOCUS_PROBLEM" javaType="String" property="customerFocusProblem"/>
+            <result column="CUSTOMER_PERSONALITY_DESCRIPTION" javaType="String" property="customerPersonalityDescription"/>
+            <result column="INDUSTRY" javaType="String" property="industry"/>
+            <result column="CUSTOMER_SEGMENTATION" javaType="String" property="customerSegmentation"/>
+            <result column="VAT_TYPE" javaType="String" property="vatType"/>
+            <result column="DRAWER_DEPARTMENT" javaType="String" property="drawerDepartment"/>
+            <result column="DRAWER" javaType="String" property="drawer"/>
+            <result column="CONTRACT_DATE" javaType="String" property="contractDate"/>
+            <result column="NOTE" javaType="String" property="note"/>
+            <result column="BUSINESS_TYPES" javaType="String" property="businessTypes"/>
+            <result column="PAYMENT_AMOUNT" javaType="Double" property="paymentAmount"/>
+            <result column="PAYMENT_METHODS" javaType="String" property="paymentMethods"/>
+            <result column="COLLECTION_CUSTOMER" javaType="String" property="collectionCustomer"/>
+            <result column="CODE" javaType="String" property="code"/>
+            <result column="POTENTIAL_DEMAND" javaType="String" property="potentialDemand"/>
+            <result column="C_USER" javaType="String" property="cUser"/>
+            <result column="M_DATE" javaType="String" property="mDate"/>
+            <result column="M_USER" javaType="String" property="mUser"/>
+            <result column="C_DATE" javaType="String" property="cDate"/>
+            <result column="CUSTOMER_REPRESENTATIVE" javaType="String" property="customerRepresentative"/>
+            <result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+            <result column="ENSURE_DISC" javaType="String" property="ensureDisc"/>
+            <result column="PERSON_TAX_PASSWORD" javaType="String" property="personTaxPassword"/>
+            <result column="BACKLOG_THINGS" javaType="String" property="backlogThings"/>
+            <result column="TAX" javaType="String" property="tax"/>
+            <result column="COLLECTION_METHODS" javaType="String" property="collectionMethods"/>
+            <result column="LEGAL_REPRESENTATIVE_IDCARD" javaType="String" property="legalRepresentativeIdcard"/>
+            <result column="IS_BOOKS_CHARGE" javaType="String" property="isBooksCharge"/>
+            <result column="AMOUNT_MONTHS_DISCOUNTS" javaType="Integer" property="amountMonthsDiscounts"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+    </resultMap>
+	<resultMap id="tallyProcessMap" type="com.mzkj.bean.TallyBean">
+		<id column="TALLY_ID" javaType="string" property="tallyId"/>
+		<result column="COMPANY_NAME" javaType="String" property="companyName"/>
+		<result column="SIGN_PERSON" javaType="String" property="signPerson"/>
+		<result column="CONTRACT_DATE" javaType="String" property="contractDate"/>
+		<result column="C_USER" javaType="String" property="cUser"/>
+		<result column="LEGAL_REPRESENTATIVE" javaType="String" property="legalRepresentative"/>
+		<result column="NOTE" javaType="String" property="note"/>
+		<result column="TENANT_ID_" javaType="String" property="tenantId"/>
+		<result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+		<result column="BUSINESS_TYPES" javaType="String" property="businessTypes"/>
+		<result column="ASSIGNEE_" javaType="String" property="actAssignee"/>
+		<result column="NAME_" javaType="String" property="actName"/>
+	</resultMap>
+	<!--表名 -->
+	<sql id="tableName">
+		TB_TALLY
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.COMPANY_NAME,	
+		f.COMPANY_LANDLINE,	
+		f.COMPANY_TYPE,	
+		f.LEGAL_REPRESENTATIVE,	
+		f.LEGAL_REPRESENTATIVE_TEL,	
+		f.SUPERVISOR,	
+		f.SUPERVISOR_TEL,	
+		f.SHAREHOLDERS,	
+		f.EMERGENCY_CONTACT,	
+		f.EMERGENCY_TEL,	
+		f.REGISTER_AREA,	
+		f.REGISTER_ADDRESS,	
+		f.BEGIN_DATE,	
+		f.REAL_ADDRESS,	
+		f.ADDRESS_TYPE,	
+		f.SCOPE_BUSINESS,	
+		f.REGISTERED_CAPITAL,	
+		f.DUE_DATE,	
+		f.IS_PAID,	
+		f.EIN_NO,	
+		f.NATIONAL_TAX_PASSWORD,	
+		f.LAND_TAX_PASSWORD,	
+		f.NATIONAL_TAX_MANAGER,	
+		f.NATIONAL_TAX_MANAGER_TEL,	
+		f.LAND_TAX_MANAGER,	
+		f.LAND_TAX_MANAGER_TEL,	
+		f.ANNUAL_REPORT_CODE,	
+		f.STAMP_COUNT,	
+		f.ACCOUNT,	
+		f.INITIAL_BANK,	
+		f.BROUGHT_TO_ACCOUNT,	
+		f.RETURN_PRINTING_METHOD,	
+		f.CUSTOMER_SOURCE,	
+		f.SALE_DEPARTMENT,	
+		f.SIGN_PERSON,	
+		f.ACCOUNTING_DEPARTMENT,	
+		f.BOOKKEEPER,	
+		f.UNIT_PRICE,	
+		f.BOOKS_YEAR_CHARGE,	
+		f.CHARGE_CYCLE,	
+		f.OTHER_SERVICE_CHARGES,	
+		f.CONTRACT_PERIOD,	
+		f.CONTRACT_CODE,	
+		f.ENSURE_DELEGATE,	
+		f.PRICE,	
+		f.CUSTOMER_FOCUS_PROBLEM,	
+		f.CUSTOMER_PERSONALITY_DESCRIPTION,	
+		f.INDUSTRY,	
+		f.CUSTOMER_SEGMENTATION,	
+		f.VAT_TYPE,	
+		f.DRAWER_DEPARTMENT,	
+		f.DRAWER,	
+		f.CONTRACT_DATE,	
+		f.NOTE,	
+		f.BUSINESS_TYPES,	
+		f.PAYMENT_AMOUNT,	
+		f.PAYMENT_METHODS,	
+		f.COLLECTION_CUSTOMER,	
+		f.CODE,	
+		f.POTENTIAL_DEMAND,	
+		f.C_USER,	
+		f.M_DATE,	
+		f.M_USER,	
+		f.C_DATE,	
+		f.CUSTOMER_REPRESENTATIVE,	
+		f.PROC_INST_ID_,	
+		f.ENSURE_DISC,	
+		f.PERSON_TAX_PASSWORD,	
+		f.BACKLOG_THINGS,	
+		f.TAX,	
+		f.COLLECTION_METHODS,	
+		f.LEGAL_REPRESENTATIVE_IDCARD,	
+		f.IS_BOOKS_CHARGE,	
+		f.AMOUNT_MONTHS_DISCOUNTS,	
+		f.TENANT_ID_,	
+		f.TALLY_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		COMPANY_NAME,	
+		COMPANY_LANDLINE,	
+		COMPANY_TYPE,	
+		LEGAL_REPRESENTATIVE,	
+		LEGAL_REPRESENTATIVE_TEL,	
+		SUPERVISOR,	
+		SUPERVISOR_TEL,	
+		SHAREHOLDERS,	
+		EMERGENCY_CONTACT,	
+		EMERGENCY_TEL,	
+		REGISTER_AREA,	
+		REGISTER_ADDRESS,	
+		BEGIN_DATE,	
+		REAL_ADDRESS,	
+		ADDRESS_TYPE,	
+		SCOPE_BUSINESS,	
+		REGISTERED_CAPITAL,	
+		DUE_DATE,	
+		IS_PAID,	
+		EIN_NO,	
+		NATIONAL_TAX_PASSWORD,	
+		LAND_TAX_PASSWORD,	
+		NATIONAL_TAX_MANAGER,	
+		NATIONAL_TAX_MANAGER_TEL,	
+		LAND_TAX_MANAGER,	
+		LAND_TAX_MANAGER_TEL,	
+		ANNUAL_REPORT_CODE,	
+		STAMP_COUNT,	
+		ACCOUNT,	
+		INITIAL_BANK,	
+		BROUGHT_TO_ACCOUNT,	
+		RETURN_PRINTING_METHOD,	
+		CUSTOMER_SOURCE,	
+		SALE_DEPARTMENT,	
+		SIGN_PERSON,	
+		ACCOUNTING_DEPARTMENT,	
+		BOOKKEEPER,	
+		UNIT_PRICE,	
+		BOOKS_YEAR_CHARGE,	
+		CHARGE_CYCLE,	
+		OTHER_SERVICE_CHARGES,	
+		CONTRACT_PERIOD,	
+		CONTRACT_CODE,	
+		ENSURE_DELEGATE,	
+		PRICE,	
+		CUSTOMER_FOCUS_PROBLEM,	
+		CUSTOMER_PERSONALITY_DESCRIPTION,	
+		INDUSTRY,	
+		CUSTOMER_SEGMENTATION,	
+		VAT_TYPE,	
+		DRAWER_DEPARTMENT,	
+		DRAWER,	
+		CONTRACT_DATE,	
+		NOTE,	
+		BUSINESS_TYPES,	
+		PAYMENT_AMOUNT,	
+		PAYMENT_METHODS,	
+		COLLECTION_CUSTOMER,	
+		CODE,	
+		POTENTIAL_DEMAND,	
+		C_USER,	
+		M_DATE,	
+		M_USER,	
+		C_DATE,	
+		CUSTOMER_REPRESENTATIVE,	
+		PROC_INST_ID_,	
+		ENSURE_DISC,	
+		PERSON_TAX_PASSWORD,	
+		BACKLOG_THINGS,	
+		TAX,	
+		COLLECTION_METHODS,	
+		LEGAL_REPRESENTATIVE_IDCARD,	
+		IS_BOOKS_CHARGE,	
+		AMOUNT_MONTHS_DISCOUNTS,	
+		TENANT_ID_,	
+		TALLY_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{companyName},
+		#{companyLandline},
+		#{companyType},
+		#{legalRepresentative},
+		#{legalRepresentativeTel},
+		#{supervisor},
+		#{supervisorTel},
+		#{shareholders},
+		#{emergencyContact},
+		#{emergencyTel},
+		#{registerArea},
+		#{registerAddress},
+		#{beginDate},
+		#{realAddress},
+		#{addressType},
+		#{scopeBusiness},
+		#{registeredCapital},
+		#{dueDate},
+		#{isPaid},
+		#{einNo},
+		#{nationalTaxPassword},
+		#{landTaxPassword},
+		#{nationalTaxManager},
+		#{nationalTaxManagerTel},
+		#{landTaxManager},
+		#{landTaxManagerTel},
+		#{annualReportCode},
+		#{stampCount},
+		#{account},
+		#{initialBank},
+		#{broughtToAccount},
+		#{returnPrintingMethod},
+		#{customerSource},
+		#{saleDepartment},
+		#{signPerson},
+		#{accountingDepartment},
+		#{bookkeeper},
+		#{unitPrice},
+		#{booksYearCharge},
+		#{chargeCycle},
+		#{otherServiceCharges},
+		#{contractPeriod},
+		#{contractCode},
+		#{ensureDelegate},
+		#{price},
+		#{customerFocusProblem},
+		#{customerPersonalityDescription},
+		#{industry},
+		#{customerSegmentation},
+		#{vatType},
+		#{drawerDepartment},
+		#{drawer},
+		#{contractDate},
+		#{note},
+		#{businessTypes},
+		#{paymentAmount},
+		#{paymentMethods},
+		#{collectionCustomer},
+		#{code},
+		#{potentialDemand},
+		#{cUser},
+		#{mDate},
+		#{mUser},
+		#{cDate},
+		#{customerRepresentative},
+		#{procInstId},
+		#{ensureDisc},
+		#{personTaxPassword},
+		#{backlogThings},
+		#{tax},
+		#{collectionMethods},
+		#{legalRepresentativeIdcard},
+		#{isBooksCharge},
+		#{amountMonthsDiscounts},
+		#{tenantId},
+		#{tallyId}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.TallyBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.TallyBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			TALLY_ID = #{tallyId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.TallyBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			COMPANY_NAME = #{companyName},
+			COMPANY_LANDLINE = #{companyLandline},
+			COMPANY_TYPE = #{companyType},
+			LEGAL_REPRESENTATIVE = #{legalRepresentative},
+			LEGAL_REPRESENTATIVE_TEL = #{legalRepresentativeTel},
+			SUPERVISOR = #{supervisor},
+			SUPERVISOR_TEL = #{supervisorTel},
+			SHAREHOLDERS = #{shareholders},
+			EMERGENCY_CONTACT = #{emergencyContact},
+			EMERGENCY_TEL = #{emergencyTel},
+			REGISTER_AREA = #{registerArea},
+			REGISTER_ADDRESS = #{registerAddress},
+			BEGIN_DATE = #{beginDate},
+			REAL_ADDRESS = #{realAddress},
+			ADDRESS_TYPE = #{addressType},
+			SCOPE_BUSINESS = #{scopeBusiness},
+			REGISTERED_CAPITAL = #{registeredCapital},
+			DUE_DATE = #{dueDate},
+			IS_PAID = #{isPaid},
+			EIN_NO = #{einNo},
+			NATIONAL_TAX_PASSWORD = #{nationalTaxPassword},
+			LAND_TAX_PASSWORD = #{landTaxPassword},
+			NATIONAL_TAX_MANAGER = #{nationalTaxManager},
+			NATIONAL_TAX_MANAGER_TEL = #{nationalTaxManagerTel},
+			LAND_TAX_MANAGER = #{landTaxManager},
+			LAND_TAX_MANAGER_TEL = #{landTaxManagerTel},
+			ANNUAL_REPORT_CODE = #{annualReportCode},
+			STAMP_COUNT = #{stampCount},
+			ACCOUNT = #{account},
+			INITIAL_BANK = #{initialBank},
+			BROUGHT_TO_ACCOUNT = #{broughtToAccount},
+			RETURN_PRINTING_METHOD = #{returnPrintingMethod},
+			CUSTOMER_SOURCE = #{customerSource},
+			SALE_DEPARTMENT = #{saleDepartment},
+			SIGN_PERSON = #{signPerson},
+			ACCOUNTING_DEPARTMENT = #{accountingDepartment},
+			BOOKKEEPER = #{bookkeeper},
+			UNIT_PRICE = #{unitPrice},
+			BOOKS_YEAR_CHARGE = #{booksYearCharge},
+			CHARGE_CYCLE = #{chargeCycle},
+			OTHER_SERVICE_CHARGES = #{otherServiceCharges},
+			CONTRACT_PERIOD = #{contractPeriod},
+			CONTRACT_CODE = #{contractCode},
+			ENSURE_DELEGATE = #{ensureDelegate},
+			PRICE = #{price},
+			CUSTOMER_FOCUS_PROBLEM = #{customerFocusProblem},
+			CUSTOMER_PERSONALITY_DESCRIPTION = #{customerPersonalityDescription},
+			INDUSTRY = #{industry},
+			CUSTOMER_SEGMENTATION = #{customerSegmentation},
+			VAT_TYPE = #{vatType},
+			DRAWER_DEPARTMENT = #{drawerDepartment},
+			DRAWER = #{drawer},
+			CONTRACT_DATE = #{contractDate},
+			NOTE = #{note},
+			BUSINESS_TYPES = #{businessTypes},
+			PAYMENT_AMOUNT = #{paymentAmount},
+			PAYMENT_METHODS = #{paymentMethods},
+			COLLECTION_CUSTOMER = #{collectionCustomer},
+			CODE = #{code},
+			POTENTIAL_DEMAND = #{potentialDemand},
+			C_USER = #{cUser},
+			M_DATE = #{mDate},
+			M_USER = #{mUser},
+			C_DATE = #{cDate},
+			CUSTOMER_REPRESENTATIVE = #{customerRepresentative},
+			PROC_INST_ID_ = #{procInstId},
+			ENSURE_DISC = #{ensureDisc},
+			PERSON_TAX_PASSWORD = #{personTaxPassword},
+			BACKLOG_THINGS = #{backlogThings},
+			TAX = #{tax},
+			COLLECTION_METHODS = #{collectionMethods},
+			LEGAL_REPRESENTATIVE_IDCARD = #{legalRepresentativeIdcard},
+			IS_BOOKS_CHARGE = #{isBooksCharge},
+			AMOUNT_MONTHS_DISCOUNTS = #{amountMonthsDiscounts},
+			TENANT_ID_ = #{tenantId},
+			TALLY_ID = #{tallyId}
+		where 
+			TALLY_ID = #{tallyId}
+	</update>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.TallyBean" resultMap="tallyMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+
+	<!-- 根据创建人查询代理记账流程 -->
+	<select id="listProcessByUser" parameterType="com.mzkj.bean.TallyBean"
+			resultMap="tallyProcessMap">
+		select
+		f.TALLY_ID,
+		f.COMPANY_NAME,
+		f.SIGN_PERSON,
+		f.CONTRACT_DATE,
+		f.LEGAL_REPRESENTATIVE,
+		f.NOTE,
+		f.C_USER,
+		f.BUSINESS_TYPES,
+		f.PROC_INST_ID_,
+		f.TENANT_ID_,
+		art.ASSIGNEE_,
+		art.NAME_
+		from
+		<include refid="tableName"></include>
+		f
+		LEFT JOIN
+		act_ru_task art ON f.PROC_INST_ID_ = art.PROC_INST_ID_
+		WHERE 1=1
+		<if test="companyName!= null and companyName != ''">
+			and
+			(
+			f.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
+
+			)
+		</if>
+		and f.SIGN_PERSON = #{signPerson} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
+		order by f.C_DATE
+	</select>
+	
+</mapper>

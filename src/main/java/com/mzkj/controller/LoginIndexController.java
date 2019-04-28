@@ -37,7 +37,7 @@ public class LoginIndexController {
 
     @RequestMapping(value = "/init_menu", method = RequestMethod.GET)
     @ApiOperation(value = "获取菜单信息", notes = "获取菜单信息")
-    public Result<List<Menu>> index() {
+    public Result<List<Menu>> initMenu() {
         logger.info(Jurisdiction.getUsername() + "获取菜单信息");
         Result<List<Menu>> result = new Result<>();
         Session session = Jurisdiction.getSession();

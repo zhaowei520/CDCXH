@@ -63,7 +63,7 @@ public class TemplateController {
     /**
      * 删除
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除template", notes = "删除template")
     public Result delete(@PathVariable("id") String TEMPLATE_ID) {
         logger.info(Jurisdiction.getUsername() + "删除薪资模板表");

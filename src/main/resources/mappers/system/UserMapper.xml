@@ -153,5 +153,14 @@
 		from 
 		<include refid="tableName"></include> f
 	</select>
+
+	<!-- 根据登录名查询用户数据 -->
+	<select id="findByUsername" parameterType="string" resultMap="userMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include> f
+		where f.USERNAME = #{username}
+	</select>
 	
 </mapper>

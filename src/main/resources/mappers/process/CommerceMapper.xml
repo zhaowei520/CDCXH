@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.process.CommerceMapper">
+
+    <resultMap id="commerceMap" type="com.mzkj.bean.CommerceBean">
+        <id column="COMMERCE_ID" javaType="string" property="commerceId"/>
+        <result column="SALER" javaType="String" property="saler"/>
+        <result column="IS_CHECK_MONEY" javaType="String" property="isCheckMoney"/>
+        <result column="C_DATE" javaType="String" property="cDate"/>
+        <result column="CUSTOMER" javaType="String" property="customer"/>
+        <result column="CUSTOMER_TEL" javaType="String" property="customerTel"/>
+        <result column="EMERGENCY_CONTACT" javaType="String" property="emergencyContact"/>
+        <result column="EMERGENCY_TEL" javaType="String" property="emergencyTel"/>
+        <result column="REGISTER_AREA" javaType="String" property="registerArea"/>
+        <result column="REGISTER_ADDRESS" javaType="String" property="registerAddress"/>
+        <result column="REGISTER_ADDRESS_SOURCE" javaType="String"
+                property="registerAddressSource"/>
+        <result column="STAMP_COUNT" javaType="Integer" property="stampCount"/>
+        <result column="INITIAL_BANK" javaType="String" property="initialBank"/>
+        <result column="CONTRACT_MONEY" javaType="Double" property="contractMoney"/>
+        <result column="RESERVE_MONEY" javaType="Double" property="reserveMoney"/>
+        <result column="TAIL_MONEY" javaType="Double" property="tailMoney"/>
+        <result column="SIGNING_DATE" javaType="String" property="signingDate"/>
+        <result column="BEGIN_DATE" javaType="String" property="beginDate"/>
+        <result column="DEADLINE" javaType="String" property="deadline"/>
+        <result column="C_USER" javaType="String" property="cUser"/>
+        <result column="M_DATE" javaType="String" property="mDate"/>
+        <result column="M_USER" javaType="String" property="mUser"/>
+        <result column="FIRST_NAME" javaType="String" property="firstName"/>
+        <result column="SCOPE_BUSINESS" javaType="String" property="scopeBusiness"/>
+        <result column="CUSTOMER_FOCUS" javaType="String" property="customerFocus"/>
+        <result column="CUSTOMER_PERSONALITY_DESCRIPTION" javaType="String"
+                property="customerPersonalityDescription"/>
+        <result column="LEGAL_REPRESENTATIVE" javaType="String" property="legalRepresentative"/>
+        <result column="LEGAL_REPRESENTATIVE_TEL" javaType="String"
+                property="legalRepresentativeTel"/>
+        <result column="SHAREHOLDERS" javaType="String" property="shareholders"/>
+        <result column="PAYMENT_AMOUNT" javaType="Double" property="paymentAmount"/>
+        <result column="BUSINESS_TYPES" javaType="String" property="businessTypes"/>
+        <result column="NOTE" javaType="String" property="note"/>
+        <result column="CODE" javaType="String" property="code"/>
+        <result column="OUTMONADER" javaType="String" property="outmonader"/>
+        <result column="OUTMONAD_DEPT" javaType="String" property="outmonadDept"/>
+        <result column="REGTYPE" javaType="String" property="regtype"/>
+        <result column="PAYMENT_METHODS" javaType="String" property="paymentMethods"/>
+        <result column="COLLECTION_CUSTOMER" javaType="String" property="collectionCustomer"/>
+        <result column="IS_TALLY" javaType="String" property="isTally"/>
+        <result column="VAT_TYPE" javaType="String" property="vatType"/>
+        <result column="BOOKS_YEAR_CHARGE" javaType="Double" property="booksYearCharge"/>
+        <result column="INDUSTRY" javaType="String" property="industry"/>
+        <result column="CUSTOMER_SEGMENTATION" javaType="String" property="customerSegmentation"/>
+        <result column="CUSTOMER_REPRESENTATIVE" javaType="String"
+                property="customerRepresentative"/>
+        <result column="CONTRACT_PERIOD" javaType="String" property="contractPeriod"/>
+        <result column="CHARGE_CYCLE" javaType="String" property="chargeCycle"/>
+        <result column="UNIT_PRICE" javaType="Double" property="unitPrice"/>
+        <result column="TALLY_BUSINESS_TYPES" javaType="String" property="tallyBusinessTypes"/>
+        <result column="TALLY_PAYMENT_AMOUNT" javaType="Double" property="tallyPaymentAmount"/>
+        <result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+        <result column="AUTHORIZITEMS" javaType="String" property="authorizitems"/>
+        <result column="REGISTERCAPITAL" javaType="Double" property="registercapital"/>
+        <result column="ALRCOLLECTDATA" javaType="String" property="alrcollectdata"/>
+        <result column="IS_BOOKS_CHARGE" javaType="String" property="isBooksCharge"/>
+        <result column="AMOUNT_MONTHS_DISCOUNTS" javaType="Integer"
+                property="amountMonthsDiscounts"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="CUSTOMER_MP" javaType="String" property="customerMp"/>
+        <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+        <result column="SUPERVISOR" javaType="String" property="supervisor"/>
+        <result column="SUPERVISOR_TEL" javaType="String" property="supervisorTel"/>
+    </resultMap>
+
+    <resultMap id="commerceProcessMap" type="com.mzkj.bean.CommerceBean">
+        <id column="COMMERCE_ID" javaType="string" property="commerceId"/>
+        <result column="SALER" javaType="String" property="saler"/>
+        <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+        <result column="SIGNING_DATE" javaType="String" property="signingDate"/>
+        <result column="C_USER" javaType="String" property="cUser"/>
+        <result column="CUSTOMER" javaType="String" property="customer"/>
+        <result column="NOTE" javaType="String" property="note"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+        <result column="BUSINESS_TYPES" javaType="String" property="businessTypes"/>
+        <result column="ASSIGNEE_" javaType="String" property="actAssignee"/>
+        <result column="NAME_" javaType="String" property="actName"/>
+    </resultMap>
+
+    <!--表名 -->
+    <sql id="tableName">
+		TB_COMMERCE
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		f.SALER,	
+		f.IS_CHECK_MONEY,	
+		f.C_DATE,	
+		f.CUSTOMER,	
+		f.CUSTOMER_TEL,	
+		f.EMERGENCY_CONTACT,	
+		f.EMERGENCY_TEL,	
+		f.REGISTER_AREA,	
+		f.REGISTER_ADDRESS,	
+		f.REGISTER_ADDRESS_SOURCE,	
+		f.STAMP_COUNT,	
+		f.INITIAL_BANK,	
+		f.CONTRACT_MONEY,	
+		f.RESERVE_MONEY,	
+		f.TAIL_MONEY,	
+		f.SIGNING_DATE,	
+		f.BEGIN_DATE,	
+		f.DEADLINE,	
+		f.C_USER,	
+		f.M_DATE,	
+		f.M_USER,	
+		f.FIRST_NAME,	
+		f.SCOPE_BUSINESS,	
+		f.CUSTOMER_FOCUS,	
+		f.CUSTOMER_PERSONALITY_DESCRIPTION,	
+		f.LEGAL_REPRESENTATIVE,	
+		f.LEGAL_REPRESENTATIVE_TEL,	
+		f.SHAREHOLDERS,	
+		f.PAYMENT_AMOUNT,	
+		f.BUSINESS_TYPES,	
+		f.NOTE,	
+		f.CODE,	
+		f.OUTMONADER,	
+		f.OUTMONAD_DEPT,	
+		f.REGTYPE,	
+		f.PAYMENT_METHODS,	
+		f.COLLECTION_CUSTOMER,	
+		f.IS_TALLY,	
+		f.VAT_TYPE,	
+		f.BOOKS_YEAR_CHARGE,	
+		f.INDUSTRY,	
+		f.CUSTOMER_SEGMENTATION,	
+		f.CUSTOMER_REPRESENTATIVE,	
+		f.CONTRACT_PERIOD,	
+		f.CHARGE_CYCLE,	
+		f.UNIT_PRICE,	
+		f.TALLY_BUSINESS_TYPES,	
+		f.TALLY_PAYMENT_AMOUNT,	
+		f.PROC_INST_ID_,	
+		f.AUTHORIZITEMS,	
+		f.REGISTERCAPITAL,	
+		f.ALRCOLLECTDATA,	
+		f.IS_BOOKS_CHARGE,	
+		f.AMOUNT_MONTHS_DISCOUNTS,	
+		f.TENANT_ID_,	
+		f.CUSTOMER_MP,	
+		f.COMPANY_NAME,	
+		f.SUPERVISOR,	
+		f.SUPERVISOR_TEL,	
+		f.COMMERCE_ID
+	</sql>
+
+    <!-- 字段用于新增 -->
+    <sql id="Field2">
+		SALER,	
+		IS_CHECK_MONEY,	
+		C_DATE,	
+		CUSTOMER,	
+		CUSTOMER_TEL,	
+		EMERGENCY_CONTACT,	
+		EMERGENCY_TEL,	
+		REGISTER_AREA,	
+		REGISTER_ADDRESS,	
+		REGISTER_ADDRESS_SOURCE,	
+		STAMP_COUNT,	
+		INITIAL_BANK,	
+		CONTRACT_MONEY,	
+		RESERVE_MONEY,	
+		TAIL_MONEY,	
+		SIGNING_DATE,	
+		BEGIN_DATE,	
+		DEADLINE,	
+		C_USER,	
+		M_DATE,	
+		M_USER,	
+		FIRST_NAME,	
+		SCOPE_BUSINESS,	
+		CUSTOMER_FOCUS,	
+		CUSTOMER_PERSONALITY_DESCRIPTION,	
+		LEGAL_REPRESENTATIVE,	
+		LEGAL_REPRESENTATIVE_TEL,	
+		SHAREHOLDERS,	
+		PAYMENT_AMOUNT,	
+		BUSINESS_TYPES,	
+		NOTE,	
+		CODE,	
+		OUTMONADER,	
+		OUTMONAD_DEPT,	
+		REGTYPE,	
+		PAYMENT_METHODS,	
+		COLLECTION_CUSTOMER,	
+		IS_TALLY,	
+		VAT_TYPE,	
+		BOOKS_YEAR_CHARGE,	
+		INDUSTRY,	
+		CUSTOMER_SEGMENTATION,	
+		CUSTOMER_REPRESENTATIVE,	
+		CONTRACT_PERIOD,	
+		CHARGE_CYCLE,	
+		UNIT_PRICE,	
+		TALLY_BUSINESS_TYPES,	
+		TALLY_PAYMENT_AMOUNT,	
+		PROC_INST_ID_,	
+		AUTHORIZITEMS,	
+		REGISTERCAPITAL,	
+		ALRCOLLECTDATA,	
+		IS_BOOKS_CHARGE,	
+		AMOUNT_MONTHS_DISCOUNTS,	
+		TENANT_ID_,	
+		CUSTOMER_MP,	
+		COMPANY_NAME,	
+		SUPERVISOR,	
+		SUPERVISOR_TEL,	
+		COMMERCE_ID
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{saler},
+		#{isCheckMoney},
+		#{cDate},
+		#{customer},
+		#{customerTel},
+		#{emergencyContact},
+		#{emergencyTel},
+		#{registerArea},
+		#{registerAddress},
+		#{registerAddressSource},
+		#{stampCount},
+		#{initialBank},
+		#{contractMoney},
+		#{reserveMoney},
+		#{tailMoney},
+		#{signingDate},
+		#{beginDate},
+		#{deadline},
+		#{cUser},
+		#{mDate},
+		#{mUser},
+		#{firstName},
+		#{scopeBusiness},
+		#{customerFocus},
+		#{customerPersonalityDescription},
+		#{legalRepresentative},
+		#{legalRepresentativeTel},
+		#{shareholders},
+		#{paymentAmount},
+		#{businessTypes},
+		#{note},
+		#{code},
+		#{outmonader},
+		#{outmonadDept},
+		#{regtype},
+		#{paymentMethods},
+		#{collectionCustomer},
+		#{isTally},
+		#{vatType},
+		#{booksYearCharge},
+		#{industry},
+		#{customerSegmentation},
+		#{customerRepresentative},
+		#{contractPeriod},
+		#{chargeCycle},
+		#{unitPrice},
+		#{tallyBusinessTypes},
+		#{tallyPaymentAmount},
+		#{procInstId},
+		#{authorizitems},
+		#{registercapital},
+		#{alrcollectdata},
+		#{isBooksCharge},
+		#{amountMonthsDiscounts},
+		#{tenantId},
+		#{customerMp},
+		#{companyName},
+		#{supervisor},
+		#{supervisorTel},
+		#{commerceId}
+	</sql>
+
+    <!-- 新增-->
+    <insert id="save" parameterType="com.mzkj.bean.CommerceBean">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field2"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="com.mzkj.bean.CommerceBean">
+        delete from
+        <include refid="tableName"></include>
+        where
+        COMMERCE_ID = #{commerceId}
+    </delete>
+
+    <!-- 修改 -->
+    <update id="edit" parameterType="com.mzkj.bean.CommerceBean">
+        update
+        <include refid="tableName"></include>
+        set
+        SALER = #{saler},
+        IS_CHECK_MONEY = #{isCheckMoney},
+        C_DATE = #{cDate},
+        CUSTOMER = #{customer},
+        CUSTOMER_TEL = #{customerTel},
+        EMERGENCY_CONTACT = #{emergencyContact},
+        EMERGENCY_TEL = #{emergencyTel},
+        REGISTER_AREA = #{registerArea},
+        REGISTER_ADDRESS = #{registerAddress},
+        REGISTER_ADDRESS_SOURCE = #{registerAddressSource},
+        STAMP_COUNT = #{stampCount},
+        INITIAL_BANK = #{initialBank},
+        CONTRACT_MONEY = #{contractMoney},
+        RESERVE_MONEY = #{reserveMoney},
+        TAIL_MONEY = #{tailMoney},
+        SIGNING_DATE = #{signingDate},
+        BEGIN_DATE = #{beginDate},
+        DEADLINE = #{deadline},
+        C_USER = #{cUser},
+        M_DATE = #{mDate},
+        M_USER = #{mUser},
+        FIRST_NAME = #{firstName},
+        SCOPE_BUSINESS = #{scopeBusiness},
+        CUSTOMER_FOCUS = #{customerFocus},
+        CUSTOMER_PERSONALITY_DESCRIPTION = #{customerPersonalityDescription},
+        LEGAL_REPRESENTATIVE = #{legalRepresentative},
+        LEGAL_REPRESENTATIVE_TEL = #{legalRepresentativeTel},
+        SHAREHOLDERS = #{shareholders},
+        PAYMENT_AMOUNT = #{paymentAmount},
+        BUSINESS_TYPES = #{businessTypes},
+        NOTE = #{note},
+        CODE = #{code},
+        OUTMONADER = #{outmonader},
+        OUTMONAD_DEPT = #{outmonadDept},
+        REGTYPE = #{regtype},
+        PAYMENT_METHODS = #{paymentMethods},
+        COLLECTION_CUSTOMER = #{collectionCustomer},
+        IS_TALLY = #{isTally},
+        VAT_TYPE = #{vatType},
+        BOOKS_YEAR_CHARGE = #{booksYearCharge},
+        INDUSTRY = #{industry},
+        CUSTOMER_SEGMENTATION = #{customerSegmentation},
+        CUSTOMER_REPRESENTATIVE = #{customerRepresentative},
+        CONTRACT_PERIOD = #{contractPeriod},
+        CHARGE_CYCLE = #{chargeCycle},
+        UNIT_PRICE = #{unitPrice},
+        TALLY_BUSINESS_TYPES = #{tallyBusinessTypes},
+        TALLY_PAYMENT_AMOUNT = #{tallyPaymentAmount},
+        PROC_INST_ID_ = #{procInstId},
+        AUTHORIZITEMS = #{authorizitems},
+        REGISTERCAPITAL = #{registercapital},
+        ALRCOLLECTDATA = #{alrcollectdata},
+        IS_BOOKS_CHARGE = #{isBooksCharge},
+        AMOUNT_MONTHS_DISCOUNTS = #{amountMonthsDiscounts},
+        TENANT_ID_ = #{tenantId},
+        CUSTOMER_MP = #{customerMp},
+        COMPANY_NAME = #{companyName},
+        SUPERVISOR = #{supervisor},
+        SUPERVISOR_TEL = #{supervisorTel},
+        COMMERCE_ID = #{commerceId}
+        where
+        COMMERCE_ID = #{commerceId}
+    </update>
+
+    <!-- 列表(全部) -->
+    <select id="list" parameterType="com.mzkj.bean.CommerceBean" resultMap="commerceMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+    </select>
+
+    <!-- 列表(全部) -->
+    <select id="listProcessByUser" parameterType="com.mzkj.bean.CommerceBean"
+            resultMap="commerceProcessMap">
+        select
+        f.COMMERCE_ID,
+        f.COMPANY_NAME,
+        f.SALER,
+        f.SIGNING_DATE,
+        f.CUSTOMER,
+        f.NOTE,
+        f.C_USER,
+        f.BUSINESS_TYPES,
+        f.PROC_INST_ID_,
+        f.TENANT_ID_,
+        art.ASSIGNEE_,
+        art.NAME_
+        from
+        <include refid="tableName"></include>
+        f
+        LEFT JOIN
+        act_ru_task art ON f.PROC_INST_ID_ = art.PROC_INST_ID_
+        WHERE 1=1
+        <if test="companyName!= null and companyName != ''">
+            and
+            (
+              f.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%') or
+              f.CUSTOMER LIKE CONCAT(CONCAT('%', #{companyName}),'%')
+
+            )
+        </if>
+        and f.SALER = #{saler} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
+        order by f.C_DATE DESC
+    </select>
+
+</mapper>
