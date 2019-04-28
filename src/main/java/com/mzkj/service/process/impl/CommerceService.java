@@ -94,12 +94,13 @@ public class CommerceService implements CommerceManager {
             FollowUpConvert.followUpVoToCommerceProcessBean(followUpQueryVo);
         //设置租户ID
         commerceBean.setTenantId(Jurisdiction.getTenant());
-        commerceBean.setSaler(Jurisdiction.getUsername());
+        commerceBean.setSaler(Jurisdiction.getU_name());
         List<CommerceBean> commercePageBean = commerceMapper.listProcessByUser(commerceBean);
+        PageInfo<FollowUpQueryVo> pageInfo = new PageInfo(commercePageBean);
         //DO转VO
         List<FollowUpQueryVo> followUpQueryVoList =
             FollowUpConvert.commerceProcessBeanToFollowUpVo(commercePageBean);
-        PageInfo<FollowUpQueryVo> pageInfo = new PageInfo<>(followUpQueryVoList);
+        pageInfo.setList(followUpQueryVoList);
         return pageInfo;
     }
 

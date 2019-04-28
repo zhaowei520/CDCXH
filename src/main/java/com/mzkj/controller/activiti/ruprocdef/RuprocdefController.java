@@ -138,11 +138,6 @@ public class RuprocdefController {
     public Result<List<RuprocdefQueryVo>> viewProcess(RuprocdefQueryVo ruprocdefQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看流程记录信息");
         Result<List<RuprocdefQueryVo>> result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             List<RuprocdefQueryVo> ruprocdefQueryVoList = ruprocdefService.viewProcess(ruprocdefQueryVo);
             result.setData(ruprocdefQueryVoList);

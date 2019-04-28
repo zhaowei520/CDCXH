@@ -89,9 +89,6 @@ public class UserService implements UserManager {
         return userVo;
     }
 
-		return userPageVo;
-	}
-
 	/**
 	 * 获取所有用户
 	 * return

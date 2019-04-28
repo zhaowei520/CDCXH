@@ -1,5 +1,6 @@
 package com.mzkj.convert;
 
+import com.github.pagehelper.PageHelper;
 import com.mzkj.bean.CommerceBean;
 import com.mzkj.bean.GShangChangeBean;
 import com.mzkj.bean.TallyBean;
@@ -49,6 +50,8 @@ public class FollowUpConvert {
     public static CommerceBean followUpVoToCommerceProcessBean(FollowUpQueryVo followUpQueryVo) {
         CommerceBean commerceBean = new CommerceBean();
         if (followUpQueryVo != null ) {
+            PageHelper.startPage(followUpQueryVo);
+
             commerceBean.setActAssignee(followUpQueryVo.getActAssignee());
             commerceBean.setActName(followUpQueryVo.getActName());
             commerceBean.setBusinessTypes(followUpQueryVo.getBusinessTypes());

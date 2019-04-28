@@ -16,7 +16,7 @@
         <result column="ASSIGNEE_" javaType="String" property="assignee"/>
         <result column="START_TIME_" javaType="Date" property="startTime"/>
         <result column="END_TIME_" javaType="Date" property="endTime"/>
-        <result column="DURATION_" javaType="Integer" property="duration"/>
+        <result column="DURATION_" javaType="long" property="duration"/>
         <result column="TENANT_ID_" javaType="String" property="tenantId"/>
     </resultMap>
 
@@ -28,7 +28,7 @@
         <result column="START_TIME_" javaType="Date" property="startTime"/>
         <result column="END_TIME_" javaType="Date" property="endTime"/>
         <result column="TENANT_ID_" javaType="String" property="tenantId"/>
-        <result column="DURATION_" javaType="Integer" property="duration"/>
+        <result column="DURATION_" javaType="long" property="duration"/>
 
         <result column="TEXT_" javaType="String" property="text"/>
         <result column="DELETE_REASON_" javaType="String" property="deleteReason"/>

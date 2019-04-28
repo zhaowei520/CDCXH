@@ -21,7 +21,7 @@ public class Ruprocdef implements Serializable {
     private String assignee;
     private Date startTime;
     private Date endTime;
-    private Integer duration;
+    private Long duration;
     private String tenantId;
 
     public String getId() {
@@ -120,11 +120,11 @@ public class Ruprocdef implements Serializable {
         this.endTime = endTime;
     }
 
-    public Integer getDuration() {
+    public Long getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(Long duration) {
         this.duration = duration;
     }
 

@@ -88,7 +88,7 @@ public class TallyService implements TallyManager{
 			FollowUpConvert.followUpVoToTallyProcessBean(followUpQueryVo);
 		//设置租户ID
 		tallyBean.setTenantId(Jurisdiction.getTenant());
-		tallyBean.setSignPerson(Jurisdiction.getUsername());
+		tallyBean.setSignPerson(Jurisdiction.getU_name());
 		List<TallyBean> tallyBeanPageBean = tallyMapper.listProcessByUser(tallyBean);
 		//DO转VO
 		List<FollowUpQueryVo> followUpQueryVoList =

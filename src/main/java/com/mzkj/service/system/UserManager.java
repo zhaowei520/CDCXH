@@ -54,13 +54,12 @@ public interface UserManager {
      */
     public UserVo findByUsername(String username) throws Exception;
 
-   / **
-        * 查询所有用户
-	 * return
-       * Author luosc
-	 * param
-	 * Date 2019-04-25 10:56
-        */
-    public List<UserQueryVo> listAll(UserQueryVo userQueryVo)throws Exception;
+    /**
+     * 查询所有用户
+     *luosc
+     * @param userQueryVo
+     * @throws Exception
+     */
+    public List<UserQueryVo> listAll(UserQueryVo userQueryVo) throws Exception;
 }
 

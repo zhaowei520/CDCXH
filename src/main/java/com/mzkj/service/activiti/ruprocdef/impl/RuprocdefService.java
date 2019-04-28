@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.RuprocdefBean;
 import com.mzkj.service.system.RoleManager;
 import com.mzkj.service.system.UserManager;
+import com.mzkj.util.Const;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.mzkj.service.activiti.ruprocdef.RuprocdefManager;
 import com.mzkj.mapper.activiti.ruprocdef.RuprocdefMapper;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -104,37 +106,57 @@ public class RuprocdefService implements RuprocdefManager {
         List<RuprocdefBean> ruprocdefBeanList = ruprocdefMapper.viewProcess(ruprocdefBean);
         List<RuprocdefQueryVo> ruprocdefQueryVoList =
             (List<RuprocdefQueryVo>) ConvertUtil.castListObjectToTargetList(ruprocdefBeanList, RuprocdefQueryVo.class);
-        //对返回数据二次处理(计算用时，人名替换)
-        ruprocdefQueryVoList = countDurationAndNameConvert(ruprocdefQueryVoList);
+        //对返回数据二次处理(计算用时，人名替换, 审批意见处理)
+        ruprocdefQueryVoList = dataCleaning(ruprocdefQueryVoList);
 
         return ruprocdefQueryVoList;
     }
 
-    private List<RuprocdefQueryVo> countDurationAndNameConvert(List<RuprocdefQueryVo> ruprocdefQueryVoList) throws Exception {
+    private List<RuprocdefQueryVo> dataCleaning(List<RuprocdefQueryVo> ruprocdefQueryVoList) throws Exception {
         if (ruprocdefQueryVoList != null && ruprocdefQueryVoList.size() > 0) {
             for (RuprocdefQueryVo ruprocdefQueryVo : ruprocdefQueryVoList) {
                 //计算用时
-                if(null != ruprocdefQueryVo.getDuration()){
-                    String newduration =  durationConvert(ruprocdefQueryVo.getDuration().toString());
+                if (null != ruprocdefQueryVo.getDuration()) {
+                    String newduration = durationConvert(ruprocdefQueryVo.getDuration().toString());
                     ruprocdefQueryVo.setDurationCN(newduration);
                 }
                 //人名替换
-                if(null != ruprocdefQueryVo.getAssignee()){
-                    String newAssignee =  nameConvert(ruprocdefQueryVo.getAssignee());
+                if (null != ruprocdefQueryVo.getAssignee()) {
+                    String newAssignee = nameConvert(ruprocdefQueryVo.getAssignee());
                     ruprocdefQueryVo.setAssignee(newAssignee);
+                }
+
+                //审批意见数据格式处理
+                if (!StringUtils.isEmpty(ruprocdefQueryVo.getText())) {
+                    String newText = textConvert(ruprocdefQueryVo.getText());
+                    ruprocdefQueryVo.setText(newText);
                 }
             }
         }
         return ruprocdefQueryVoList;
     }
 
+    private String textConvert(String text) {
+        //重新定义数据格式放回给前台
+        String newText = "";
+        String[] textSplit = text.split(Const.DATA_FH);
+        String nameText = textSplit[0];
+        String reasonText = "";
+        if (textSplit.length>=2) {
+            reasonText = textSplit[1];
+            reasonText = reasonText.replace(Const.HTML_LEFT_P, Const.DATA_LEFT_BORDER).replace(Const.HTML_BR+Const.HTML_RIGHT_P, Const.DATA_RIGHT_BORDER);
+        }
+        newText = nameText + reasonText;
+        return newText;
+    }
+
     private String durationConvert(String duration) {
         Long ztime = Long.parseLong(duration);
-        Long tian = ztime / (1000*60*60*24);
-        Long shi = (ztime % (1000*60*60*24))/(1000*60*60);
-        Long fen = (ztime % (1000*60*60*24))%(1000*60*60)/(1000*60);
-        Long miao = (ztime % (1000*60*60*24))%(1000*60*60)%(1000*60)/1000;
-        return tian+"天"+shi+"时"+fen+"分"+miao+"秒";
+        Long tian = ztime / (1000 * 60 * 60 * 24);
+        Long shi = (ztime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+        Long fen = (ztime % (1000 * 60 * 60 * 24)) % (1000 * 60 * 60) / (1000 * 60);
+        Long miao = (ztime % (1000 * 60 * 60 * 24)) % (1000 * 60 * 60) % (1000 * 60) / 1000;
+        return tian + "天" + shi + "时" + fen + "分" + miao + "秒";
     }
 
     private String nameConvert(String assignee) throws Exception {

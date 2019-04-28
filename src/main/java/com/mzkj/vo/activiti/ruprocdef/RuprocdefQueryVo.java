@@ -1,5 +1,6 @@
 package com.mzkj.vo.activiti.ruprocdef;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mzkj.vo.BaseVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,9 +20,13 @@ public class RuprocdefQueryVo extends BaseVo {
     private String taskId;
     private String actName;
     private String assignee;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date endTime;
-    private Integer duration;
+    private Long duration;
     private String tenantId;
 
     //节点内容和删除信息
@@ -95,11 +100,11 @@ public class RuprocdefQueryVo extends BaseVo {
         this.endTime = endTime;
     }
 
-    public Integer getDuration() {
+    public Long getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(Long duration) {
         this.duration = duration;
     }
 

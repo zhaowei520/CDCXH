@@ -96,7 +96,7 @@ public class GShangChangeService implements GShangChangeManager {
             FollowUpConvert.followUpVoToGShangChangeProcessBean(followUpQueryVo);
         //设置租户ID
         gShangChangeBean.setTenantId(Jurisdiction.getTenant());
-        gShangChangeBean.setSignMan(Jurisdiction.getUsername());
+        gShangChangeBean.setSignMan(Jurisdiction.getU_name());
         List<GShangChangeBean> gShangChangeBeanPageBean =
             gShangChangeMapper.listProcessByUser(gShangChangeBean);
         //DO转VO
