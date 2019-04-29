@@ -105,6 +105,7 @@ public class GShangChangeService implements GShangChangeManager {
             FollowUpConvert.gShangChangeProcessBeanToFollowUpVo(gShangChangeBeanPageBean);
         pageInfo.setList(followUpQueryVoList);
         pageInfo.setPageSize(followUpQueryVo.getPageSize());
+        pageInfo.setPageNum(followUpQueryVo.getPageNum());
         return pageInfo;
     }
 

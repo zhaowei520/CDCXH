@@ -103,6 +103,7 @@ public class TallyService implements TallyManager {
             FollowUpConvert.tallyProcessBeanToFollowUpVo(tallyBeanPageBean);
         pageInfo.setList(followUpQueryVoList);
         pageInfo.setPageSize(followUpQueryVo.getPageSize());
+        pageInfo.setPageNum(followUpQueryVo.getPageNum());
         return pageInfo;
     }
 
