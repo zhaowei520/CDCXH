@@ -84,6 +84,7 @@
         <result column="BUSINESS_TYPES" javaType="String" property="businessTypes"/>
         <result column="ASSIGNEE_" javaType="String" property="actAssignee"/>
         <result column="NAME_" javaType="String" property="actName"/>
+        <result column="EXECUTION_ID_" javaType="String" property="excutionId"/>
     </resultMap>
 
     <!--表名 -->
@@ -395,7 +396,8 @@
         f.PROC_INST_ID_,
         f.TENANT_ID_,
         art.ASSIGNEE_,
-        art.NAME_
+        art.NAME_,
+        art.EXECUTION_ID_
         from
         <include refid="tableName"></include>
         f

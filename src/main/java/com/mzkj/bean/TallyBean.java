@@ -1,17 +1,19 @@
 package com.mzkj.bean;
 
 import com.mzkj.domain.Tally;
+
 /**
  * 说明： 业务对象，与数据库操作
  * 创建人：CDCXH
  * 创建时间：2019-04-22
- * @version
  */
-public class TallyBean extends Tally{
+public class TallyBean extends Tally {
     //工作流act_ru_task表信息
     private String actAssignee;
 
     private String actName;
+
+    private String excutionId;
 
     public String getActAssignee() {
         return actAssignee;
@@ -29,5 +31,12 @@ public class TallyBean extends Tally{
         this.actName = actName;
     }
 
+    public String getExcutionId() {
+        return excutionId;
+    }
+
+    public void setExcutionId(String excutionId) {
+        this.excutionId = excutionId;
+    }
 }
 

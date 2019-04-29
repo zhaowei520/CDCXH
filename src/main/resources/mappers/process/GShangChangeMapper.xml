@@ -56,6 +56,7 @@
 		<result column="BUSINESS_TYPES" javaType="String" property="businessTypes"/>
 		<result column="ASSIGNEE_" javaType="String" property="actAssignee"/>
 		<result column="NAME_" javaType="String" property="actName"/>
+		<result column="EXECUTION_ID_" javaType="String" property="excutionId"/>
 	</resultMap>
     <!--表名 -->
     <sql id="tableName">
@@ -275,6 +276,7 @@
 		f.PROC_INST_ID_,
 		f.TENANT_ID_,
 		art.ASSIGNEE_,
+		art.EXECUTION_ID_
 		art.NAME_
 		from
 		<include refid="tableName"></include>
@@ -290,6 +292,6 @@
 			)
 		</if>
 		and f.SIGN_MAN = #{signMan} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
-		order by f.CREATE_DATE
+		order by f.CREATE_DATE DESC
 	</select>
 </mapper>
