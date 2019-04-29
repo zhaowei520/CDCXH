@@ -168,7 +168,7 @@
 		<if test="companyInformationId != null and companyInformationId != ''">
 			and f.COMPANY_INFORMATION_ID = #{companyInformationId}
 		</if>
-
+		ORDER BY f.CREATE_DATE desc
 	</select>
 
 	<select id="findById" parameterType="com.mzkj.bean.OriginalBean" resultMap="originalMap">

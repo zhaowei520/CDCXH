@@ -48,14 +48,12 @@ public class OriginalService implements OriginalManager {
     @Override
     public OriginalVo save(OriginalVo originalVo) throws Exception {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
-        //如果原件持有状态为在公司内部，设置原件持有人为当前登录人
-        if (!StringUtils.isEmpty(originalBean.getOriginalHoldStatus()) && originalBean.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_2)) {
-            originalBean.setOriginalHolder(Jurisdiction.getUsername());
-            originalBean.setOriginalHolderDepartment(Jurisdiction.getDEPARTMENT_ID());
-        }
+        originalBean.setOriginalHolder(Jurisdiction.getUsername());
+        originalBean.setOriginalHolderDepartment(Jurisdiction.getDEPARTMENT_ID());
         //公司名称
         originalBean.setCompanyName(companyInformationMapper.findById(originalBean.getCompanyInformationId()).getCompanyName());
-
+        originalBean.setCreateDate(DateUtil.getTime());
+        originalBean.setCreateUser(Jurisdiction.getUsername());
         originalBean.setTenantId(Jurisdiction.getTenant());
         originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_2);//原件流转状态设为入库
         originalMapper.save(originalBean);
@@ -175,7 +173,7 @@ public class OriginalService implements OriginalManager {
         PageInfo<OriginalQueryVo> pageInfo = new PageInfo(originalPageBean);
 
         //DO转VO
-        List<OriginalQueryVo> originalQueryVoList = (List<OriginalQueryVo>) ConvertUtil.castListObjectToTargetList(originalPageBean,OriginalQueryVo.class);
+        List<OriginalQueryVo> originalQueryVoList = (List<OriginalQueryVo>) ConvertUtil.castListObjectToTargetList(originalPageBean, OriginalQueryVo.class);
         pageInfo.setList(originalQueryVoList);
 
         //初始化当前登录人的权限
@@ -223,7 +221,7 @@ public class OriginalService implements OriginalManager {
                 }
                 //将持有状态编码转成name
                 if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus())) {
-                    DictionariesBean dictionariesBean= new DictionariesBean();
+                    DictionariesBean dictionariesBean = new DictionariesBean();
                     dictionariesBean.setBianma(originalQueryVo.getOriginalHoldStatus());
                     dictionariesBean = dictionariesMapper.findByBianma(dictionariesBean);
                     originalQueryVo.setOriginalHoldStatus(dictionariesBean.getName());
