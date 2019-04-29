@@ -163,6 +163,7 @@ public class CompanyInformationController {
                             result += originalName + ":" + originalHolder + ",";
                         } else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_0)) {
                             //无原件
+                            result+= originalName + ":无";
                         }else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_1)) {
                             //在客户处
                             result+= originalName + ":客户处,";
