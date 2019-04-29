@@ -85,7 +85,7 @@ public class OriginalController {
 	/**修改
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/edit", method = RequestMethod.PUT)
+	@RequestMapping(value="/edit", method = RequestMethod.POST)
     @ApiOperation(value = "修改template", notes = "修改template")
 	public Result edit(OriginalVo originalVo) {
         logger.info(Jurisdiction.getUsername()+"修改公司原件详情");
