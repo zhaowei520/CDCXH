@@ -112,18 +112,8 @@
 		<include refid="tableName"></include>
 		set 
 			ORIGINAL_NAME = #{originalName},
-			ORIGINAL_HOLDER = #{originalHolder},
-			ORIGINAL_HOLDER_DEPARTMENT = #{originalHolderDepartment},
-			ORIGINAL_OUT_TO = #{originalOutTo},
 			ORIGINAL_HOLD_STATUS = #{originalHoldStatus},
-			ORIGINAL_OUT_STATUS = #{originalOutStatus},
-			REMARK = #{remark},
-			CREATE_DATE = #{createDate},
-			CREATE_USER = #{createUser},
-			UPDATE_DATE = #{updateDate},
-			UPDATE_USER = #{updateUser},
-			TENANT_ID_ = #{tenantId},
-			ORIGINAL_ID = #{originalId}
+			REMARK = #{remark}
 		where 
 			ORIGINAL_ID = #{originalId}
 	</update>
