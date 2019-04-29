@@ -94,6 +94,8 @@ public class FollowUpConvert {
     public static TallyBean followUpVoToTallyProcessBean(FollowUpQueryVo followUpQueryVo) {
         TallyBean tallyBean = new TallyBean();
         if (followUpQueryVo != null ) {
+            PageHelper.startPage(followUpQueryVo);
+
             tallyBean.setActAssignee(followUpQueryVo.getActAssignee());
             tallyBean.setActName(followUpQueryVo.getActName());
             tallyBean.setBusinessTypes(followUpQueryVo.getBusinessTypes());
@@ -135,6 +137,8 @@ public class FollowUpConvert {
     public static GShangChangeBean followUpVoToGShangChangeProcessBean(FollowUpQueryVo followUpQueryVo) {
         GShangChangeBean gShangChangeBean = new GShangChangeBean();
         if (followUpQueryVo != null ) {
+            PageHelper.startPage(followUpQueryVo);
+
             gShangChangeBean.setActAssignee(followUpQueryVo.getActAssignee());
             gShangChangeBean.setActName(followUpQueryVo.getActName());
             gShangChangeBean.setBusinessTypes(followUpQueryVo.getBusinessTypes());

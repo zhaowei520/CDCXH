@@ -101,6 +101,7 @@ public class CommerceService implements CommerceManager {
         List<FollowUpQueryVo> followUpQueryVoList =
             FollowUpConvert.commerceProcessBeanToFollowUpVo(commercePageBean);
         pageInfo.setList(followUpQueryVoList);
+        pageInfo.setPageSize(followUpQueryVo.getPageSize());
         return pageInfo;
     }
 
