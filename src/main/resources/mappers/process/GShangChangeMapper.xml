@@ -276,7 +276,7 @@
 		f.PROC_INST_ID_,
 		f.TENANT_ID_,
 		art.ASSIGNEE_,
-		art.EXECUTION_ID_
+		art.EXECUTION_ID_,
 		art.NAME_
 		from
 		<include refid="tableName"></include>
