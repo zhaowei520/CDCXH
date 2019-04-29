@@ -99,10 +99,13 @@ public class GShangChangeService implements GShangChangeManager {
         gShangChangeBean.setSignMan(Jurisdiction.getU_name());
         List<GShangChangeBean> gShangChangeBeanPageBean =
             gShangChangeMapper.listProcessByUser(gShangChangeBean);
+        PageInfo<FollowUpQueryVo> pageInfo = new PageInfo(gShangChangeBeanPageBean);
         //DO转VO
         List<FollowUpQueryVo> followUpQueryVoList =
             FollowUpConvert.gShangChangeProcessBeanToFollowUpVo(gShangChangeBeanPageBean);
-        PageInfo<FollowUpQueryVo> pageInfo = new PageInfo<>(followUpQueryVoList);
+        pageInfo.setList(followUpQueryVoList);
+        pageInfo.setPageSize(followUpQueryVo.getPageSize());
+        pageInfo.setPageNum(followUpQueryVo.getPageNum());
         return pageInfo;
     }
 
