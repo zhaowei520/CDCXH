@@ -11,6 +11,7 @@ public class GShangChangeBean extends GShangChange {
     //工作流act_ru_task表信息
     private String actAssignee;
     private String actName;
+    private String excutionId;
 
     public String getActAssignee() {
         return actAssignee;
@@ -26,6 +27,14 @@ public class GShangChangeBean extends GShangChange {
 
     public void setActName(String actName) {
         this.actName = actName;
+    }
+
+    public String getExcutionId() {
+        return excutionId;
+    }
+
+    public void setExcutionId(String excutionId) {
+        this.excutionId = excutionId;
     }
 }
 

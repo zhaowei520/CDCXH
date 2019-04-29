@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModel;
  */
 @ApiModel(value = "跟进流程查询对象", description = "跟进流程查询")
 public class FollowUpQueryVo extends BaseVo {
+    private String excutionId;
     private String companyName;
     private String customer;
     private String signPerson;
@@ -23,6 +24,14 @@ public class FollowUpQueryVo extends BaseVo {
     //工作流act_ru_task表信息
     private String actAssignee;
     private String actName;
+
+    public String getExcutionId() {
+        return excutionId;
+    }
+
+    public void setExcutionId(String excutionId) {
+        this.excutionId = excutionId;
+    }
 
     public String getCompanyName() {
         return companyName;

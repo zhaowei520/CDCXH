@@ -14,6 +14,8 @@ public class CommerceBean extends Commerce {
 
     private String actName;
 
+    private String excutionId;
+
     public String getActAssignee() {
         return actAssignee;
     }
@@ -28,6 +30,14 @@ public class CommerceBean extends Commerce {
 
     public void setActName(String actName) {
         this.actName = actName;
+    }
+
+    public String getExcutionId() {
+        return excutionId;
+    }
+
+    public void setExcutionId(String excutionId) {
+        this.excutionId = excutionId;
     }
 }
 
