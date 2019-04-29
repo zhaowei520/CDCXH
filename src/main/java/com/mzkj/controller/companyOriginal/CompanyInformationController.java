@@ -159,11 +159,11 @@ public class CompanyInformationController {
                     for (OriginalQueryVo original : originalQueryVos) {
                         String originalName = original.getOriginalName();//原件名
                         String originalHolder = original.getOriginalHolder();//原件持有人
-                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)) {
+                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)&&!StringUtils.isEmpty(originalHolder)) {
                             result += originalName + ":" + originalHolder + ",";
                         } else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_0)) {
                             //无原件
-                            result+= originalName + ":无";
+                            result+= originalName + ":无,";
                         }else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_1)) {
                             //在客户处
                             result+= originalName + ":客户处,";
