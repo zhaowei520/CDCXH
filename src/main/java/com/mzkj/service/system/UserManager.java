@@ -55,11 +55,11 @@ public interface UserManager {
     public UserVo findByUsername(String username) throws Exception;
 
     /**
-     * 查询所有用户
+     * 查询所有用户，不包含当前登录人
      *luosc
      * @param userQueryVo
      * @throws Exception
      */
-    public List<UserQueryVo> listAll(UserQueryVo userQueryVo) throws Exception;
+    public List<UserQueryVo> listAllAndFilterSelf(UserQueryVo userQueryVo) throws Exception;
 }
 
