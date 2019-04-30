@@ -93,6 +93,7 @@ public class OriginalService implements OriginalManager {
     public void edit(OriginalVo originalVo) throws Exception {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
         originalBean.setTenantId(Jurisdiction.getTenant());
+        originalBean.setOriginalHolder(Jurisdiction.getUsername());
         originalMapper.edit(originalBean);
     }
 
