@@ -3,6 +3,8 @@ package com.mzkj.service.process.impl;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.GShangChangeBean;
 import com.mzkj.convert.FollowUpConvert;
+import com.mzkj.domain.MyPageInfo;
+import com.mzkj.service.followUp.FollowUpManager;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
@@ -17,6 +19,7 @@ import com.mzkj.service.process.GShangChangeManager;
 import com.mzkj.mapper.process.GShangChangeMapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 说明： 工商变更
@@ -29,6 +32,8 @@ public class GShangChangeService implements GShangChangeManager {
     @Autowired
     private GShangChangeMapper gShangChangeMapper;
 
+    @Autowired
+    private FollowUpManager followUpService;
     /**
      * 新增
      *
@@ -90,7 +95,7 @@ public class GShangChangeService implements GShangChangeManager {
     }
 
     @Override
-    public PageInfo<FollowUpQueryVo> listProcessByUser(FollowUpQueryVo followUpQueryVo) throws Exception {
+    public MyPageInfo<String,Integer,FollowUpQueryVo> listProcessByUser(FollowUpQueryVo followUpQueryVo) throws Exception {
         //将vo转DO并将分页信息传到pageHelper
         GShangChangeBean gShangChangeBean =
             FollowUpConvert.followUpVoToGShangChangeProcessBean(followUpQueryVo);
@@ -99,15 +104,23 @@ public class GShangChangeService implements GShangChangeManager {
         gShangChangeBean.setSignMan(Jurisdiction.getU_name());
         List<GShangChangeBean> gShangChangeBeanPageBean =
             gShangChangeMapper.listProcessByUser(gShangChangeBean);
-        PageInfo<FollowUpQueryVo> pageInfo = new PageInfo(gShangChangeBeanPageBean);
+        MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(gShangChangeBeanPageBean);
         //DO转VO
         List<FollowUpQueryVo> followUpQueryVoList =
             FollowUpConvert.gShangChangeProcessBeanToFollowUpVo(gShangChangeBeanPageBean);
-        pageInfo.setList(followUpQueryVoList);
-        pageInfo.setPageSize(followUpQueryVo.getPageSize());
-        pageInfo.setPageNum(followUpQueryVo.getPageNum());
-        return pageInfo;
+        //统计所有工单数量
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber();
+        myPageInfo.setMap(allProcessNumber);
+        myPageInfo.setList(followUpQueryVoList);
+        myPageInfo.setPageSize(followUpQueryVo.getPageSize());
+        myPageInfo.setPageNum(followUpQueryVo.getPageNum());
+        return myPageInfo;
     }
 
+
+    @Override
+    public Integer countProcessNumber() throws Exception {
+        return gShangChangeMapper.countProcessNumber(Jurisdiction.getTenant(), Jurisdiction.getU_name());
+    }
 }
 

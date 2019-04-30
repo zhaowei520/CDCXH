@@ -2,6 +2,7 @@ package com.mzkj.mapper.process;
 
 import com.mzkj.bean.TallyBean;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -52,5 +53,13 @@ public interface TallyMapper {
      * @throws Exception
      */
     public List<TallyBean> listProcessByUser(TallyBean tallyBean) throws Exception;
+
+    /**
+     * 根据创建人查询代账流程数量
+     *
+     * @param
+     * @throws Exception
+     */
+    Integer countProcessNumber(@Param("tenantId") String tenant, @Param("signPerson") String u_name) throws Exception;
 }
 

@@ -2,6 +2,7 @@ package com.mzkj.mapper.process;
 
 import com.mzkj.bean.GShangChangeBean;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -52,5 +53,13 @@ public interface GShangChangeMapper {
      * @throws Exception
      */
     List<GShangChangeBean> listProcessByUser(GShangChangeBean gShangChangeBean) throws Exception;
+
+    /**
+     * 根据创建人查询工商变更流程
+     *
+     * @param
+     * @throws Exception
+     */
+    Integer countProcessNumber(@Param("tenantId") String tenant, @Param("signMan") String u_name) throws Exception;
 }
 
