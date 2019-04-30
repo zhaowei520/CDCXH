@@ -1,7 +1,10 @@
 package com.mzkj.service.companyOriginal.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.OriginalProcessRecordsBean;
+import com.mzkj.bean.UserBean;
+import com.mzkj.mapper.system.UserMapper;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
@@ -10,12 +13,14 @@ import com.mzkj.vo.companyOriginal.OriginalProcessRecordsVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.github.pagehelper.PageHelper;
 
 import com.mzkj.service.companyOriginal.OriginalProcessRecordsManager;
 import com.mzkj.mapper.companyOriginal.OriginalProcessRecordsMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +34,8 @@ public class OriginalProcessRecordsService implements OriginalProcessRecordsMana
     @Autowired
     private OriginalProcessRecordsMapper originalprocessrecordsMapper;
 
+    @Autowired
+    private UserMapper userMapper;
     /**
      * 新增
      */
@@ -69,8 +76,42 @@ public class OriginalProcessRecordsService implements OriginalProcessRecordsMana
         PageInfo<OriginalProcessRecordsBean> pageInfo = new PageInfo<>(originalprocessrecordsPageBean);
         //将DO转vo
         PageInfo<OriginalProcessRecordsQueryVo> originalprocessrecordsPageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
-        return originalprocessrecordsPageVo;
+        return castUsernameToName(originalprocessrecordsPageVo);
     }
 
+    /**
+     * 将用户名替换为姓名
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-30 11:42
+     */
+    private PageInfo<OriginalProcessRecordsQueryVo> castUsernameToName(PageInfo<OriginalProcessRecordsQueryVo> originalprocessrecordsPageVo) throws Exception {
+        List<OriginalProcessRecordsQueryVo> list = originalprocessrecordsPageVo.getList();
+        List<OriginalProcessRecordsQueryVo> result = new ArrayList<>();
+        if (list != null && list.size() > 0) {
+            for (int i=0;i<list.size();i++) {
+                OriginalProcessRecordsQueryVo originalProcessRecordsQueryVo = ConvertUtil.json2Obj(JSON.toJSONString(list.get(i)), OriginalProcessRecordsQueryVo.class);
+                String outUsername = originalProcessRecordsQueryVo.getOriginalOutUsername();
+                if (!StringUtils.isEmpty(outUsername)) {
+                    UserBean userBean= userMapper.findByUsername(outUsername);
+                    if (userBean != null && !StringUtils.isEmpty(userBean.getName())) {
+                        originalProcessRecordsQueryVo.setOriginalOutUsername(userBean.getName());
+                    }
+                }
+
+                String fromUsername = originalProcessRecordsQueryVo.getOriginalFromUsername();
+                if (!StringUtils.isEmpty(fromUsername)) {
+                    UserBean userBean= userMapper.findByUsername(fromUsername);
+                    if (userBean != null && !StringUtils.isEmpty(userBean.getName())) {
+                        originalProcessRecordsQueryVo.setOriginalFromUsername(userBean.getName());
+                    }
+                }
+                result.add(originalProcessRecordsQueryVo);
+            }
+        }
+        originalprocessrecordsPageVo.setList(result);
+        return originalprocessrecordsPageVo;
+    }
 }
 

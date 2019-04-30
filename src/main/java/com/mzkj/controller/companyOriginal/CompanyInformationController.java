@@ -2,6 +2,7 @@ package com.mzkj.controller.companyOriginal;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.domain.Original;
+import com.mzkj.service.system.impl.UserService;
 import com.mzkj.util.Const;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mzkj.service.companyOriginal.CompanyInformationManager;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
+import com.mzkj.vo.system.UserVo;
 
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class CompanyInformationController {
     String menuUrl = "companyInformation/list.do"; //菜单地址(权限用)
     @Autowired
     private CompanyInformationManager companyinformationService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 保存
@@ -149,7 +154,7 @@ public class CompanyInformationController {
      * param
      * Date 2019-04-22 9:02
      */
-    private void constOriginalListToString(PageInfo<CompanyInformationQueryVo> varList) {
+    private void constOriginalListToString(PageInfo<CompanyInformationQueryVo> varList) throws Exception {
         if (varList != null && varList.getList() != null && varList.getList().size() > 0) {
             for (CompanyInformationQueryVo companyInformationQueryVo : varList.getList()) {
                 List<OriginalQueryVo> originalQueryVos = companyInformationQueryVo.getOriginalList();
@@ -159,36 +164,40 @@ public class CompanyInformationController {
                     for (OriginalQueryVo original : originalQueryVos) {
                         String originalName = original.getOriginalName();//原件名
                         String originalHolder = original.getOriginalHolder();//原件持有人
-                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)&&!StringUtils.isEmpty(originalHolder)) {
-                            result += originalName + ":" + originalHolder + ",";
+                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2) && !StringUtils.isEmpty(originalHolder)) {
+                            //将当前持有人userName 转name
+                            UserVo userVo = userService.findByUsername(originalHolder);
+                            if (userVo != null && !StringUtils.isEmpty(userVo.getName())) {
+                                result += originalName + ":" + userVo.getName() + ",";
+                            }
                         } else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_0)) {
                             //无原件
-                            result+= originalName + ":无,";
-                        }else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_1)) {
+                            result += originalName + ":无,";
+                        } else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_1)) {
                             //在客户处
-                            result+= originalName + ":客户处,";
+                            result += originalName + ":客户处,";
                         }
 
                         //流转状态为 出库中
                         if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_1)) {
                             //如果原件持有人和当前登录人相同
                             if (!StringUtils.isEmpty(original.getOriginalHolder()) && original.getOriginalHolder().equals(Jurisdiction.getUsername())) {
-                                originalOutStatusInformation += original.getOriginalName() + ":出库中,";
+                                originalOutStatusInformation += Jurisdiction.getU_name() + ":出库中,";
                             }
                             //出库对象和当前登录人相同
                             else if (!StringUtils.isEmpty(original.getOriginalOutTo()) && original.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
-                                originalOutStatusInformation += original.getOriginalName() + ":借入待确认,";
+                                originalOutStatusInformation += Jurisdiction.getU_name() + ":借入待确认,";
                             }
                         }
                         //待借入
                         if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_3)) {
                             //如果原件持有人和当前登录人相同
                             if (!StringUtils.isEmpty(original.getOriginalHolder()) && original.getOriginalHolder().equals(Jurisdiction.getUsername())) {
-                                originalOutStatusInformation += original.getOriginalName() + ":借出待确认,";
+                                originalOutStatusInformation += Jurisdiction.getU_name() + ":借出待确认,";
                             }
                             //出库对象和当前登录人相同
                             else if (!StringUtils.isEmpty(original.getOriginalOutTo()) && original.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
-                                originalOutStatusInformation += original.getOriginalName() + ":待借入,";
+                                originalOutStatusInformation += Jurisdiction.getU_name() + ":待借入,";
                             }
                         }
 
