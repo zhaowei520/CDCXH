@@ -97,11 +97,15 @@ public class OriginalService implements OriginalManager {
         String originalOutTo = originalBean.getOriginalOutTo();
         if (!StringUtils.isEmpty(originalHolder)) {
             UserBean userBean=userMapper.findByUsername(originalHolder);
-            originalBean.setOriginalHolder(userBean.getName());
+            if (userBean != null) {
+                originalBean.setOriginalHolder(userBean.getName());
+            }
         }
         if (!StringUtils.isEmpty(originalOutTo)) {
             UserBean userBean=userMapper.findByUsername(originalOutTo);
-            originalBean.setOriginalOutTo(userBean.getName());
+            if (userBean != null) {
+                originalBean.setOriginalOutTo(userBean.getName());
+            }
         }
     }
     /**
