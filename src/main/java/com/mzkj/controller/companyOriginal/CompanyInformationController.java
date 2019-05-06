@@ -1,6 +1,7 @@
 package com.mzkj.controller.companyOriginal;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.bean.OriginalBean;
 import com.mzkj.domain.Original;
 import com.mzkj.service.system.impl.UserService;
 import com.mzkj.util.Const;
@@ -25,6 +26,7 @@ import com.mzkj.vo.companyOriginal.OriginalQueryVo;
 import com.mzkj.vo.system.UserVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 说明：原件管理客户信息
@@ -182,22 +184,22 @@ public class CompanyInformationController {
                         if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_1)) {
                             //如果原件持有人和当前登录人相同
                             if (!StringUtils.isEmpty(original.getOriginalHolder()) && original.getOriginalHolder().equals(Jurisdiction.getUsername())) {
-                                originalOutStatusInformation += Jurisdiction.getU_name() + ":出库中,";
+                                originalOutStatusInformation += original.getOriginalName() + ":出库中,";
                             }
                             //出库对象和当前登录人相同
                             else if (!StringUtils.isEmpty(original.getOriginalOutTo()) && original.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
-                                originalOutStatusInformation += Jurisdiction.getU_name() + ":借入待确认,";
+                                originalOutStatusInformation += original.getOriginalName() + ":借入待确认,";
                             }
                         }
                         //待借入
                         if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_3)) {
                             //如果原件持有人和当前登录人相同
                             if (!StringUtils.isEmpty(original.getOriginalHolder()) && original.getOriginalHolder().equals(Jurisdiction.getUsername())) {
-                                originalOutStatusInformation += Jurisdiction.getU_name() + ":借出待确认,";
+                                originalOutStatusInformation += original.getOriginalName() + ":借出待确认,";
                             }
                             //出库对象和当前登录人相同
                             else if (!StringUtils.isEmpty(original.getOriginalOutTo()) && original.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
-                                originalOutStatusInformation += Jurisdiction.getU_name() + ":待借入,";
+                                originalOutStatusInformation += original.getOriginalName() + ":待借入,";
                             }
                         }
 
@@ -232,4 +234,29 @@ public class CompanyInformationController {
         }
         return result;
     }
+
+    /**
+     * 统计当前登录人持有原件数量、需确认条数、出库中数量、待借入数量
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-30 17:15
+     */
+    @RequestMapping(value = "/getCount", method = RequestMethod.GET)
+    @ApiOperation(value = "统计", notes = "统计")
+    public Result<Map<String, Integer>> holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount() {
+        Result<Map<String, Integer>> result = new Result<>();
+
+        try {
+            Map<String, Integer> countMap = companyinformationService.holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount();
+            result.setData(countMap);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
 }

@@ -197,4 +197,15 @@
         o
         where o.COMPANY_INFORMATION_ID = #{companyInformationId}
     </select>
+
+    <select id="holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount"
+            parameterType="com.mzkj.bean.OriginalBean"
+            resultMap="originalMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        where f.TENANT_ID_=#{tenantId}
+    </select>
 </mapper>

@@ -1,8 +1,13 @@
 package com.mzkj.service.companyOriginal;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.bean.CompanyInformationBean;
+import com.mzkj.bean.OriginalBean;
 import com.mzkj.vo.companyOriginal.CompanyInformationQueryVo;
 import com.mzkj.vo.companyOriginal.CompanyInformationVo;
+
+import java.util.List;
+import java.util.Map;
 
 /** 
  * 说明： 原件管理客户信息接口
@@ -46,5 +51,6 @@ public interface CompanyInformationManager{
 	 */
 	public CompanyInformationVo findById(String CompanyInformationId)throws Exception;
 
+	public Map<String, Integer> holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount() throws Exception;
 }
 

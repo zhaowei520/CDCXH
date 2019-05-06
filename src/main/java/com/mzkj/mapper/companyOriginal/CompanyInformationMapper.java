@@ -4,6 +4,7 @@ import com.mzkj.bean.CompanyInformationBean;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /** 
  * 说明： 原件管理客户信息接口
@@ -43,5 +44,7 @@ public interface CompanyInformationMapper{
 	 * @throws Exception
 	 */
 	public CompanyInformationBean findById(String companyInformationId)throws Exception;
+
+
 }
 
