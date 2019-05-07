@@ -13,11 +13,13 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+//需求
 public class TallyControllerSpec {
 
 
     TallyController tallyController;
     TallyManager tallyManager;
+
     @Before
     public void before(){
         tallyController = spy(TallyController.class);
