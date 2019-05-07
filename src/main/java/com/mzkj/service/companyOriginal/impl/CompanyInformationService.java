@@ -18,6 +18,7 @@ import com.mzkj.vo.companyOriginal.CompanyInformationVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.github.pagehelper.PageHelper;
 
@@ -25,7 +26,11 @@ import com.mzkj.service.companyOriginal.CompanyInformationManager;
 import com.mzkj.mapper.companyOriginal.CompanyInformationMapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import io.swagger.models.auth.In;
 
 /**
  * 说明： 原件管理客户信息
@@ -89,7 +94,7 @@ public class CompanyInformationService implements CompanyInformationManager {
         selectOriginalByInformationBeanList(companyinformationPageBean);
         PageInfo<CompanyInformationQueryVo> pageInfo = new PageInfo(companyinformationPageBean);
         //DO转VO
-        List<CompanyInformationQueryVo> informationQueryVoList = (List<CompanyInformationQueryVo>) ConvertUtil.castListObjectToTargetList(companyinformationPageBean,CompanyInformationQueryVo.class);
+        List<CompanyInformationQueryVo> informationQueryVoList = (List<CompanyInformationQueryVo>) ConvertUtil.castListObjectToTargetList(companyinformationPageBean, CompanyInformationQueryVo.class);
         pageInfo.setList(informationQueryVoList);
         return pageInfo;
     }
@@ -102,8 +107,8 @@ public class CompanyInformationService implements CompanyInformationManager {
      * Date 2019-04-23 14:56
      */
     public void selectOriginalByInformationBeanList(List<CompanyInformationBean> CompanyInformationBeanList) throws Exception {
-        for (CompanyInformationBean companyInformationBean:CompanyInformationBeanList) {
-            List<OriginalBean> originalBeans=originalMapper.findByCompanyInformationId(companyInformationBean.getCompanyInformationId());
+        for (CompanyInformationBean companyInformationBean : CompanyInformationBeanList) {
+            List<OriginalBean> originalBeans = originalMapper.findByCompanyInformationId(companyInformationBean.getCompanyInformationId());
             if (originalBeans != null && originalBeans.size() > 0) {
                 companyInformationBean.setOriginalList(originalBeans);
             }
@@ -113,9 +118,57 @@ public class CompanyInformationService implements CompanyInformationManager {
     @Override
     public CompanyInformationVo findById(String CompanyInformationId) throws Exception {
         CompanyInformationBean companyInformationBean = new CompanyInformationBean();
-        companyInformationBean =companyinformationMapper.findById(CompanyInformationId);
+        companyInformationBean = companyinformationMapper.findById(CompanyInformationId);
         CompanyInformationVo companyinformationVo = ConvertUtil.objectCopyParams(companyInformationBean, CompanyInformationVo.class);
         return companyinformationVo;
+    }
+
+    @Override
+    public Map<String, Integer> holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount() throws Exception {
+        int holdCount = 0;//当前登录人持有原件数量
+        int toBeConfirmedCount = 0;//需确认条数
+        int outgoingCount = 0;//出库中数量
+        int loanInCount = 0;//待借入数量
+        OriginalBean originalBean = new OriginalBean();
+        originalBean.setTenantId(Jurisdiction.getTenant());
+        List<OriginalBean> list = originalMapper.holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount(originalBean);
+        for (OriginalBean originalBean1 : list
+                ) {
+            //如果原件持有人和当前登录人相同
+            if (!StringUtils.isEmpty(originalBean1.getOriginalHolder())&&originalBean1.getOriginalHolder().equals(Jurisdiction.getUsername())) {
+                //如果流转状态为入库
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)) {
+                    holdCount++;
+                }
+                //如果流转状态为出库中
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_1)) {
+                    outgoingCount++;
+                }
+                //如果流转状态为待借入
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_3)) {
+                    toBeConfirmedCount++;
+                }
+            }
+            //如果流转对象和当前登录人相同
+            if (!StringUtils.isEmpty(originalBean1.getOriginalOutTo())&&originalBean1.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
+                //如果流转状态为出库中
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_1)) {
+                    toBeConfirmedCount++;
+                }
+                //如果流转状态为待借入
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_3)) {
+                    loanInCount++;
+                }
+            }
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("holdCount", holdCount);
+        map.put("toBeConfirmedCount", toBeConfirmedCount);
+        map.put("outgoingCount", outgoingCount);
+        map.put("loanInCount", loanInCount);
+
+        return map;
     }
 
 

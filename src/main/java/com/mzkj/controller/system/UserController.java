@@ -130,7 +130,7 @@ public class UserController {
 		return result;
 	}
     /**
-     * 获取所有user
+     * 获取所有user，不包含当前登录人
      * return
      * Author luosc
      * param
@@ -142,7 +142,7 @@ public class UserController {
         logger.info(Jurisdiction.getUsername()+"查看所有用户列表");
         Result<List<UserQueryVo>> result = new Result<>();
         try {
-            List<UserQueryVo>	varList = userService.listAll(userQueryVo);
+            List<UserQueryVo>	varList = userService.listAllAndFilterSelf(userQueryVo);
             result.setData(varList);
         } catch (Exception e) {
             logger.error(e.toString(), e);

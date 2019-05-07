@@ -1,7 +1,9 @@
 package com.mzkj.controller.companyOriginal;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.bean.OriginalBean;
 import com.mzkj.domain.Original;
+import com.mzkj.service.system.impl.UserService;
 import com.mzkj.util.Const;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
@@ -21,8 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mzkj.service.companyOriginal.CompanyInformationManager;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
+import com.mzkj.vo.system.UserVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 说明：原件管理客户信息
@@ -38,6 +42,9 @@ public class CompanyInformationController {
     String menuUrl = "companyInformation/list.do"; //菜单地址(权限用)
     @Autowired
     private CompanyInformationManager companyinformationService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 保存
@@ -149,7 +156,7 @@ public class CompanyInformationController {
      * param
      * Date 2019-04-22 9:02
      */
-    private void constOriginalListToString(PageInfo<CompanyInformationQueryVo> varList) {
+    private void constOriginalListToString(PageInfo<CompanyInformationQueryVo> varList) throws Exception {
         if (varList != null && varList.getList() != null && varList.getList().size() > 0) {
             for (CompanyInformationQueryVo companyInformationQueryVo : varList.getList()) {
                 List<OriginalQueryVo> originalQueryVos = companyInformationQueryVo.getOriginalList();
@@ -159,14 +166,18 @@ public class CompanyInformationController {
                     for (OriginalQueryVo original : originalQueryVos) {
                         String originalName = original.getOriginalName();//原件名
                         String originalHolder = original.getOriginalHolder();//原件持有人
-                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)&&!StringUtils.isEmpty(originalHolder)) {
-                            result += originalName + ":" + originalHolder + ",";
+                        if (!StringUtils.isEmpty(original.getOriginalOutStatus()) && original.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2) && !StringUtils.isEmpty(originalHolder)) {
+                            //将当前持有人userName 转name
+                            UserVo userVo = userService.findByUsername(originalHolder);
+                            if (userVo != null && !StringUtils.isEmpty(userVo.getName())) {
+                                result += originalName + ":" + userVo.getName() + ",";
+                            }
                         } else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_0)) {
                             //无原件
-                            result+= originalName + ":无,";
-                        }else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_1)) {
+                            result += originalName + ":无,";
+                        } else if (!StringUtils.isEmpty(original.getOriginalHoldStatus()) && original.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_1)) {
                             //在客户处
-                            result+= originalName + ":客户处,";
+                            result += originalName + ":客户处,";
                         }
 
                         //流转状态为 出库中
@@ -223,4 +234,29 @@ public class CompanyInformationController {
         }
         return result;
     }
+
+    /**
+     * 统计当前登录人持有原件数量、需确认条数、出库中数量、待借入数量
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-30 17:15
+     */
+    @RequestMapping(value = "/getCount", method = RequestMethod.GET)
+    @ApiOperation(value = "统计", notes = "统计")
+    public Result<Map<String, Integer>> holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount() {
+        Result<Map<String, Integer>> result = new Result<>();
+
+        try {
+            Map<String, Integer> countMap = companyinformationService.holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount();
+            result.setData(countMap);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
 }

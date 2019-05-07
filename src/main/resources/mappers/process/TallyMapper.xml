@@ -485,5 +485,16 @@
 		and f.SIGN_PERSON = #{signPerson} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
 		order by f.C_DATE DESC
 	</select>
+
+	<select id="countProcessNumber" resultType="Integer">
+		select
+		COUNT(DISTINCT f.PROC_INST_ID_)
+		from
+		<include refid="tableName"></include>
+		f
+		LEFT JOIN
+		act_ru_task art ON f.PROC_INST_ID_ = art.PROC_INST_ID_
+		WHERE f.SIGN_PERSON = #{signPerson} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
+	</select>
 	
 </mapper>

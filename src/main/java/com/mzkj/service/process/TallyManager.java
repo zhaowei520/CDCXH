@@ -1,6 +1,7 @@
 package com.mzkj.service.process;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.domain.MyPageInfo;
 import com.mzkj.vo.followUp.FollowUpQueryVo;
 import com.mzkj.vo.process.TallyProcessQueryVo;
 import com.mzkj.vo.process.TallyQueryVo;
@@ -51,6 +52,14 @@ public interface TallyManager {
      * @param followUpQueryVo
      * @throws Exception
      */
-    public PageInfo<FollowUpQueryVo> listProcessByUser(FollowUpQueryVo followUpQueryVo) throws Exception;
+    public MyPageInfo<String,Integer,FollowUpQueryVo> listProcessByUser(FollowUpQueryVo followUpQueryVo) throws Exception;
+
+    /**
+     * 根据创建人查询工商注册流程
+     *
+     * @param
+     * @throws Exception
+     */
+    public Integer countProcessNumber() throws Exception;
 }
 

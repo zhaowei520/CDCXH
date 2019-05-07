@@ -1,13 +1,16 @@
 package com.mzkj.service.companyOriginal.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.DictionariesBean;
 import com.mzkj.bean.OriginalBean;
 import com.mzkj.bean.OriginalProcessRecordsBean;
+import com.mzkj.bean.UserBean;
 import com.mzkj.mapper.companyOriginal.CompanyInformationMapper;
 import com.mzkj.mapper.companyOriginal.OriginalMapper;
 import com.mzkj.mapper.companyOriginal.OriginalProcessRecordsMapper;
 import com.mzkj.mapper.system.DictionariesMapper;
+import com.mzkj.mapper.system.UserMapper;
 import com.mzkj.service.companyOriginal.OriginalManager;
 import com.mzkj.util.Const;
 import com.mzkj.util.ConvertUtil;
@@ -15,8 +18,10 @@ import com.mzkj.util.DateUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
 import com.mzkj.util.UuidUtil;
+import com.mzkj.vo.companyOriginal.OriginalProcessRecordsQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalVo;
+import com.mzkj.vo.system.UserVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +47,8 @@ public class OriginalService implements OriginalManager {
     @Autowired
     private CompanyInformationMapper companyInformationMapper;
 
+    @Autowired
+    private UserMapper userMapper;
     /**
      * 新增
      */
@@ -75,9 +82,32 @@ public class OriginalService implements OriginalManager {
     public OriginalQueryVo findById(OriginalQueryVo originalQueryVo) throws Exception {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalQueryVo, OriginalBean.class);
         originalBean = originalMapper.findById(originalBean);
+        castUsernameToName(originalBean);
         return ConvertUtil.objectCopyParams(originalBean, OriginalQueryVo.class);
     }
-
+    /**
+     * 将username转为name
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-30 14:18
+     */
+    private void castUsernameToName(OriginalBean originalBean) throws Exception {
+        String originalHolder =originalBean.getOriginalHolder();
+        String originalOutTo = originalBean.getOriginalOutTo();
+        if (!StringUtils.isEmpty(originalHolder)) {
+            UserBean userBean=userMapper.findByUsername(originalHolder);
+            if (userBean != null) {
+                originalBean.setOriginalHolder(userBean.getName());
+            }
+        }
+        if (!StringUtils.isEmpty(originalOutTo)) {
+            UserBean userBean=userMapper.findByUsername(originalOutTo);
+            if (userBean != null) {
+                originalBean.setOriginalOutTo(userBean.getName());
+            }
+        }
+    }
     /**
      * 删除
      */
@@ -93,6 +123,7 @@ public class OriginalService implements OriginalManager {
     public void edit(OriginalVo originalVo) throws Exception {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
         originalBean.setTenantId(Jurisdiction.getTenant());
+        originalBean.setOriginalHolder(Jurisdiction.getUsername());
         originalMapper.edit(originalBean);
     }
 
@@ -181,9 +212,34 @@ public class OriginalService implements OriginalManager {
 
         //初始化当前登录人的权限
         initAuthorizedAndCastDicBianmaToName(pageInfo);
-        return pageInfo;
+        return castUsernameToName(pageInfo);
     }
-
+    /**
+     * 将用户名替换为姓名
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-30 11:42
+     */
+    private PageInfo<OriginalQueryVo> castUsernameToName(PageInfo<OriginalQueryVo> OriginalQueryPageVo) throws Exception {
+        List<OriginalQueryVo> list = OriginalQueryPageVo.getList();
+        List<OriginalQueryVo> result = new ArrayList<>();
+        if (list != null && list.size() > 0) {
+            for (int i=0;i<list.size();i++) {
+                OriginalQueryVo originalQueryVo = ConvertUtil.json2Obj(JSON.toJSONString(list.get(i)), OriginalQueryVo.class);
+                String originalHolder = originalQueryVo.getOriginalHolder();
+                if (!StringUtils.isEmpty(originalHolder)) {
+                    UserBean userBean= userMapper.findByUsername(originalHolder);
+                    if (userBean != null && !StringUtils.isEmpty(userBean.getName())) {
+                        originalQueryVo.setOriginalHolder(userBean.getName());
+                    }
+                }
+                result.add(originalQueryVo);
+            }
+        }
+        OriginalQueryPageVo.setList(result);
+        return OriginalQueryPageVo;
+    }
     /**
      * 根据原件持有人，流转状态，持有状态，借出人，查询当前登录人的按钮操作权限
      * return

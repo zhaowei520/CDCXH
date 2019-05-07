@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.CommerceBean;
 import com.mzkj.bean.TallyBean;
 import com.mzkj.convert.FollowUpConvert;
+import com.mzkj.domain.MyPageInfo;
+import com.mzkj.service.followUp.FollowUpManager;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
@@ -20,6 +22,7 @@ import com.mzkj.service.process.TallyManager;
 import com.mzkj.mapper.process.TallyMapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 说明： 代理记账
@@ -32,6 +35,8 @@ public class TallyService implements TallyManager {
     @Autowired
     private TallyMapper tallyMapper;
 
+    @Autowired
+    private FollowUpManager followUpService;
     /**
      * 新增
      *
@@ -90,7 +95,7 @@ public class TallyService implements TallyManager {
     }
 
     @Override
-    public PageInfo<FollowUpQueryVo> listProcessByUser(FollowUpQueryVo followUpQueryVo) throws Exception {
+    public MyPageInfo<String,Integer,FollowUpQueryVo> listProcessByUser(FollowUpQueryVo followUpQueryVo) throws Exception {
         //将vo转DO并将分页信息传到pageHelper
         TallyBean tallyBean = FollowUpConvert.followUpVoToTallyProcessBean(followUpQueryVo);
         //设置租户ID
@@ -98,14 +103,21 @@ public class TallyService implements TallyManager {
         tallyBean.setSignPerson(Jurisdiction.getU_name());
         List<TallyBean> tallyBeanPageBean = tallyMapper.listProcessByUser(tallyBean);
         //DO转VO
-        PageInfo<FollowUpQueryVo> pageInfo = new PageInfo(tallyBeanPageBean);
+        MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(tallyBeanPageBean);
         List<FollowUpQueryVo> followUpQueryVoList =
             FollowUpConvert.tallyProcessBeanToFollowUpVo(tallyBeanPageBean);
-        pageInfo.setList(followUpQueryVoList);
-        pageInfo.setPageSize(followUpQueryVo.getPageSize());
-        pageInfo.setPageNum(followUpQueryVo.getPageNum());
-        return pageInfo;
+        //统计所有工单数量
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber();
+        myPageInfo.setMap(allProcessNumber);
+        myPageInfo.setList(followUpQueryVoList);
+        myPageInfo.setPageSize(followUpQueryVo.getPageSize());
+        myPageInfo.setPageNum(followUpQueryVo.getPageNum());
+        return myPageInfo;
     }
 
+    @Override
+    public Integer countProcessNumber() throws Exception {
+        return tallyMapper.countProcessNumber(Jurisdiction.getTenant(), Jurisdiction.getU_name());
+    }
 }
 

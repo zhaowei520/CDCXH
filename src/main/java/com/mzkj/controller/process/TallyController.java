@@ -2,6 +2,7 @@ package com.mzkj.controller.process;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.controller.base.BaseController;
+import com.mzkj.domain.MyPageInfo;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
 import com.mzkj.util.enums.HttpCode;
@@ -144,16 +145,16 @@ public class TallyController extends BaseController {
      */
     @RequestMapping(value="/listProcessByUser", method = RequestMethod.POST)
     @ApiOperation(value = "根据创建人查询代理记账跟进流程", notes = "根据创建人查询代理记账跟进流程")
-    public Result<PageInfo<FollowUpQueryVo>> listProcessByUser(FollowUpQueryVo followUpQueryVo) {
+    public Result<MyPageInfo<String,Integer,FollowUpQueryVo>> listProcessByUser(FollowUpQueryVo followUpQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看代理记账流程跟进信息");
-        Result<PageInfo<FollowUpQueryVo>> result = new Result<>();
+        Result<MyPageInfo<String,Integer,FollowUpQueryVo>> result = new Result<>();
         if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
         try {
-            PageInfo<FollowUpQueryVo>	varList = tallyService.listProcessByUser(followUpQueryVo);
+            MyPageInfo<String,Integer,FollowUpQueryVo>	varList = tallyService.listProcessByUser(followUpQueryVo);
             varList.setList(addCHNName(varList.getList()));
             result.setData(varList);
         } catch (Exception e) {

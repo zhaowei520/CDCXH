@@ -3,6 +3,9 @@ package com.mzkj.vo.followUp;
 import com.mzkj.vo.BaseVo;
 import io.swagger.annotations.ApiModel;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 说明： 跟进查询vo
  * 创建人：zw
@@ -24,6 +27,9 @@ public class FollowUpQueryVo extends BaseVo {
     //工作流act_ru_task表信息
     private String actAssignee;
     private String actName;
+
+    //所有工单统计数量
+    private Map<String, Integer> allProcessNumber = new HashMap();
 
     public String getExcutionId() {
         return excutionId;
@@ -119,6 +125,14 @@ public class FollowUpQueryVo extends BaseVo {
 
     public void setActName(String actName) {
         this.actName = actName;
+    }
+
+    public Map<String, Integer> getAllProcessNumber() {
+        return allProcessNumber;
+    }
+
+    public void setAllProcessNumber(Map<String, Integer> allProcessNumber) {
+        this.allProcessNumber = allProcessNumber;
     }
 }
 

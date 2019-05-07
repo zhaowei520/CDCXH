@@ -9,6 +9,8 @@ import com.mzkj.vo.system.UserQueryVo;
 import com.mzkj.vo.system.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import com.github.pagehelper.PageHelper;
 
 import com.mzkj.service.system.UserManager;
@@ -90,14 +92,14 @@ public class UserService implements UserManager {
     }
 
 	/**
-	 * 获取所有用户
+	 * 获取所有用户,不包含当前登录人
 	 * return
 	 * Author luosc
 	 * param
 	 * Date 2019-04-25 11:04
 	 */
 	@Override
-	public List<UserQueryVo> listAll(UserQueryVo userQueryVo) throws Exception {
+	public List<UserQueryVo> listAllAndFilterSelf(UserQueryVo userQueryVo) throws Exception {
 		//将vo转DO
 		UserBean userBean = ConvertUtil.objectCopyParams(userQueryVo, UserBean.class);
 		userBean.setTenantId(Jurisdiction.getTenant());
@@ -107,7 +109,11 @@ public class UserService implements UserManager {
 		for (UserBean userBean1:userBeanList
 			 ) {
 			UserQueryVo queryVo = ConvertUtil.objectCopyParams(userBean1, UserQueryVo.class);
-			userQueryVoList.add(queryVo);
+			//过滤当前登录人
+            if (!StringUtils.isEmpty(Jurisdiction.getUsername()) && Jurisdiction.getUsername().equals(queryVo.getUsername())) {
+            } else {
+                userQueryVoList.add(queryVo);
+            }
 		}
 		return userQueryVoList;
 	}

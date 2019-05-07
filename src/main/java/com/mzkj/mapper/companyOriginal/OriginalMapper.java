@@ -1,5 +1,6 @@
 package com.mzkj.mapper.companyOriginal;
 
+import com.mzkj.bean.CompanyInformationBean;
 import com.mzkj.bean.OriginalBean;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -89,6 +90,14 @@ public interface OriginalMapper{
 	 * Date 2019-04-23 13:59
 	 */
 	public List<OriginalBean> findByCompanyInformationId(String companyInformationId) throws Exception;
-	
+
+	/**
+	 * 统计当前登录人持有原件数量、需确认条数、出库中数量、待借入数量
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-30 17:27
+	 */
+	public List<OriginalBean> holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount(OriginalBean originalBean) throws Exception;
 }
 

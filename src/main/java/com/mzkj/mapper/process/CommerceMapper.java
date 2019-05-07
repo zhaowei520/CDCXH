@@ -2,6 +2,7 @@ package com.mzkj.mapper.process;
 
 import com.mzkj.bean.CommerceBean;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -53,5 +54,13 @@ public interface CommerceMapper {
      * @throws Exception
      */
     public List<CommerceBean> listProcessByUser(CommerceBean commerceBean) throws Exception;
+
+    /**
+     * 根据创建人查询工商注册流程
+     *
+     * @param
+     * @throws Exception
+     */
+    Integer countProcessNumber(@Param("tenantId") String tenant,@Param("saler") String u_name) throws Exception;
 }
 
