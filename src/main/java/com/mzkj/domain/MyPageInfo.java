@@ -17,8 +17,8 @@ public class MyPageInfo<K,V,T> extends PageInfo {
 
     private Map<K,V> map = new HashMap<>();
 
-    public MyPageInfo(List<T> commercePageBean) {
-        super(commercePageBean, 8);
+    public MyPageInfo(List<T> list) {
+        super(list, 8);
     }
 
     public Map<K, V> getMap() {

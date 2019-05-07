@@ -7,7 +7,7 @@
     <groupId>com.mzkj</groupId>
     <artifactId>CDCXH</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>CDCXH</name>
     <description>salary project for Spring Boot</description>
@@ -22,9 +22,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <!-- docker镜像前缀名-->
         <docker.image.prefix>CDCXH</docker.image.prefix>
+        <start-class>com.mzkj.Application</start-class>
     </properties>
 
     <dependencies>
@@ -92,7 +93,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <!--shiro-->
         <dependency>
@@ -129,6 +130,27 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
