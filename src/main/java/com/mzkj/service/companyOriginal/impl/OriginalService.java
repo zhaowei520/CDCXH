@@ -123,7 +123,12 @@ public class OriginalService implements OriginalManager {
     public void edit(OriginalVo originalVo) throws Exception {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
         originalBean.setTenantId(Jurisdiction.getTenant());
-        originalBean.setOriginalHolder(Jurisdiction.getUsername());
+        String originalHoldStatus =originalBean.getOriginalHoldStatus();
+        if (!StringUtils.isEmpty(originalHoldStatus) && originalHoldStatus.equals(Const.ORIGINAL_HOLD_STATUS_2)) {
+            originalBean.setOriginalHolder(Jurisdiction.getUsername());
+        } else {
+            originalBean.setOriginalHolder("");
+        }
         originalMapper.edit(originalBean);
     }
 
