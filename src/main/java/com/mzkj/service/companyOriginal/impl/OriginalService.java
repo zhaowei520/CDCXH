@@ -155,9 +155,11 @@ public class OriginalService implements OriginalManager {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
         //插入原件流转记录表
         initOriginalProcessRecords(originalBean, Const.LOAN_OUT_CONFIRMED);
+        originalBean =originalMapper.findById(originalBean);
         originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_2);
         originalBean.setOriginalHolder(originalBean.getOriginalOutTo());//借入人确认，当前持有人变成当前借出对象
         originalBean.setOriginalOutTo(null);
+
         originalMapper.loanOutConfirmed(originalBean);
     }
 

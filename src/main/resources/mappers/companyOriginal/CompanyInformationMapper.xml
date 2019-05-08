@@ -116,7 +116,7 @@
             AND f.TENANT_ID_= #{tenantId}
         </if>
         <if test="companyName != null and companyName != ''">
-        AND f.COMPANY_NAME = #{companyName}
+        AND f.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
         </if>
         <if test="originalHolderDepartment != null and originalHolderDepartment != ''">
             AND o.ORIGINAL_HOLDER_DEPARTMENT = #{originalHolderDepartment}
