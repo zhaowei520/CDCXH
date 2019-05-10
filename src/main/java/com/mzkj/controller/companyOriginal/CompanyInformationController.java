@@ -1,5 +1,6 @@
 package com.mzkj.controller.companyOriginal;
 
+import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.OriginalBean;
 import com.mzkj.domain.Original;
@@ -39,7 +40,7 @@ import java.util.Map;
 public class CompanyInformationController {
 
     private static Logger logger = LogManager.getLogger(CompanyInformationController.class);
-    String menuUrl = "companyInformation/list.do"; //菜单地址(权限用)
+    String menuUrl = "/companyInformation"; //菜单地址(权限用)
     @Autowired
     private CompanyInformationManager companyinformationService;
 
@@ -125,9 +126,9 @@ public class CompanyInformationController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ApiOperation(value = "分页查询CompanyInformation", notes = "分页查询CompanyInformation")
-    public Result<PageInfo<CompanyInformationQueryVo>> list(CompanyInformationQueryVo companyinformationQueryVo) {
+    public Result<PageData> list(CompanyInformationQueryVo companyinformationQueryVo) {
         logger.info(Jurisdiction.getUsername() + "查看原件管理客户信息");
-        Result<PageInfo<CompanyInformationQueryVo>> result = new Result<>();
+        Result<PageData> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "cha")) {
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
@@ -137,8 +138,10 @@ public class CompanyInformationController {
             PageInfo<CompanyInformationQueryVo> varList = companyinformationService.list(companyinformationQueryVo);
             //设置原件信息
             constOriginalListToString(varList);
-
-            result.setData(varList);
+            PageData resultdata = new PageData();
+            resultdata.put("varList", varList);
+            resultdata.put("QX", Jurisdiction.getHC());
+            result.setData(resultdata);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
