@@ -10,16 +10,16 @@ package com.mzkj.vo;
  */
 public class Result<T> {
 
-  private boolean success = true;// 是否成功
-  private int status = 200;// 状态代码
-  private String msg = "操作成功";// 提示信息
+    private Boolean success;// 是否成功
+    private int status;// 状态代码
+    private String msg;// 提示信息
   private T data; // 返回数据
 
-  public boolean isSuccess() {
+    public Boolean isSuccess() {
     return success;
   }
 
-  public void setSuccess(boolean success) {
+    public void setSuccess(Boolean success) {
     this.success = success;
   }
 
