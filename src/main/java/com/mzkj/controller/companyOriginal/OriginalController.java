@@ -1,5 +1,6 @@
 package com.mzkj.controller.companyOriginal;
 
+import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.util.Const;
 import com.mzkj.util.Jurisdiction;
@@ -29,7 +30,7 @@ import com.mzkj.service.companyOriginal.OriginalManager;
 public class OriginalController {
 
     private static Logger logger = LogManager.getLogger(OriginalController.class);
-	String menuUrl = "original/list.do"; //菜单地址(权限用)
+	String menuUrl = "/original"; //菜单地址(权限用)
     @Autowired
 	private OriginalManager originalService;
 
@@ -136,9 +137,9 @@ public class OriginalController {
 	 */
 	@RequestMapping(value="/list", method = RequestMethod.POST)
     @ApiOperation(value = "分页查询template", notes = "分页查询template")
-	public Result<PageInfo<OriginalQueryVo>> list(OriginalQueryVo originalQueryVo) {
+	public Result<PageData> list(OriginalQueryVo originalQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看公司原件详情");
-        Result<PageInfo<OriginalQueryVo>> result = new Result<>();
+        Result<PageData> result = new Result<>();
         if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
@@ -146,7 +147,10 @@ public class OriginalController {
         }
         try {
             PageInfo<OriginalQueryVo>	varList = originalService.list(originalQueryVo);
-            result.setData(varList);
+            PageData resultdata = new PageData();
+            resultdata.put("varList", varList);
+            resultdata.put("QX", Jurisdiction.getHC());
+            result.setData(resultdata);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());

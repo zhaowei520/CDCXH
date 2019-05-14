@@ -26,7 +26,10 @@ public class Const {
     public static final String SESSION_allmenuList = "allmenuList"; // 全部菜单
     public static final String SESSION_QX = "QX"; // 主职角色权限
     public static final String SESSION_QX2 = "QX2"; // 副职角色权限
-
+    public static final String LOGIN = "/index/login_toLogin";//登录方法
+    public static final String NO_INTERCEPTOR_PATH =
+            ".*/((login)|(logout)|(code)|(app)|(weixin)|(static)|(main)|(websocket)|(uploadImgs)|(fileServerDir)|(mp)).*"; // 不对匹配该值的访问路径拦截（正则）
+    public static final String SESSION_USER = "sessionUser"; // session用的用户
     // 状态
     public static final int STATUS_0 = 0;
     public static final int STATUS_1 = 1;
