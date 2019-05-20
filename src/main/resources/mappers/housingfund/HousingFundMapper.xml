@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.housingfund.HousingFundMapper">
+
+    <resultMap id="housingFundMap" type="com.mzkj.bean.HousingFundBean">
+        <id column="HOUSINGFUND_ID" javaType="string" property="housingFundId" />
+            <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+            <result column="REGISTERED_AREA" javaType="String" property="registeredArea"/>
+            <result column="CUSTOMER_PHONE" javaType="String" property="customerPhone"/>
+            <result column="ADDRESS" javaType="String" property="address"/>
+            <result column="CUSTOMER" javaType="String" property="customer"/>
+            <result column="FEES" javaType="String" property="fees"/>
+            <result column="SALER" javaType="String" property="saler"/>
+            <result column="BUY_START_MONTH" javaType="String" property="buyStartMonth"/>
+            <result column="OPEN_ACCOUNT" javaType="String" property="openAccount"/>
+            <result column="BACK_ACCOUNT" javaType="String" property="backAccount"/>
+            <result column="BUY_TYPE" javaType="String" property="buyType"/>
+            <result column="PERSONAL_INFORMATION" javaType="String" property="personalInformation"/>
+            <result column="IDENTITY_CARD_NUMBER" javaType="String" property="identityCardNumber"/>
+            <result column="CREATE_USER" javaType="String" property="createUser"/>
+            <result column="CREATE_DATE" javaType="String" property="createDate"/>
+            <result column="UPDATE_USER" javaType="String" property="updateUser"/>
+            <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+            <result column="DATA_PRIVILEGE_CODE" javaType="String" property="dataPrivilegeCode"/>
+    </resultMap>
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		TB_HOUSINGFUND
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.COMPANY_NAME,	
+		f.REGISTERED_AREA,	
+		f.CUSTOMER_PHONE,	
+		f.ADDRESS,	
+		f.CUSTOMER,	
+		f.FEES,	
+		f.SALER,	
+		f.BUY_START_MONTH,	
+		f.OPEN_ACCOUNT,	
+		f.BACK_ACCOUNT,	
+		f.BUY_TYPE,	
+		f.PERSONAL_INFORMATION,	
+		f.IDENTITY_CARD_NUMBER,	
+		f.CREATE_USER,	
+		f.CREATE_DATE,	
+		f.UPDATE_USER,	
+		f.UPDATE_DATE,	
+		f.TENANT_ID_,	
+		f.DATA_PRIVILEGE_CODE,
+		f.HOUSINGFUND_ID
+	</sql>
+
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		COMPANY_NAME,	
+		REGISTERED_AREA,	
+		CUSTOMER_PHONE,	
+		ADDRESS,	
+		CUSTOMER,	
+		FEES,	
+		SALER,	
+		BUY_START_MONTH,	
+		OPEN_ACCOUNT,	
+		BACK_ACCOUNT,	
+		BUY_TYPE,	
+		PERSONAL_INFORMATION,	
+		IDENTITY_CARD_NUMBER,	
+		CREATE_USER,	
+		CREATE_DATE,	
+		UPDATE_USER,	
+		UPDATE_DATE,	
+		TENANT_ID_,	
+		DATA_PRIVILEGE_CODE,	
+		HOUSINGFUND_ID
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{companyName},
+		#{registeredArea},
+		#{customerPhone},
+		#{address},
+		#{customer},
+		#{fees},
+		#{saler},
+		#{buyStartMonth},
+		#{openAccount},
+		#{backAccount},
+		#{buyType},
+		#{personalInformation},
+		#{identityCardNumber},
+		#{createUser},
+		#{createDate},
+		#{updateUser},
+		#{updateDate},
+		#{tenantId},
+		#{dataPrivilegeCode},
+		#{housingFundId}
+	</sql>
+
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.HousingFundBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.HousingFundBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			HOUSINGFUND_ID = #{housingFundId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.HousingFundBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			COMPANY_NAME = #{companyName},
+			REGISTERED_AREA = #{registeredArea},
+			CUSTOMER_PHONE = #{customerPhone},
+			ADDRESS = #{address},
+			CUSTOMER = #{customer},
+			FEES = #{fees},
+			SALER = #{saler},
+			BUY_START_MONTH = #{buyStartMonth},
+			OPEN_ACCOUNT = #{openAccount},
+			BACK_ACCOUNT = #{backAccount},
+			BUY_TYPE = #{buyType},
+			PERSONAL_INFORMATION = #{personalInformation},
+			IDENTITY_CARD_NUMBER = #{identityCardNumber},
+			UPDATE_USER = #{updateUser},
+			UPDATE_DATE = #{updateDate},
+			DATA_PRIVILEGE_CODE = #{dataPrivilegeCode},
+			HOUSINGFUND_ID = #{housingFundId}
+		where 
+			HOUSINGFUND_ID = #{housingFundId}
+	</update>
+
+    <!--根据ID查询-->
+	<select id="findById" parameterType="String" resultMap="housingFundMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include> f
+		where HOUSINGFUND_ID = #{housingFundId}
+	</select>
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.HousingFundBean" resultMap="housingFundMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+		order by f.CREATE_DATE DESC
+	</select>
+	
+</mapper>

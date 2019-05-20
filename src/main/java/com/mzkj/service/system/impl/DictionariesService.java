@@ -98,5 +98,42 @@ public class DictionariesService implements DictionariesManager{
 		return dictionariesQueryVoList;
 	}
 
+	/**
+	 * 通过编码查询字典TREE
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-05-15 14:33
+	 */
+	@Override
+	public DictionariesQueryVo findDicTreeByBianma(String bianma) throws Exception {
+		DictionariesBean dictionariesBean = new DictionariesBean();
+		dictionariesBean.setBianma(bianma);
+		//通过编码查询菜单
+		DictionariesBean dictionarieBean = dictionariesMapper.findByBianma(dictionariesBean);
+		//do转VO
+		DictionariesQueryVo dictionariesQueryVo = ConvertUtil.objectCopyParams(dictionarieBean, DictionariesQueryVo.class);
+		//通过parentId查询
+		List<DictionariesBean> dictionariesBeans = dictionariesMapper.findChildListByParentId(dictionarieBean.getDictionariesId());
+		List<DictionariesQueryVo> list = new ArrayList<>();
+		for (DictionariesBean dictionarieBean1:dictionariesBeans) {
+			DictionariesQueryVo dictionariesQueryVo1 = ConvertUtil.objectCopyParams(dictionarieBean1, DictionariesQueryVo.class);
+			dictionariesQueryVo1.setChildTreeList(getChildList(dictionariesQueryVo1));
+			list.add(dictionariesQueryVo1);
+		}
+		dictionariesQueryVo.setChildTreeList(list);
+		return dictionariesQueryVo;
+	}
+
+	private List<DictionariesQueryVo> getChildList(DictionariesQueryVo dictionariesQueryVo) throws Exception {
+		List<DictionariesBean>  list=dictionariesMapper.findChildListByParentId(dictionariesQueryVo.getDictionariesId());
+		List<DictionariesQueryVo> dictionariesQueryVos = new ArrayList<>();
+		for (DictionariesBean d:list) {
+			DictionariesQueryVo dictionariesQueryVo1 = ConvertUtil.objectCopyParams(d, DictionariesQueryVo.class);
+			dictionariesQueryVo1.setChildTreeList(getChildList(dictionariesQueryVo1));
+			dictionariesQueryVos.add(dictionariesQueryVo1);
+		}
+		return dictionariesQueryVos;
+	}
 }
 

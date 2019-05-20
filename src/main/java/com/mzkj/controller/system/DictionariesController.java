@@ -153,4 +153,28 @@ public class DictionariesController {
         }
         return result;
     }
+
+    /**
+     * 通过编码查询字典tree
+     * return
+     * Author luosc
+     * param
+     * Date 2019-05-15 14:30
+     */
+    @RequestMapping(value="/findChildlTreeListByBianma", method = RequestMethod.GET)
+    @ApiOperation(value = "通过编码查询子菜单Tree列表", notes = "通过编码查询子菜单Tree列表")
+    public Result<DictionariesQueryVo> findTreelListByBianma(String bianma) {
+        logger.info(Jurisdiction.getUsername()+"查看字典");
+        Result<DictionariesQueryVo> result = new Result<>();
+        try {
+            DictionariesQueryVo	dictionariesQueryVo = dictionariesService.findDicTreeByBianma(bianma);
+            result.setData(dictionariesQueryVo);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
 }

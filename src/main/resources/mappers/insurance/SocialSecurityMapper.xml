@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.insurance.SocialSecurityMapper">
+
+    <resultMap id="socialSecurityMap" type="com.mzkj.bean.SocialSecurityBean">
+        <id column="SOCIALSECURITY_ID" javaType="string" property="socialSecurityId" />
+            <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+            <result column="CUSTOMER" javaType="String" property="customer"/>
+            <result column="REGISTERED_AREA" javaType="String" property="registeredArea"/>
+            <result column="CUSTOMER_PHONE" javaType="String" property="customerPhone"/>
+            <result column="ADDRESS" javaType="String" property="address"/>
+            <result column="FEES" javaType="String" property="fees"/>
+            <result column="SALER" javaType="String" property="saler"/>
+            <result column="BUY_START_MONTH" javaType="String" property="buyStartMonth"/>
+            <result column="IS_CREDIT_CARD" javaType="String" property="isCreditCard"/>
+            <result column="OPEN_ACCOUNT" javaType="String" property="openAccount"/>
+            <result column="BACK_ACCOUNT" javaType="String" property="backAccount"/>
+            <result column="BUY_TYPE" javaType="String" property="buyType"/>
+            <result column="PERSONAL_INFORMATION" javaType="String" property="personalInformation"/>
+            <result column="IS_LEGAL_PERSON_BUY" javaType="String" property="isLegalPersonBuy"/>
+            <result column="LEGAL_PERSON_CERTIFICATE" javaType="String" property="legalPersonCertificate"/>
+            <result column="IS_CLERK_STOP_BUY_INSURANCE" javaType="String" property="isClerkStopBuyInsurance"/>
+            <result column="IDENTITY_CARD_NUMBER" javaType="String" property="identityCardNumber"/>
+            <result column="CREATE_USER" javaType="String" property="createUser"/>
+            <result column="CREATE_DATE" javaType="String" property="createDate"/>
+            <result column="UPDATE_USER" javaType="String" property="updateUser"/>
+            <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+            <result column="DATA_PRIVILEGE_CODE" javaType="String" property="dataPrivilegeCode"/>
+
+    </resultMap>
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		TB_SOCIALSECURITY
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.COMPANY_NAME,	
+		f.CUSTOMER,	
+		f.REGISTERED_AREA,	
+		f.CUSTOMER_PHONE,	
+		f.ADDRESS,	
+		f.FEES,	
+		f.SALER,	
+		f.BUY_START_MONTH,	
+		f.IS_CREDIT_CARD,	
+		f.OPEN_ACCOUNT,	
+		f.BACK_ACCOUNT,	
+		f.BUY_TYPE,	
+		f.PERSONAL_INFORMATION,	
+		f.IS_LEGAL_PERSON_BUY,	
+		f.LEGAL_PERSON_CERTIFICATE,	
+		f.IS_CLERK_STOP_BUY_INSURANCE,	
+		f.IDENTITY_CARD_NUMBER,	
+		f.CREATE_USER,	
+		f.CREATE_DATE,	
+		f.UPDATE_USER,	
+		f.UPDATE_DATE,	
+		f.TENANT_ID_,	
+		f.DATA_PRIVILEGE_CODE,	
+		f.SOCIALSECURITY_ID
+	</sql>
+
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		COMPANY_NAME,	
+		CUSTOMER,	
+		REGISTERED_AREA,	
+		CUSTOMER_PHONE,	
+		ADDRESS,	
+		FEES,	
+		SALER,	
+		BUY_START_MONTH,	
+		IS_CREDIT_CARD,	
+		OPEN_ACCOUNT,	
+		BACK_ACCOUNT,	
+		BUY_TYPE,	
+		PERSONAL_INFORMATION,	
+		IS_LEGAL_PERSON_BUY,	
+		LEGAL_PERSON_CERTIFICATE,	
+		IS_CLERK_STOP_BUY_INSURANCE,	
+		IDENTITY_CARD_NUMBER,	
+		CREATE_USER,	
+		CREATE_DATE,	
+		UPDATE_USER,	
+		UPDATE_DATE,	
+		TENANT_ID_,	
+		DATA_PRIVILEGE_CODE,	
+		SOCIALSECURITY_ID
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{companyName},
+		#{customer},
+		#{registeredArea},
+		#{customerPhone},
+		#{address},
+		#{fees},
+		#{saler},
+		#{buyStartMonth},
+		#{isCreditCard},
+		#{openAccount},
+		#{backAccount},
+		#{buyType},
+		#{personalInformation},
+		#{isLegalPersonBuy},
+		#{legalPersonCertificate},
+		#{isClerkStopBuyInsurance},
+		#{identityCardNumber},
+		#{createUser},
+		#{createDate},
+		#{updateUser},
+		#{updateDate},
+		#{tenantId},
+		#{dataPrivilegeCode},
+		#{socialSecurityId}
+	</sql>
+
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.SocialSecurityBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.SocialSecurityBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			SOCIALSECURITY_ID = #{socialSecurityId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.SocialSecurityBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			COMPANY_NAME = #{companyName},
+			CUSTOMER = #{customer},
+			REGISTERED_AREA = #{registeredArea},
+			CUSTOMER_PHONE = #{customerPhone},
+			ADDRESS = #{address},
+			FEES = #{fees},
+			SALER = #{saler},
+			BUY_START_MONTH = #{buyStartMonth},
+			IS_CREDIT_CARD = #{isCreditCard},
+			OPEN_ACCOUNT = #{openAccount},
+			BACK_ACCOUNT = #{backAccount},
+			BUY_TYPE = #{buyType},
+			PERSONAL_INFORMATION = #{personalInformation},
+			IS_LEGAL_PERSON_BUY = #{isLegalPersonBuy},
+			LEGAL_PERSON_CERTIFICATE = #{legalPersonCertificate},
+			IS_CLERK_STOP_BUY_INSURANCE = #{isClerkStopBuyInsurance},
+			IDENTITY_CARD_NUMBER = #{identityCardNumber},
+			UPDATE_USER = #{updateUser},
+			UPDATE_DATE = #{updateDate},
+			SOCIALSECURITY_ID = #{socialSecurityId}
+		where 
+			SOCIALSECURITY_ID = #{socialSecurityId}
+	</update>
+	<!--根据ID查询-->
+	<select id="findById" parameterType="String" resultMap="socialSecurityMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include> f
+		where f.SOCIALSECURITY_ID = #{socialSecurityId}
+	</select>
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.SocialSecurityBean" resultMap="socialSecurityMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+
+		order by f.CREATE_DATE DESC
+	</select>
+
+</mapper>
