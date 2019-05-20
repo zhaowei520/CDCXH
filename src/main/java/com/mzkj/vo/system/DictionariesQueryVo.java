@@ -1,6 +1,9 @@
 package com.mzkj.vo.system;
 
 import com.mzkj.vo.BaseVo;
+
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,6 +26,15 @@ private String dictionariesId;
         private String tbfield;
         private String yndel;
         private String tenantId;
+        private List<DictionariesQueryVo> childTreeList;
+
+    public List<DictionariesQueryVo> getChildTreeList() {
+        return childTreeList;
+    }
+
+    public void setChildTreeList(List<DictionariesQueryVo> childTreeList) {
+        this.childTreeList = childTreeList;
+    }
 
     public String getDictionariesId(){
         return dictionariesId;

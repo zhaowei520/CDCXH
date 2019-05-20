@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.customer.CustomerMapper">
+
+    <resultMap id="customerMap" type="com.mzkj.bean.CustomerBean">
+        <id column="CUSTOMER_ID" javaType="string" property="customerId" />
+            <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+            <result column="CONTRACT_NUM" javaType="String" property="contractNum"/>
+            <result column="INSDUTRY" javaType="String" property="insdutry"/>
+            <result column="CUSTOMER_SEGMENTATION" javaType="String" property="customerSegmentation"/>
+            <result column="VAT_TYPE" javaType="String" property="vatType"/>
+            <result column="CHIEF_ACCOUNTANT" javaType="String" property="chiefAccountant"/>
+            <result column="COST_ACCOUNTANT" javaType="String" property="costAccountant"/>
+            <result column="TAX_ACCOUNTANT" javaType="String" property="taxAccountant"/>
+            <result column="MONTHLY_FEE" javaType="Double" property="monthlyFee"/>
+            <result column="DPO" javaType="String" property="dpo"/>
+            <result column="NEXT_PAYMENT_MONTH" javaType="String" property="nextPaymentMonth"/>
+            <result column="LINKMAN" javaType="String" property="linkman"/>
+            <result column="LINKMAN_PHONE_NUM" javaType="String" property="linkmanPhoneNum"/>
+            <result column="JOB_REBORTER" javaType="String" property="jobReborter"/>
+            <result column="JOB_REBORTER_PHONE_NUM" javaType="String" property="jobReborterPhoneNum"/>
+            <result column="CONTACT_ADDRESS" javaType="String" property="contactAddress"/>
+            <result column="LEGAL_REPRESENTATIVE" javaType="String" property="legalRepresentative"/>
+            <result column="LEGAL_PHONE_NUM" javaType="String" property="legalPhoneNum"/>
+            <result column="IDENTITY_NUM" javaType="String" property="identityNum"/>
+            <result column="SHAREHOLDER" javaType="String" property="shareholder"/>
+            <result column="LICENSE_REGISTRATION_DATE" javaType="String" property="licenseRegistrationDate"/>
+            <result column="REGISTERED_CAPITAL" javaType="Double" property="registeredCapital"/>
+            <result column="SUBMISSION_DATE" javaType="String" property="submissionDate"/>
+            <result column="IS_WHETHER_PAY" javaType="String" property="isWhetherPay"/>
+            <result column="UNIFORM_CODE" javaType="String" property="uniformCode"/>
+            <result column="BUSINESS_SCOPE" javaType="String" property="businessScope"/>
+            <result column="REGISTERED" javaType="String" property="registered"/>
+            <result column="BANK" javaType="String" property="bank"/>
+            <result column="BANK_ACCOUNT_NO" javaType="String" property="bankAccountNo"/>
+            <result column="NATIONAL_TAX_PWD" javaType="String" property="nationalTaxPwd"/>
+            <result column="LOCAL_TAX_PWD" javaType="String" property="localTaxPwd"/>
+            <result column="BUSINESS_PWD" javaType="String" property="businessPwd"/>
+            <result column="NATIONAL_ADMIN" javaType="String" property="nationalAdmin"/>
+            <result column="NATIONAL_ADMIN_PHONE_NUM" javaType="String" property="nationalAdminPhoneNum"/>
+            <result column="LOCAL_ADMIN" javaType="String" property="localAdmin"/>
+            <result column="LOCAL_ADMIN_PHONE_NUM" javaType="String" property="localAdminPhoneNum"/>
+            <result column="VAT_TAX_BURDEN" javaType="String" property="vatTaxBurden"/>
+            <result column="CORPORATE_INCOME_TAX" javaType="String" property="corporateIncomeTax"/>
+            <result column="OVERALL_TAX_BURDEN" javaType="String" property="overallTaxBurden"/>
+            <result column="CREATER" javaType="String" property="creater"/>
+            <result column="CREATE_DATE" javaType="String" property="createDate"/>
+            <result column="UPDATER" javaType="String" property="updater"/>
+            <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
+            <result column="BUSINESSID" javaType="String" property="businessid"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+            <result column="CUSTOMER_FOCUS" javaType="String" property="customerFocus"/>
+            <result column="CUSTOMER_PERSONALITY_DESCRIPTION" javaType="String" property="customerPersonalityDescription"/>
+            <result column="REGISTER_AREA" javaType="String" property="registerArea"/>
+            <result column="ACCOUNTANT" javaType="String" property="accountant"/>
+            <result column="OFFICE_WORKER" javaType="String" property="officeWorker"/>
+            <result column="CUSTOMER_TYPE" javaType="String" property="customerType"/>
+            <result column="FILED_MANAGER" javaType="String" property="filedManager"/>
+    </resultMap>
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		TB_CUSTOMER
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.COMPANY_NAME,	
+		f.CONTRACT_NUM,	
+		f.INSDUTRY,	
+		f.CUSTOMER_SEGMENTATION,	
+		f.VAT_TYPE,	
+		f.CHIEF_ACCOUNTANT,	
+		f.COST_ACCOUNTANT,	
+		f.TAX_ACCOUNTANT,	
+		f.MONTHLY_FEE,	
+		f.DPO,	
+		f.NEXT_PAYMENT_MONTH,	
+		f.LINKMAN,	
+		f.LINKMAN_PHONE_NUM,	
+		f.JOB_REBORTER,	
+		f.JOB_REBORTER_PHONE_NUM,	
+		f.CONTACT_ADDRESS,	
+		f.LEGAL_REPRESENTATIVE,	
+		f.LEGAL_PHONE_NUM,	
+		f.IDENTITY_NUM,	
+		f.SHAREHOLDER,	
+		f.LICENSE_REGISTRATION_DATE,	
+		f.REGISTERED_CAPITAL,	
+		f.SUBMISSION_DATE,	
+		f.IS_WHETHER_PAY,	
+		f.UNIFORM_CODE,	
+		f.BUSINESS_SCOPE,	
+		f.REGISTERED,	
+		f.BANK,	
+		f.BANK_ACCOUNT_NO,	
+		f.NATIONAL_TAX_PWD,	
+		f.LOCAL_TAX_PWD,	
+		f.BUSINESS_PWD,	
+		f.NATIONAL_ADMIN,	
+		f.NATIONAL_ADMIN_PHONE_NUM,	
+		f.LOCAL_ADMIN,	
+		f.LOCAL_ADMIN_PHONE_NUM,	
+		f.VAT_TAX_BURDEN,	
+		f.CORPORATE_INCOME_TAX,	
+		f.OVERALL_TAX_BURDEN,	
+		f.CREATER,	
+		f.CREATE_DATE,	
+		f.UPDATER,	
+		f.UPDATE_DATE,	
+		f.BUSINESSID,	
+		f.TENANT_ID_,	
+		f.CUSTOMER_FOCUS,	
+		f.CUSTOMER_PERSONALITY_DESCRIPTION,	
+		f.REGISTER_AREA,	
+		f.ACCOUNTANT,	
+		f.OFFICE_WORKER,	
+		f.CUSTOMER_TYPE,	
+		f.FILED_MANAGER,	
+		f.CUSTOMER_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		COMPANY_NAME,	
+		CONTRACT_NUM,	
+		INSDUTRY,	
+		CUSTOMER_SEGMENTATION,	
+		VAT_TYPE,	
+		CHIEF_ACCOUNTANT,	
+		COST_ACCOUNTANT,	
+		TAX_ACCOUNTANT,	
+		MONTHLY_FEE,	
+		DPO,	
+		NEXT_PAYMENT_MONTH,	
+		LINKMAN,	
+		LINKMAN_PHONE_NUM,	
+		JOB_REBORTER,	
+		JOB_REBORTER_PHONE_NUM,	
+		CONTACT_ADDRESS,	
+		LEGAL_REPRESENTATIVE,	
+		LEGAL_PHONE_NUM,	
+		IDENTITY_NUM,	
+		SHAREHOLDER,	
+		LICENSE_REGISTRATION_DATE,	
+		REGISTERED_CAPITAL,	
+		SUBMISSION_DATE,	
+		IS_WHETHER_PAY,	
+		UNIFORM_CODE,	
+		BUSINESS_SCOPE,	
+		REGISTERED,	
+		BANK,	
+		BANK_ACCOUNT_NO,	
+		NATIONAL_TAX_PWD,	
+		LOCAL_TAX_PWD,	
+		BUSINESS_PWD,	
+		NATIONAL_ADMIN,	
+		NATIONAL_ADMIN_PHONE_NUM,	
+		LOCAL_ADMIN,	
+		LOCAL_ADMIN_PHONE_NUM,	
+		VAT_TAX_BURDEN,	
+		CORPORATE_INCOME_TAX,	
+		OVERALL_TAX_BURDEN,	
+		CREATER,	
+		CREATE_DATE,	
+		UPDATER,	
+		UPDATE_DATE,	
+		BUSINESSID,	
+		TENANT_ID_,	
+		CUSTOMER_FOCUS,	
+		CUSTOMER_PERSONALITY_DESCRIPTION,	
+		REGISTER_AREA,	
+		ACCOUNTANT,	
+		OFFICE_WORKER,	
+		CUSTOMER_TYPE,	
+		FILED_MANAGER,	
+		CUSTOMER_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{companyName},
+		#{contractNum},
+		#{insdutry},
+		#{customerSegmentation},
+		#{vatType},
+		#{chiefAccountant},
+		#{costAccountant},
+		#{taxAccountant},
+		#{monthlyFee},
+		#{dpo},
+		#{nextPaymentMonth},
+		#{linkman},
+		#{linkmanPhoneNum},
+		#{jobReborter},
+		#{jobReborterPhoneNum},
+		#{contactAddress},
+		#{legalRepresentative},
+		#{legalPhoneNum},
+		#{identityNum},
+		#{shareholder},
+		#{licenseRegistrationDate},
+		#{registeredCapital},
+		#{submissionDate},
+		#{isWhetherPay},
+		#{uniformCode},
+		#{businessScope},
+		#{registered},
+		#{bank},
+		#{bankAccountNo},
+		#{nationalTaxPwd},
+		#{localTaxPwd},
+		#{businessPwd},
+		#{nationalAdmin},
+		#{nationalAdminPhoneNum},
+		#{localAdmin},
+		#{localAdminPhoneNum},
+		#{vatTaxBurden},
+		#{corporateIncomeTax},
+		#{overallTaxBurden},
+		#{creater},
+		#{createDate},
+		#{updater},
+		#{updateDate},
+		#{businessid},
+		#{tenantId},
+		#{customerFocus},
+		#{customerPersonalityDescription},
+		#{registerArea},
+		#{accountant},
+		#{officeWorker},
+		#{customerType},
+		#{filedManager},
+		#{customerId}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.CustomerBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.CustomerBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			CUSTOMER_ID = #{customerId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.CustomerBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			COMPANY_NAME = #{companyName},
+			CONTRACT_NUM = #{contractNum},
+			INSDUTRY = #{insdutry},
+			CUSTOMER_SEGMENTATION = #{customerSegmentation},
+			VAT_TYPE = #{vatType},
+			CHIEF_ACCOUNTANT = #{chiefAccountant},
+			COST_ACCOUNTANT = #{costAccountant},
+			TAX_ACCOUNTANT = #{taxAccountant},
+			MONTHLY_FEE = #{monthlyFee},
+			DPO = #{dpo},
+			NEXT_PAYMENT_MONTH = #{nextPaymentMonth},
+			LINKMAN = #{linkman},
+			LINKMAN_PHONE_NUM = #{linkmanPhoneNum},
+			JOB_REBORTER = #{jobReborter},
+			JOB_REBORTER_PHONE_NUM = #{jobReborterPhoneNum},
+			CONTACT_ADDRESS = #{contactAddress},
+			LEGAL_REPRESENTATIVE = #{legalRepresentative},
+			LEGAL_PHONE_NUM = #{legalPhoneNum},
+			IDENTITY_NUM = #{identityNum},
+			SHAREHOLDER = #{shareholder},
+			LICENSE_REGISTRATION_DATE = #{licenseRegistrationDate},
+			REGISTERED_CAPITAL = #{registeredCapital},
+			SUBMISSION_DATE = #{submissionDate},
+			IS_WHETHER_PAY = #{isWhetherPay},
+			UNIFORM_CODE = #{uniformCode},
+			BUSINESS_SCOPE = #{businessScope},
+			REGISTERED = #{registered},
+			BANK = #{bank},
+			BANK_ACCOUNT_NO = #{bankAccountNo},
+			NATIONAL_TAX_PWD = #{nationalTaxPwd},
+			LOCAL_TAX_PWD = #{localTaxPwd},
+			BUSINESS_PWD = #{businessPwd},
+			NATIONAL_ADMIN = #{nationalAdmin},
+			NATIONAL_ADMIN_PHONE_NUM = #{nationalAdminPhoneNum},
+			LOCAL_ADMIN = #{localAdmin},
+			LOCAL_ADMIN_PHONE_NUM = #{localAdminPhoneNum},
+			VAT_TAX_BURDEN = #{vatTaxBurden},
+			CORPORATE_INCOME_TAX = #{corporateIncomeTax},
+			OVERALL_TAX_BURDEN = #{overallTaxBurden},
+			CREATER = #{creater},
+			CREATE_DATE = #{createDate},
+			UPDATER = #{updater},
+			UPDATE_DATE = #{updateDate},
+			BUSINESSID = #{businessid},
+			TENANT_ID_ = #{tenantId},
+			CUSTOMER_FOCUS = #{customerFocus},
+			CUSTOMER_PERSONALITY_DESCRIPTION = #{customerPersonalityDescription},
+			REGISTER_AREA = #{registerArea},
+			ACCOUNTANT = #{accountant},
+			OFFICE_WORKER = #{officeWorker},
+			CUSTOMER_TYPE = #{customerType},
+			FILED_MANAGER = #{filedManager},
+			CUSTOMER_ID = #{customerId}
+		where 
+			CUSTOMER_ID = #{customerId}
+	</update>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.CustomerBean" resultMap="customerMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+	<!--获取所有客户-->
+	<select id="listAll" parameterType="com.mzkj.bean.CustomerBean" resultMap="customerMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include> f
+	</select>
+
+</mapper>
