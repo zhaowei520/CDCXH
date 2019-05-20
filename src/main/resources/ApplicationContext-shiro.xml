@@ -54,6 +54,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /index/login_toLogin     = anon
+                /index/index = anon
                 /swagger-ui.html         = user
                 /** = authc
             </value>

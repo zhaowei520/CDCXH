@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.masterAccessOperation.MasterAccessOperationMapper">
+
+    <resultMap type="com.mzkj.bean.PrivilegeOfUsergroupBean" id="PrivilegesByUsergroupResultMap">
+        <id column="PRIVILEGE_ID" property="privilegeId"/>
+        <result column="NAME" property="name"/>
+        <result column="TYPE" property="type"/>
+        <result column="CODE" property="code"/>
+        <result column="TENANT_ID_" property="tenantId"/>
+        <result column="CREATE_USER" property="createUser"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_USER" property="updateUser"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="DELETED" property="deleted"/>
+        <result column="master_access_operation_mapping_id"
+                property="masterAccessOperationMappingId"/>
+    </resultMap>
+
+    <!--表名 -->
+    <sql id="tb_master_access_operation_mapping">
+		tb_master_access_operation_mapping
+	</sql>
+
+    <sql id="tb_privilege">
+		tb_privilege
+	</sql>
+
+    <sql id="tb_master_access_operation_mapping_field_insert">
+		master_access_operation_mapping_id,
+		master_type,
+		master_value,
+		access_type,
+		access_value,
+		operation,
+		create_user,
+		create_date,
+		update_user,
+		update_date
+		deleted
+	</sql>
+    <sql id="tb_master_access_operation_mapping_variable_insert">
+		master_access_operation_mapping_id,
+		master_type,
+		master_value,
+		access_type,
+		access_value,
+		operation,
+		create_user,
+		create_date,
+		update_user,
+		update_date
+		deleted
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		f.NAME,	
+		f.TYPE,
+		f.CODE,
+		f.TENANT_ID_,
+		f.CREATE_USER,
+		f.CREATE_DATE,
+		f.UPDATE_USER,
+		f.UPDATE_DATE,
+		f.DELETED,
+		f.PRIVILEGE_ID
+	</sql>
+
+
+    <!-- 根据用户组查权限 -->
+    <select id="findPrivilegesByUsergroup" parameterType="com.mzkj.bean.PrivilegeOfUsergroupBean"
+            resultMap="PrivilegesByUsergroupResultMap">
+        select
+        <include refid="Field"></include>, mapping.master_access_operation_mapping_id
+        from
+        <include refid="tb_master_access_operation_mapping"></include>
+        mapping
+        ,<include refid="tb_privilege"></include> f
+        where mapping.master_type = 'usergroup'
+        and mapping.access_type='privilege'
+        and mapping.master_value=#{usergroupId}
+        and mapping.access_value=f.privilege_id
+        and mapping.deleted='0'
+    </select>
+
+    <insert id="save" parameterType="com.mzkj.bean.UserOfUsergroupBean">
+
+        insert into
+        <include refid="tb_master_access_operation_mapping"></include>
+        (
+        <include refid="tb_master_access_operation_mapping_field_insert"></include>
+        ) values
+        <foreach item="userId" collection="userIds" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+
+        (
+        <include refid="tb_master_access_operation_mapping_variable_insert"></include>
+        )
+    </insert>
+
+
+</mapper>
