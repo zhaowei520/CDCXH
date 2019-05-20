@@ -1,7 +1,7 @@
 package com.mzkj.bean;
 
-import com.mzkj.domain.Usergroup;
+import com.mzkj.domain.Privilege;
 
-public class PrivilegeBean extends Usergroup {
+public class PrivilegeBean extends Privilege {
 
 }

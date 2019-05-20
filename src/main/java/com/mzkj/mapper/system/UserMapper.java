@@ -1,6 +1,7 @@
 package com.mzkj.mapper.system;
 
 import com.mzkj.bean.UserBean;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -52,5 +53,10 @@ public interface UserMapper {
      * @throws Exception
      */
     public UserBean findByUsername(String username)throws Exception;
+
+    /**
+     *
+     */
+    public List<UserBean> findUsersByUsergroup(UserBean userBean);
 }
 

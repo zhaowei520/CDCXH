@@ -1,12 +1,5 @@
 package com.mzkj.util;
 
-import org.springframework.context.ApplicationContext;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * 常量定义
  *
@@ -65,5 +58,8 @@ public class Const {
     public static final String DATA_FH = ",fh,";
     public static final String DATA_LEFT_BORDER = "[";
     public static final String DATA_RIGHT_BORDER = "]";
+
+    //树的顶层节点id
+    public static final String ROOF_ID_FOR_TREE = "ROOF";
 
 }

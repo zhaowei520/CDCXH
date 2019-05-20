@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mzkj.mapper.usergroup.UsergroupMapper">
+<mapper namespace="com.mzkj.mapper.privilege.PrivilegeMapper">
 
-    <resultMap type="com.mzkj.bean.UsergroupBean" id="usergroupResultMap">
-        <id column="USERGROUP_ID" property="usergroupId"/>
+    <resultMap type="com.mzkj.bean.PrivilegeBean" id="privilegeResultMap">
+        <id column="PRIVILEGE_ID" property="privilegeId"/>
         <result column="NAME" property="name"/>
-        <result column="PARENT_ID" property="parentId"/>
         <result column="TYPE" property="type"/>
-        <result column="SUBTYPE" property="subtype"/>
         <result column="CODE" property="code"/>
         <result column="TENANT_ID_" property="tenantId"/>
         <result column="CREATE_USER" property="createUser"/>
@@ -20,47 +18,41 @@
 
     <!--表名 -->
     <sql id="tableName">
-		TB_USERGROUP
+		TB_PRIVILEGE
 	</sql>
-
 
     <!-- 字段 -->
     <sql id="Field">
 		f.NAME,	
-		f.TYPE,	
-		f.SUBTYPE,	
+		f.TYPE,
 		f.CODE,	
 		f.TENANT_ID_,	
 		f.CREATE_USER,	
 		f.CREATE_DATE,	
 		f.UPDATE_USER,	
 		f.UPDATE_DATE,	
-		f.DELETED,	
-		f.PARENT_ID,
-		f.USERGROUP_ID
+		f.DELETED,
+		f.PRIVILEGE_ID
 	</sql>
 
     <!-- 字段用于新增 -->
     <sql id="Field2">
 		NAME,	
-		TYPE,	
-		SUBTYPE,		
+		TYPE,
 		CODE,	
 		TENANT_ID_,	
 		CREATE_USER,	
 		CREATE_DATE,	
 		UPDATE_USER,	
 		UPDATE_DATE,	
-		DELETED,	
-		PARENT_ID,
-		USERGROUP_ID
+		DELETED,
+		PRIVILEGE_ID
 	</sql>
 
     <!-- 字段值 -->
     <sql id="FieldValue">
 		#{name},
 		#{type},
-		#{subtype},
 		#{code},
 		#{tenantId},
 		#{createUser},
@@ -68,28 +60,24 @@
 		#{updateUser},
 		#{updateDate},
 		#{deleted},
-		#{parentId},
-		#{usergroupId}
+		#{privilegeId}
 	</sql>
 
     <!-- 列表 -->
-    <select id="datalistPage" parameterType="com.mzkj.bean.UsergroupBean"
-            resultMap="usergroupResultMap">
+    <select id="datalistPage" parameterType="com.mzkj.bean.PrivilegeBean"
+            resultMap="privilegeResultMap">
         select
         <include refid="Field"></include>
         from
         <include refid="tableName"></include>
         f
         where 1=1
-        <if test="name!= null and name != ''">
+        <if test="name!= null and name != ''"><!-- 检索 -->
             and f.name like = CONCAT(CONCAT('%', #{name}),'%')
-        </if>
-        <if test="parentId!= null and parentId != ''">
-            and f.PARENT_ID = #{parentId})
         </if>
     </select>
 
-    <insert id="save" parameterType="com.mzkj.bean.UsergroupBean">
+    <insert id="insert" parameterType="com.mzkj.bean.PrivilegeBean">
         insert into
         <include refid="tableName"></include>
         (
@@ -100,57 +88,30 @@
     </insert>
 
     <!-- 修改 -->
-    <update id="update" parameterType="com.mzkj.bean.UsergroupBean">
+    <update id="update" parameterType="com.mzkj.bean.PrivilegeBean">
         update
         <include refid="tableName"></include>
         set
         name = #{name},
         type = #{type},
-        subtype = #{subtype},
         code = #{code},
         TENANT_ID_ = #{tenantId},
-        PARENT_ID = #{parentId},
         deleted = #{deleted},
         UPDATE_DATE = #{updateDate},
         UPDATE_USER = #{updateUser}
         where
-        USERGROUP_ID = #{usergroupId}
+        PRIVILEGE_ID = #{privilegeId}
     </update>
 
-    <!-- findByParentId -->
-    <select id="findByParentId" parameterType="com.mzkj.bean.UsergroupBean"
-            resultMap="usergroupResultMap">
+    <!--单查-->
+    <select id="findById" parameterType="com.mzkj.bean.PrivilegeBean"
+            resultMap="privilegeResultMap">
         select
         <include refid="Field"></include>
         from
         <include refid="tableName"></include>
         f
-        where PARENT_ID=#{parentId}
+        where PRIVILEGE_ID = #{privilegeId}
     </select>
 
-    <!-- findById -->
-    <select id="findById" parameterType="com.mzkj.bean.UsergroupBean"
-            resultMap="usergroupResultMap">
-        select
-        <include refid="Field"></include>
-        from
-        <include refid="tableName"></include>
-        f
-        where USERGROUP_ID=#{usergroupId}
-    </select>
-
-    <!-- 逻辑删除 -->
-    <update id="delete" parameterType="com.mzkj.bean.UsergroupDeleteBean">
-        update
-        <include refid="tableName"></include>
-        set
-        deleted = '1',
-        UPDATE_DATE = now(),
-        UPDATE_USER = #{updateUser}
-        where
-        USERGROUP_ID in
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </update>
 </mapper>
