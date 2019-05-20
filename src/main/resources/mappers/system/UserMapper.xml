@@ -30,6 +30,11 @@
 		SYS_USER
 	</sql>
 
+    <!--tb_usergroup -->
+    <sql id="tb_master_access_operation_mapping">
+		tb_master_access_operation_mapping
+	</sql>
+
 	<!-- 字段 -->
 	<sql id="Field">
 		f.USERNAME,	
@@ -167,5 +172,20 @@
 		<include refid="tableName"></include> f
 		where f.USERNAME = #{username}
 	</select>
+
+    <!-- 根据用户组查用户 -->
+    <select id="findUsersByUsergroup" parameterType="com.mzkj.bean.UserBean" resultMap="userMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        ,<include refid="tb_master_access_operation_mapping"></include> mapping
+        where mapping.master_type = 'usergroup'
+        and mapping.access_type='user'
+        and mapping.master_value=#{usergroupId}
+        and mapping.access_value=f.user_id
+        and mapping.deleted='0'
+    </select>
 	
 </mapper>
