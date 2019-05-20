@@ -46,5 +46,14 @@ public interface DictionariesManager{
 	 * Date 2019-04-24 11:05
 	 */
 	public List<DictionariesQueryVo> findChildlListByBianma(String bianma)throws Exception;
+
+	/**
+	 * 通过编码查询Tree
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-05-15 14:32
+	 */
+	public DictionariesQueryVo findDicTreeByBianma(String bianma)throws Exception;
 }
 

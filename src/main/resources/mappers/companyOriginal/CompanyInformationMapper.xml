@@ -87,7 +87,6 @@
         COMPANY_NAME = #{companyName},
         CUSTOMER_USERNAME = #{customerUsername},
         REMARK = #{remark},
-        CREATE_USER = #{createUser},
         UPDATE_DATE = #{updateDate},
         UPDATE_USER = #{updateUser},
         COMPANYINFORMATION_ID = #{companyInformationId}
