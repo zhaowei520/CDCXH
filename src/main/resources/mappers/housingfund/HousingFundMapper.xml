@@ -162,6 +162,7 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include> f
+		where f.TENANT_ID_=#{tenantId}
 		order by f.CREATE_DATE DESC
 	</select>
 	

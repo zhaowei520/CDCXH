@@ -158,6 +158,9 @@
 		from 
 		<include refid="tableName"></include> f
 		where f.TENANT_ID_=#{tenantId}
+		<if test="userType != null and userType != ''">
+			and f.USER_TYPE = #{userType}
+		</if>
 		<if test="name != null and name != ''">
 			and f.NAME like CONCAT(CONCAT('%',#{name}),'%')
 		</if>

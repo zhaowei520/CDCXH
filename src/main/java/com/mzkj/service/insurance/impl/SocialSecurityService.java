@@ -116,6 +116,7 @@ public class SocialSecurityService implements SocialSecurityManager {
             }
             list.add(securityQueryVo);
         }
+        pageInfo.setList(list);
         return pageInfo;
     }
 

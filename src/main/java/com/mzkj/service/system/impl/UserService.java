@@ -103,6 +103,9 @@ public class UserService implements UserManager {
 		//将vo转DO
 		UserBean userBean = ConvertUtil.objectCopyParams(userQueryVo, UserBean.class);
 		userBean.setTenantId(Jurisdiction.getTenant());
+        if (null==userBean.getUserType()) {
+            userBean.setUserType(0);//员工
+        }
 		List<UserBean> userBeanList = userMapper.list(userBean);
 		//将DO转VO
 		List<UserQueryVo> userQueryVoList = new ArrayList<>();
@@ -117,6 +120,31 @@ public class UserService implements UserManager {
 		}
 		return userQueryVoList;
 	}
+    /**
+     * 获取所有用户
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-25 11:04
+     */
+    @Override
+    public List<UserQueryVo> listAll(UserQueryVo userQueryVo) throws Exception {
+        //将vo转DO
+        UserBean userBean = ConvertUtil.objectCopyParams(userQueryVo, UserBean.class);
+        userBean.setTenantId(Jurisdiction.getTenant());
+        if (null==userBean.getUserType()) {
+            userBean.setUserType(0);//员工
+        }
+        List<UserBean> userBeanList = userMapper.list(userBean);
+        //将DO转VO
+        List<UserQueryVo> userQueryVoList = new ArrayList<>();
+        for (UserBean userBean1:userBeanList
+                ) {
+            UserQueryVo queryVo = ConvertUtil.objectCopyParams(userBean1, UserQueryVo.class);
+                userQueryVoList.add(queryVo);
 
+        }
+        return userQueryVoList;
+    }
 }
 
