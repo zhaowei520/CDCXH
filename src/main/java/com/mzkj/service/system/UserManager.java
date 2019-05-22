@@ -61,5 +61,14 @@ public interface UserManager {
      * @throws Exception
      */
     public List<UserQueryVo> listAllAndFilterSelf(UserQueryVo userQueryVo) throws Exception;
+    /**
+     * 查询所有员工
+     * return
+     * Author luosc
+     * param
+     * Date 2019-05-22 15:00
+     */
+    public List<UserQueryVo> listAll(UserQueryVo userQueryVo) throws Exception;
+
 }
 
