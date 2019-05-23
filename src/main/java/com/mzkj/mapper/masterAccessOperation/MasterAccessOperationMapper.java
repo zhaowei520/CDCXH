@@ -1,9 +1,10 @@
 package com.mzkj.mapper.masterAccessOperation;
 
+import com.mzkj.bean.MasterAccessOperationMappingBean;
 import com.mzkj.bean.PrivilegeOfUsergroupBean;
-import com.mzkj.bean.UserOfUsergroupBean;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,8 +13,10 @@ public interface MasterAccessOperationMapper {
 
     public List<PrivilegeOfUsergroupBean> findPrivilegesByUsergroup(PrivilegeOfUsergroupBean privilegesByUsergroupBean);
 
-    public void addUser2Usergroup(UserOfUsergroupBean userOfUsergroupBean);
+    public void addAccess2Master(List<MasterAccessOperationMappingBean> masterAccessOperationMappingBean);
 
     public void addPrivilege2Usergroup(PrivilegeOfUsergroupBean privilegeOfUsergroupBean);
 
+    public void deleteMasterAccessOperationMapping(@Param("mappingIds") String[] mappingIds
+            , @Param("tenantId") String tenantId, @Param("updateUser") String updateUser);
 }

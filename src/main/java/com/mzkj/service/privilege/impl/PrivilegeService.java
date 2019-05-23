@@ -1,15 +1,30 @@
 package com.mzkj.service.privilege.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.mzkj.bean.MasterAccessOperationMappingBean;
 import com.mzkj.bean.PrivilegeBean;
+import com.mzkj.mapper.masterAccessOperation.MasterAccessOperationMapper;
 import com.mzkj.mapper.privilege.PrivilegeMapper;
+import com.mzkj.mapper.system.UserMapper;
 import com.mzkj.service.privilege.PrivilegeManager;
 import com.mzkj.util.ConvertUtil;
+import com.mzkj.util.DateUtil;
+import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
+import com.mzkj.util.UuidUtil;
+import com.mzkj.util.enums.DeleteStatus;
+import com.mzkj.util.enums.RelatingType;
+import com.mzkj.vo.BaseVo;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
+import com.mzkj.vo.privilege.PrivilegeVo;
+import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("privilegeService")
@@ -18,41 +33,135 @@ public class PrivilegeService implements PrivilegeManager {
     @Autowired
     private PrivilegeMapper privilegeMapper;
 
+    @Autowired
+    MasterAccessOperationMapper masterAccessOperationMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    public static <T> T objectCopyParams(Object obj, Class<T> target) {
+        return ConvertUtil.objectCopyParams(obj, target);
+    }
+
     public PrivilegeMapper getPrivilegeMapper() {
         return privilegeMapper;
     }
 
-    public List<PrivilegeQueryVo> datalistPage(PrivilegeQueryVo privilegeQueryVo) {
-        PrivilegeBean privilegeBean = convertVO2Bean(privilegeQueryVo, PrivilegeBean.class);
-        List<PrivilegeBean> privilegeBeans = getPrivilegeMapper().datalistPage(privilegeBean);
-        List<PrivilegeQueryVo> privilegeQueryVos =
-                (List<PrivilegeQueryVo>) ConvertUtil.castListObjectToTargetList(privilegeBeans, PrivilegeQueryVo.class);
-        return privilegeQueryVos;
+    public UserMapper getUserMapper() {
+        return userMapper;
     }
 
-    public void update(PrivilegeQueryVo privilegeQueryVo) {
+    public MasterAccessOperationMapper getMasterAccessOperationMapper() {
+        return masterAccessOperationMapper;
+    }
+
+    public PageInfo datalistPage(PrivilegeQueryVo privilegeQueryVo) {
         PrivilegeBean privilegeBean = convertVO2Bean(privilegeQueryVo, PrivilegeBean.class);
+        List<PrivilegeBean> privilegeBeans = getPrivilegeMapper().datalistPage(privilegeBean);
+        PageInfo pageInfo = new PageInfo(privilegeBeans);
+        return pageInfo;
+    }
+
+    public void update(PrivilegeVo privilegeVo) {
+        PrivilegeBean privilegeBean = objectCopyParams(privilegeVo, PrivilegeBean.class);
+        privilegeBean.setUpdateUser(getUsername());
+        privilegeBean.setUpdateDate(DateUtil.getTime());
         getPrivilegeMapper().update(privilegeBean);
     }
 
-    public PrivilegeQueryVo findById(PrivilegeQueryVo privilegeQueryVo) {
-        PrivilegeBean privilegeBean =
-                convertVO2Bean(privilegeQueryVo, PrivilegeBean.class);
-        PrivilegeBean privilegeBeanResult = getPrivilegeMapper().findById(privilegeBean);
-        PrivilegeQueryVo privilegeQueryVoResult = ConvertUtil.objectCopyParams(privilegeBeanResult, PrivilegeQueryVo.class);
-        return privilegeQueryVoResult;
+    public PrivilegeVo findById(String id) {
+        PrivilegeBean privilegeBeanResult = getPrivilegeMapper().findById(id);
+        PrivilegeVo privilegeVo = objectCopyParams(privilegeBeanResult, PrivilegeVo.class);
+        return privilegeVo;
     }
 
-    public void insert(PrivilegeQueryVo privilegeQueryVo) {
-        PrivilegeBean privilegeBean =
-                convertVO2Bean(privilegeQueryVo, PrivilegeBean.class);
+    public void insert(PrivilegeVo privilegeVo) {
+        privilegeVo.setTenantId(getTenantId());
+        privilegeVo.setPrivilegeId(UuidUtil.get32UUID());
+        privilegeVo.setCreateUser(getUsername());
+        privilegeVo.setCreateDate(DateUtil.getTime());
+        privilegeVo.setUpdateUser(getUsername());
+        privilegeVo.setUpdateDate(DateUtil.getTime());
+        privilegeVo.setDeleted(DeleteStatus.NOT_YET.getCode());
+        PrivilegeBean privilegeBean = objectCopyParams(privilegeVo, PrivilegeBean.class);
         getPrivilegeMapper().insert(privilegeBean);
+    }
+
+    @Override
+    public PageInfo findUsersByPrivilege(UserOfPrivilegeQueryVo userOfPrivilegeQueryVo) {
+        startPage(userOfPrivilegeQueryVo);
+        String privilegeId = userOfPrivilegeQueryVo.getPrivilegeId();
+        List<PrivilegeBean> privilegeBeans = getUserMapper().findUsersByPrivilege(privilegeId);
+        PageInfo pageInfo = new PageInfo(privilegeBeans);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo findUsersUnselectedByPrivilege(UserOfPrivilegeQueryVo userOfPrivilegeQueryVo) {
+        startPage(userOfPrivilegeQueryVo);
+        String privilegeId = userOfPrivilegeQueryVo.getPrivilegeId();
+        List<PrivilegeBean> privilegeBeans = getUserMapper().findUsersUnselectedByPrivilege(privilegeId);
+        PageInfo pageInfo = new PageInfo(privilegeBeans);
+        return pageInfo;
+    }
+
+    @Override
+    public void addUsers2Privileges(String privilegeId, String[] userIds, String[] operationParams) {
+        String masterType = RelatingType.USER.getCode();
+        String[] masterValues = userIds;
+        String accessType = RelatingType.PRIVILEGE.getCode();
+        String accessValue = privilegeId;
+        String[] operations = operationParams;
+        List<MasterAccessOperationMappingBean> masterAccessOperationMappingBeanList
+                = doMasterAccessOperationMappingBeanList(masterType, masterValues, accessType, accessValue, operations);
+        getMasterAccessOperationMapper().addAccess2Master(masterAccessOperationMappingBeanList);
+    }
+
+    public List<MasterAccessOperationMappingBean> doMasterAccessOperationMappingBeanList(String masterType
+            , String[] masterValue, String accessType, String accessValues, String[] operations) {
+        List<MasterAccessOperationMappingBean> masterAccessOperationMappingBeans = new ArrayList<MasterAccessOperationMappingBean>();
+        for (int i = 0; i < masterValue.length; i++) {
+            String masterAccessOperationMappingId = UuidUtil.get32UUID();
+            MasterAccessOperationMappingBean masterAccessOperationMappingBean = new MasterAccessOperationMappingBean();
+            masterAccessOperationMappingBean.setMasterAccessOperationMappingId(masterAccessOperationMappingId);
+            masterAccessOperationMappingBean.setMasterType(masterType);
+            masterAccessOperationMappingBean.setMasterValue(masterValue[i]);
+            masterAccessOperationMappingBean.setAccessType(accessType);
+            masterAccessOperationMappingBean.setAccessValue(accessValues);
+            masterAccessOperationMappingBean.setOperation(operations[i]);
+            masterAccessOperationMappingBean.setTenantId(getTenantId());
+            masterAccessOperationMappingBean.setCreateUser(getUsername());
+            masterAccessOperationMappingBean.setCreateDate(DateUtil.getTime());
+            masterAccessOperationMappingBean.setUpdateUser(getUsername());
+            masterAccessOperationMappingBean.setUpdateDate(DateUtil.getTime());
+            masterAccessOperationMappingBean.setDeleted(DeleteStatus.NOT_YET.getCode());
+            masterAccessOperationMappingBeans.add(masterAccessOperationMappingBean);
+        }
+        return masterAccessOperationMappingBeans;
     }
 
     public PrivilegeBean convertVO2Bean(PrivilegeQueryVo privilegeQueryVo, Class<PrivilegeBean> privilegeBeanClass) {
         PrivilegeBean privilegeBean =
                 PageUtil.startPageAndObjectCopyParams(privilegeQueryVo, PrivilegeBean.class);
         return privilegeBean;
+    }
+
+    public Page startPage(BaseVo baseVo) {
+        return PageHelper.startPage(baseVo);
+    }
+
+    public PrivilegeBean convertVO2Bean(PrivilegeVo privilegeVo, Class<PrivilegeBean> privilegeBeanClass) {
+        PrivilegeBean privilegeBean =
+                PageUtil.startPageAndObjectCopyParams(privilegeVo, PrivilegeBean.class);
+        return privilegeBean;
+    }
+
+    public String getTenantId() {
+        return Jurisdiction.getTenant();
+    }
+
+    public String getUsername() {
+        return Jurisdiction.getUsername();
     }
 
 }

@@ -1,15 +1,19 @@
 package com.mzkj.controller.usergroup;
 
 import com.alibaba.fastjson.JSONArray;
+import com.github.pagehelper.PageInfo;
+import com.mzkj.bean.UsergroupBean;
 import com.mzkj.service.usergroup.UsergroupManager;
 import com.mzkj.util.Const;
 import com.mzkj.util.UuidUtil;
 import com.mzkj.util.enums.HttpCode;
 import com.mzkj.vo.Result;
-import com.mzkj.vo.system.UserVo;
 import com.mzkj.vo.usergroup.PrivilegeOfUsergroupQueryVo;
+import com.mzkj.vo.usergroup.PrivilegeUnselected2UsergroupQueryVo;
 import com.mzkj.vo.usergroup.UserOfUsergroupQueryVo;
+import com.mzkj.vo.usergroup.UserUnselected2UsergroupQueryVo;
 import com.mzkj.vo.usergroup.UsergroupQueryVo;
+import com.mzkj.vo.usergroup.UsergroupVo;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,10 +48,13 @@ public class UsergroupController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ApiOperation(value = "分页查询usergroup", notes = "分页查询usergroup")
     public Result list(final UsergroupQueryVo usergroupQueryVo) {
-        Result<List<UsergroupQueryVo>> result = new Result<>();
+        Result<PageInfo> result = new Result<>();
         try {
-            List<UsergroupQueryVo> usergroupQueryVos = getUsergroupService().list(usergroupQueryVo);
-            result.setData(usergroupQueryVos);
+            PageInfo pageInfo = getUsergroupService().list(usergroupQueryVo);
+            result.setMsg("分页查询usergroup成功");
+            result.setSuccess(Boolean.TRUE);
+            result.setStatus(HttpCode.OK.getCode());
+            result.setData(pageInfo);
         } catch (Exception e) {
             logger.error(e);
             result.setSuccess(false);
@@ -63,13 +70,14 @@ public class UsergroupController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ApiOperation(value = "保存usergroup", notes = "保存usergroup")
-    public Result<UsergroupQueryVo> save(UsergroupQueryVo usergroupQueryVo) {
-        Result<UsergroupQueryVo> result = new Result<>();
+    public Result save(UsergroupVo usergroupVo) {
+        Result result = new Result<>();
         try {
-            usergroupQueryVo.setUsergroupId(UuidUtil.get32UUID());
-            getUsergroupService().save(usergroupQueryVo);
+            usergroupVo.setUsergroupId(UuidUtil.get32UUID());
+            getUsergroupService().save(usergroupVo);
+            result.setMsg("保存用户组成功");
             result.setSuccess(Boolean.TRUE);
-            result.setData(usergroupQueryVo);
+            result.setStatus(HttpCode.OK.getCode());
         } catch (Exception e) {
             logger.error("保存用户组报错", e);
             result.setSuccess(Boolean.FALSE);
@@ -82,10 +90,10 @@ public class UsergroupController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ApiOperation(value = "更新usergroup", notes = "更新usergroup")
-    public Result update(UsergroupQueryVo usergroupQueryVo) {
+    public Result update(UsergroupVo usergroupVo) {
         Result result = new Result();
         try {
-            getUsergroupService().update(usergroupQueryVo);
+            getUsergroupService().update(usergroupVo);
             result.setMsg("更新用户组成功");
             result.setSuccess(Boolean.TRUE);
             result.setStatus(HttpCode.OK.getCode());
@@ -100,14 +108,14 @@ public class UsergroupController {
 
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     @ApiOperation(value = "查找指定usergroup", notes = "查找指定usergroup")
-    public Result findById(UsergroupQueryVo usergroupQueryVo) {
+    public Result findById(String id) {
         Result result = new Result();
         try {
-            UsergroupQueryVo usergroupQueryVoResult = getUsergroupService().findById(usergroupQueryVo);
+            UsergroupBean usergroupBean = getUsergroupService().findById(id);
             result.setMsg("查询指定用户组成功");
             result.setSuccess(Boolean.TRUE);
             result.setStatus(HttpCode.OK.getCode());
-            result.setData(usergroupQueryVoResult);
+            result.setData(usergroupBean);
         } catch (RuntimeException e) {
             logger.error("查询指定用户组报错", e);
             result.setSuccess(Boolean.FALSE);
@@ -156,21 +164,20 @@ public class UsergroupController {
 
     @RequestMapping(value = "/findUsersByUsergroup", method = RequestMethod.POST)
     @ApiOperation(value = "根据用户组查用户", notes = "根据用户组查用户")
-    public Result findUsersByUsergroup(UserVo userVo) {
+    public Result findUsersByUsergroup(UserOfUsergroupQueryVo userOfUsergroupQueryVo) {
         Result result = new Result();
         try {
-            List<UserVo> userVos = getUsergroupService().findUsersByUsergroup(userVo);
+            PageInfo pageInfo = getUsergroupService().findUsersByUsergroup(userOfUsergroupQueryVo);
             result.setMsg("查询用户组对应用户成功");
             result.setSuccess(Boolean.TRUE);
             result.setStatus(HttpCode.OK.getCode());
-            result.setData(userVos);
+            result.setData(pageInfo);
         } catch (RuntimeException e) {
             logger.error("查询用户组对应用户异常", e);
             result.setSuccess(Boolean.FALSE);
             result.setMsg("查询用户组对应用户异常");
             result.setStatus(HttpCode.ERROR.getCode());
         }
-
         return result;
     }
 
@@ -179,27 +186,26 @@ public class UsergroupController {
     public Result findPrivilegesByUsergroup(PrivilegeOfUsergroupQueryVo privilegeByUsergroupQueryVo) {
         Result result = new Result();
         try {
-            List<PrivilegeOfUsergroupQueryVo> privilegeByUsergroupQueryVos = getUsergroupService().findPrivilegesByUsergroup(privilegeByUsergroupQueryVo);
+            PageInfo pageInfo = getUsergroupService().findPrivilegesByUsergroup(privilegeByUsergroupQueryVo);
             result.setSuccess(Boolean.TRUE);
             result.setMsg("查询用户组对应权限成功");
             result.setStatus(HttpCode.OK.getCode());
-            result.setData(privilegeByUsergroupQueryVos);
+            result.setData(pageInfo);
         } catch (Exception e) {
             logger.error("查询用户组对应权限异常", e);
             result.setSuccess(Boolean.FALSE);
             result.setMsg("查询用户组对应权限异常");
             result.setStatus(HttpCode.ERROR.getCode());
         }
-
         return result;
     }
 
     @RequestMapping(value = "/addUser2Usergroup", method = RequestMethod.POST)
     @ApiOperation(value = "添加用户到用户组", notes = "添加用户到用户组")
-    public Result addUser2Usergroup(UserOfUsergroupQueryVo userByUsergroupQueryVo) {
+    public Result addUser2Usergroup(String usergroupId, String[] userIds, String[] operations) {
         Result result = new Result();
         try {
-            getUsergroupService().addUser2Usergroup(userByUsergroupQueryVo);
+            getUsergroupService().addUser2Usergroup(usergroupId, userIds, operations);
             result.setSuccess(Boolean.TRUE);
             result.setMsg("添加用户到用户组成功");
             result.setStatus(HttpCode.OK.getCode());
@@ -214,10 +220,10 @@ public class UsergroupController {
 
     @RequestMapping(value = "/addPrivilege2Usergroup", method = RequestMethod.POST)
     @ApiOperation(value = "添加权限到用户组", notes = "添加权限到用户组")
-    public Result addPrivilege2Usergroup(PrivilegeOfUsergroupQueryVo privilegeOfUsergroupQueryVo) {
+    public Result addPrivilege2Usergroup(String usergroupId, String[] privileges, String[] operations) {
         Result result = new Result();
         try {
-            getUsergroupService().addPrivilege2Usergroup(privilegeOfUsergroupQueryVo);
+            getUsergroupService().addPrivilege2Usergroup(usergroupId, privileges, operations);
             result.setSuccess(Boolean.TRUE);
             result.setMsg("添加权限到用户组成功");
             result.setStatus(HttpCode.OK.getCode());
@@ -225,6 +231,80 @@ public class UsergroupController {
             logger.error("添加权限到用户组异常", e);
             result.setSuccess(Boolean.FALSE);
             result.setMsg("添加权限到用户组异常");
+            result.setStatus(HttpCode.ERROR.getCode());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/deleteUsersOfUsergroup", method = RequestMethod.POST)
+    @ApiOperation(value = "删除用户组用户", notes = "删除用户组用户")
+    public Result deleteUsersOfUsergroup(String[] mappingIds) {
+        Result result = new Result();
+        try {
+            getUsergroupService().deleteUsersOfUsergroup(mappingIds);
+            result.setSuccess(Boolean.TRUE);
+            result.setMsg("删除用户组用户成功");
+            result.setStatus(HttpCode.OK.getCode());
+        } catch (RuntimeException e) {
+            logger.error("删除用户组用户异常", e);
+            result.setSuccess(Boolean.FALSE);
+            result.setMsg("删除用户组用户异常");
+            result.setStatus(HttpCode.ERROR.getCode());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/deletePrivilegesOfUsergroup", method = RequestMethod.POST)
+    @ApiOperation(value = "删除用户组权限", notes = "删除用户组权限")
+    public Result deletePrivilegesOfUsergroup(String[] mappingIds) {
+        Result result = new Result();
+        try {
+            getUsergroupService().deletePrivilegesOfUsergroup(mappingIds);
+            result.setSuccess(Boolean.TRUE);
+            result.setMsg("删除用户组权限成功");
+            result.setStatus(HttpCode.OK.getCode());
+        } catch (RuntimeException e) {
+            logger.error("删除用户组权限异常", e);
+            result.setSuccess(Boolean.FALSE);
+            result.setMsg("删除用户组权限异常");
+            result.setStatus(HttpCode.ERROR.getCode());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/findUsersUnselected", method = RequestMethod.POST)
+    @ApiOperation(value = "获取用户组未选用户", notes = "获取用户组未选用户")
+    public Result<PageInfo> findUsersUnselected(UserUnselected2UsergroupQueryVo userUnselected2UsergroupVo) {
+        Result<PageInfo> result = new Result();
+        try {
+            PageInfo pageInfo = getUsergroupService().findUsersUnselected(userUnselected2UsergroupVo);
+            result.setSuccess(Boolean.TRUE);
+            result.setMsg("获取用户组未选用户成功");
+            result.setStatus(HttpCode.OK.getCode());
+            result.setData(pageInfo);
+        } catch (RuntimeException e) {
+            logger.error("获取用户组未选用户异常", e);
+            result.setSuccess(Boolean.FALSE);
+            result.setMsg("获取用户组未选用户异常");
+            result.setStatus(HttpCode.ERROR.getCode());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/findPrivilegesUnselected", method = RequestMethod.POST)
+    @ApiOperation(value = "获取用户组未选权限", notes = "获取用户组未选权限")
+    public Result findPrivilegesUnselected(PrivilegeUnselected2UsergroupQueryVo privilegesUnselected2UsergroupQueryVo) {
+        Result result = new Result();
+        try {
+            PageInfo pageInfo = getUsergroupService().findPrivilegesUnselected(privilegesUnselected2UsergroupQueryVo);
+            result.setSuccess(Boolean.TRUE);
+            result.setMsg("获取用户组未选权限成功");
+            result.setStatus(HttpCode.OK.getCode());
+            result.setData(pageInfo);
+        } catch (RuntimeException e) {
+            logger.error("获取用户组未选权限异常", e);
+            result.setSuccess(Boolean.FALSE);
+            result.setMsg("获取用户组未选权限异常");
             result.setStatus(HttpCode.ERROR.getCode());
         }
         return result;

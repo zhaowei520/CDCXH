@@ -82,10 +82,10 @@
         f
         where 1=1
         <if test="name!= null and name != ''">
-            and f.name like = CONCAT(CONCAT('%', #{name}),'%')
+            and f.name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
         <if test="parentId!= null and parentId != ''">
-            and f.PARENT_ID = #{parentId})
+            and f.PARENT_ID = #{parentId}
         </if>
     </select>
 
@@ -108,9 +108,7 @@
         type = #{type},
         subtype = #{subtype},
         code = #{code},
-        TENANT_ID_ = #{tenantId},
         PARENT_ID = #{parentId},
-        deleted = #{deleted},
         UPDATE_DATE = #{updateDate},
         UPDATE_USER = #{updateUser}
         where
@@ -129,7 +127,7 @@
     </select>
 
     <!-- findById -->
-    <select id="findById" parameterType="com.mzkj.bean.UsergroupBean"
+    <select id="findById"
             resultMap="usergroupResultMap">
         select
         <include refid="Field"></include>

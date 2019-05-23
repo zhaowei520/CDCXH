@@ -1,12 +1,14 @@
 package com.mzkj.vo.system;
 
+import com.mzkj.vo.BaseVo;
+
 /**
 * 说明： 用户管理新增/修改vo
 * 创建人：CDCXH
 * 创建时间：2019-04-18
 * @version
 */
-public class UserVo{
+public class UserVo extends BaseVo {
 private String userId;
         private String username;
         private String password;

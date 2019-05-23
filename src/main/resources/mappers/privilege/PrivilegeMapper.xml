@@ -21,6 +21,10 @@
 		TB_PRIVILEGE
 	</sql>
 
+    <sql id="tb_master_access_operation_mapping">
+		tb_master_access_operation_mapping
+	</sql>
+
     <!-- 字段 -->
     <sql id="Field">
 		f.NAME,	
@@ -73,7 +77,7 @@
         f
         where 1=1
         <if test="name!= null and name != ''"><!-- 检索 -->
-            and f.name like = CONCAT(CONCAT('%', #{name}),'%')
+            and f.name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
     </select>
 
@@ -95,8 +99,6 @@
         name = #{name},
         type = #{type},
         code = #{code},
-        TENANT_ID_ = #{tenantId},
-        deleted = #{deleted},
         UPDATE_DATE = #{updateDate},
         UPDATE_USER = #{updateUser}
         where
@@ -114,4 +116,20 @@
         where PRIVILEGE_ID = #{privilegeId}
     </select>
 
+    <!-- 根据用户组查未选中权限 -->
+    <select id="findPrivilegesUnselected" resultMap="privilegeResultMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        left join <include refid="tb_master_access_operation_mapping"></include> mapping on
+        mapping.access_value=f.privilege_id
+        and mapping.master_type = 'usergroup'
+        and mapping.access_type='privilege'
+        and mapping.master_value=#{usergroupId}
+        and mapping.deleted='0'
+        where
+        mapping.master_access_operation_mapping_id IS null
+    </select>
 </mapper>

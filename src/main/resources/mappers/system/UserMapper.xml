@@ -177,7 +177,8 @@
 	</select>
 
     <!-- 根据用户组查用户 -->
-    <select id="findUsersByUsergroup" parameterType="com.mzkj.bean.UserBean" resultMap="userMap">
+	<select id="findUsersByUsergroup" parameterType="com.mzkj.bean.UserOfUsergroupBean"
+			resultMap="userMap">
         select
         <include refid="Field"></include>
         from
@@ -190,5 +191,52 @@
         and mapping.access_value=f.user_id
         and mapping.deleted='0'
     </select>
+
+	<!-- 根据用户组查未选中用户 -->
+	<select id="findUsersUnselected" resultMap="userMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		f
+		left join <include refid="tb_master_access_operation_mapping"></include> mapping on
+		mapping.master_value=#{usergroupId}
+		and mapping.master_type = 'usergroup'
+		and mapping.access_type='user'
+		and mapping.access_value=f.user_id
+		and mapping.deleted='0'
+		where mapping.master_access_operation_mapping_id IS null
+	</select>
+
+	<!-- 根据用户组查用户 -->
+	<select id="findUsersByPrivilege" resultMap="userMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		f
+		,<include refid="tb_master_access_operation_mapping"></include> mapping
+		where mapping.master_type = 'user'
+		and mapping.access_type='privilege'
+		and mapping.master_value=f.user_id
+		and mapping.access_value=#{privilegeId}
+		and mapping.deleted='0'
+	</select>
+
+	<!-- 根据权限查未选中用户 -->
+	<select id="findUsersUnselectedByPrivilege" resultMap="userMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		f
+		left join <include refid="tb_master_access_operation_mapping"></include> mapping on
+		mapping.master_value=f.user_id
+		and mapping.master_type = 'user'
+		and mapping.access_type='privilege'
+		and mapping.access_value=#{usergroupId}
+		and mapping.deleted='0'
+		where mapping.master_access_operation_mapping_id IS null
+	</select>
 	
 </mapper>

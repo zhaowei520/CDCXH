@@ -34,24 +34,26 @@
 		access_type,
 		access_value,
 		operation,
+		TENANT_ID_,
 		create_user,
 		create_date,
 		update_user,
-		update_date
+		update_date,
 		deleted
 	</sql>
     <sql id="tb_master_access_operation_mapping_variable_insert">
-		master_access_operation_mapping_id,
-		master_type,
-		master_value,
-		access_type,
-		access_value,
-		operation,
-		create_user,
-		create_date,
-		update_user,
-		update_date
-		deleted
+		#{masterAccessOperationMappingBean.masterAccessOperationMappingId},
+		#{masterAccessOperationMappingBean.masterType},
+		#{masterAccessOperationMappingBean.masterValue},
+		#{masterAccessOperationMappingBean.accessType},
+		#{masterAccessOperationMappingBean.accessValue},
+		#{masterAccessOperationMappingBean.operation},
+		#{masterAccessOperationMappingBean.tenantId},
+		#{masterAccessOperationMappingBean.createUser},
+		#{masterAccessOperationMappingBean.createDate},
+		#{masterAccessOperationMappingBean.updateUser},
+		#{masterAccessOperationMappingBean.updateDate},
+		#{masterAccessOperationMappingBean.deleted}
 	</sql>
 
     <!-- 字段 -->
@@ -85,21 +87,32 @@
         and mapping.deleted='0'
     </select>
 
-    <insert id="save" parameterType="com.mzkj.bean.UserOfUsergroupBean">
-
+    <insert id="addAccess2Master" parameterType="list">
         insert into
         <include refid="tb_master_access_operation_mapping"></include>
         (
         <include refid="tb_master_access_operation_mapping_field_insert"></include>
         ) values
-        <foreach item="userId" collection="userIds" open="(" separator="," close=")">
-            #{userId}
+        <foreach item="masterAccessOperationMappingBean" collection="list" open="" separator=","
+                 close="">
+            (<include refid="tb_master_access_operation_mapping_variable_insert"></include>)
         </foreach>
-
-        (
-        <include refid="tb_master_access_operation_mapping_variable_insert"></include>
-        )
     </insert>
 
-
+    <!-- 逻辑删除 -->
+    <update id="deleteMasterAccessOperationMapping">
+        update
+        <include refid="tb_master_access_operation_mapping"></include>
+        set
+        deleted = '1',
+        UPDATE_DATE = now(),
+        UPDATE_USER = #{updateUser}
+        where
+        TENANT_ID_=#{tenantId}
+        and
+        master_access_operation_mapping_id in
+        <foreach item="mappingId" collection="mappingIds" open="(" separator="," close=")">
+            #{mappingId}
+        </foreach>
+    </update>
 </mapper>

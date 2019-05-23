@@ -1,6 +1,9 @@
 package com.mzkj.mapper.system;
 
+import com.mzkj.bean.PrivilegeBean;
 import com.mzkj.bean.UserBean;
+import com.mzkj.bean.UserOfUsergroupBean;
+import com.mzkj.bean.UserUnselected2UsergroupBean;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -57,6 +60,12 @@ public interface UserMapper {
     /**
      *
      */
-    public List<UserBean> findUsersByUsergroup(UserBean userBean);
+    public List<UserBean> findUsersByUsergroup(UserOfUsergroupBean userBean);
+
+    List<UserBean> findUsersUnselected(UserUnselected2UsergroupBean userUnselected2UsergroupBean);
+
+    List<PrivilegeBean> findUsersByPrivilege(String privilegeId);
+
+    List<PrivilegeBean> findUsersUnselectedByPrivilege(String privilegeId);
 }
 

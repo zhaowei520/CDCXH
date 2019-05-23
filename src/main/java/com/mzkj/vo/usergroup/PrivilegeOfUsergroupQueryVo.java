@@ -13,4 +13,5 @@ public class PrivilegeOfUsergroupQueryVo extends PrivilegeQueryVo {
     public void setUsergroupId(String usergroupId) {
         this.usergroupId = usergroupId;
     }
+
 }

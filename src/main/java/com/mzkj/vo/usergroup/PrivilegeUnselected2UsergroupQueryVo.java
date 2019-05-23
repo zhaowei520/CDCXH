@@ -2,7 +2,7 @@ package com.mzkj.vo.usergroup;
 
 import com.mzkj.vo.BaseVo;
 
-public class UserOfUsergroupQueryVo extends BaseVo {
+public class PrivilegeUnselected2UsergroupQueryVo extends BaseVo {
 
     private String usergroupId;
 
@@ -13,5 +13,4 @@ public class UserOfUsergroupQueryVo extends BaseVo {
     public void setUsergroupId(String usergroupId) {
         this.usergroupId = usergroupId;
     }
-
 }
