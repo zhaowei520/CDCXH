@@ -30,7 +30,7 @@ public class HttpUtils {
      * param
      * Date 2019-05-28 16:21
      */
-    public static String doPostrequest(String url, String jsonString, String cookie) {
+    public static String doPostrequest(String url, String jsonString, String sessionId) {
         String result = "";
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -40,7 +40,7 @@ public class HttpUtils {
         // post请求是将参数放在请求体里面传过去的;这里将entity放入post请求体中
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json;charset=utf8");
-        httpPost.setHeader("Cookie", cookie);
+        httpPost.setHeader("Cookie", "custom.session="+sessionId);
         // 响应模型
         CloseableHttpResponse response = null;
         try {
@@ -84,13 +84,13 @@ public class HttpUtils {
      * param
      * Date 2019-05-27 18:32
      */
-    public static void doGetRequest(String path, String cookie) {
+    public static void doGetRequest(String path, String sessionId) {
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
         // 创建Get请求
         HttpGet httpGet = new HttpGet(path);
-        httpGet.setHeader("Cookie", cookie);
+        httpGet.setHeader("Cookie", "custom.session="+sessionId);
         // 响应模型
         CloseableHttpResponse response = null;
         try {

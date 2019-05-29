@@ -25,12 +25,15 @@ import com.github.pagehelper.PageHelper;
 
 import com.mzkj.service.insurance.SocialSecurityManager;
 import com.mzkj.mapper.insurance.SocialSecurityMapper;
+import com.oainterface.ProcessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 /**
  * 说明： 社保工单
@@ -46,6 +49,9 @@ public class SocialSecurityService implements SocialSecurityManager {
     @Autowired
     private UserMapper userMapper;
 
+    @Resource
+    private ProcessInterface processInterfaceService;
+
     /**
      * 新增
      */
@@ -60,7 +66,7 @@ public class SocialSecurityService implements SocialSecurityManager {
         }
         socialSecurityBean.setCreateDate(DateUtil.getTime());
         //发起流程
-        String procInstId =processStart(socialSecurityBean);
+        String procInstId =processInterfaceService.processStart(socialSecurityBean);
         if (!StringUtils.isEmpty(procInstId)) {
             socialSecurityBean.setProcInstId(procInstId);
             socialSecurityMapper.save(socialSecurityBean);
@@ -69,36 +75,6 @@ public class SocialSecurityService implements SocialSecurityManager {
         }
         return null;
 
-    }
-
-    /**
-     * 调用OA系统，发起流程
-     * return
-     * Author luosc
-     * param
-     * Date 2019-05-28 9:53
-     */
-    private String processStart(SocialSecurityBean socialSecurityBean) {
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        map.put("SERVERNAME", "socialSecurityService");
-        //map.put("CONTRACTNAME", "indcomconService");    //合同service
-        map.put("USERNAME", Jurisdiction.getUsername()); // 指派代理人为当前用户
-        map.put("socialSecurityId", socialSecurityBean.getSocialSecurityId());
-        //放置serviceName
-        map.put("serviceName", "socialSecurityService");
-        //map.put("CUSTOMER_TEL",pd.get("CUSTOMER_TEL"));
-        map.put("CREATER", Jurisdiction.getUsername());
-        map.put("BUSINESS_ID", socialSecurityBean.getBusinessId());
-        //调用OA发起流程方法；
-        Map requestData = new HashMap();
-        requestData.put("pd", ConvertUtil.obj2Json(socialSecurityBean));
-        requestData.put("map", map);
-        requestData.put("processKey", "KEY_social_security");//社保工单流程标识
-        requestData.put("idname", "socialSecurityId");
-        String url=PropertiesUtil.getProperty("application.properties","oa.server.url")+"/springBoot/processStart";
-        String data= JSON.toJSONString(requestData);
-        String cookie="custom.session="+Jurisdiction.getSession().getId();
-        return HttpUtils.doPostrequest(url,data,cookie);
     }
 
     /**
