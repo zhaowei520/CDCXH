@@ -22,6 +22,8 @@
             <result column="UPDATE_USER" javaType="String" property="updateUser"/>
             <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
             <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+		<result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+		<result column="BUSINESS_ID" javaType="String" property="businessId"/>
             <result column="DATA_PRIVILEGE_CODE" javaType="String" property="dataPrivilegeCode"/>
     </resultMap>
 
@@ -52,6 +54,8 @@
 		f.UPDATE_DATE,	
 		f.TENANT_ID_,	
 		f.DATA_PRIVILEGE_CODE,
+		f.PROC_INST_ID_,
+		f.BUSINESS_ID,
 		f.HOUSINGFUND_ID
 	</sql>
 
@@ -75,7 +79,9 @@
 		UPDATE_USER,	
 		UPDATE_DATE,	
 		TENANT_ID_,	
-		DATA_PRIVILEGE_CODE,	
+		DATA_PRIVILEGE_CODE,
+		PROC_INST_ID_,
+		BUSINESS_ID,
 		HOUSINGFUND_ID
 	</sql>
 
@@ -100,6 +106,8 @@
 		#{updateDate},
 		#{tenantId},
 		#{dataPrivilegeCode},
+		#{procInstId},
+		#{businessId},
 		#{housingFundId}
 	</sql>
 

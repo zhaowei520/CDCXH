@@ -40,6 +40,16 @@ public interface SocialSecurityMapper{
 	 * Date 2019-05-13 15:42
 	 */
 	public SocialSecurityBean findById(String socialSecurityId)throws Exception;
+
+	/**
+	 * 根据businessId获取数据
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-05-28 18:26
+	 */
+	public SocialSecurityBean findByCode(String businessId)throws Exception;
+
 	/**列表
 	 * @param socialSecurityBean
 	 * @throws Exception

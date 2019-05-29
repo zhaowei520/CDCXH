@@ -38,6 +38,9 @@ public interface SocialSecurityManager{
 	 * Date 2019-05-13 15:40
 	 */
 	public SocialSecurityQueryVo findById(String  socialSecurityId)throws Exception;
+
+	public SocialSecurityQueryVo findByCode(String  businessId)throws Exception;
+
 	/**列表
 	 * @param socialSecurityQueryVo
 	 * @throws Exception

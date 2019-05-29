@@ -32,7 +32,23 @@ public class HousingFundQueryVo extends BaseVo {
     private String updateDate;
     private String tenantId;
     private String dataPrivilegeCode;
+    private String procInstId;
+    private String businessId;
 
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
+    }
+    public String getProcInstId() {
+        return procInstId;
+    }
+
+    public void setProcInstId(String procInstId) {
+        this.procInstId = procInstId;
+    }
     public String getHousingFundId() {
         return housingFundId;
     }

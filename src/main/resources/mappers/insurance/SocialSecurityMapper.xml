@@ -26,6 +26,8 @@
             <result column="UPDATE_USER" javaType="String" property="updateUser"/>
             <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
             <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+			<result column="PROC_INST_ID_" javaType="String" property="procInstId"/>
+		<result column="BUSINESS_ID" javaType="String" property="businessId"/>
             <result column="DATA_PRIVILEGE_CODE" javaType="String" property="dataPrivilegeCode"/>
 
     </resultMap>
@@ -38,57 +40,61 @@
 
 	<!-- 字段 -->
 	<sql id="Field">
-		f.COMPANY_NAME,	
-		f.CUSTOMER,	
-		f.REGISTERED_AREA,	
-		f.CUSTOMER_PHONE,	
-		f.ADDRESS,	
-		f.FEES,	
-		f.SALER,	
-		f.BUY_START_MONTH,	
-		f.IS_CREDIT_CARD,	
-		f.OPEN_ACCOUNT,	
-		f.BACK_ACCOUNT,	
-		f.BUY_TYPE,	
-		f.PERSONAL_INFORMATION,	
-		f.IS_LEGAL_PERSON_BUY,	
-		f.LEGAL_PERSON_CERTIFICATE,	
-		f.IS_CLERK_STOP_BUY_INSURANCE,	
-		f.IDENTITY_CARD_NUMBER,	
-		f.CREATE_USER,	
-		f.CREATE_DATE,	
-		f.UPDATE_USER,	
-		f.UPDATE_DATE,	
-		f.TENANT_ID_,	
-		f.DATA_PRIVILEGE_CODE,	
+		f.COMPANY_NAME,
+		f.CUSTOMER,
+		f.REGISTERED_AREA,
+		f.CUSTOMER_PHONE,
+		f.ADDRESS,
+		f.FEES,
+		f.SALER,
+		f.BUY_START_MONTH,
+		f.IS_CREDIT_CARD,
+		f.OPEN_ACCOUNT,
+		f.BACK_ACCOUNT,
+		f.BUY_TYPE,
+		f.PERSONAL_INFORMATION,
+		f.IS_LEGAL_PERSON_BUY,
+		f.LEGAL_PERSON_CERTIFICATE,
+		f.IS_CLERK_STOP_BUY_INSURANCE,
+		f.IDENTITY_CARD_NUMBER,
+		f.CREATE_USER,
+		f.CREATE_DATE,
+		f.UPDATE_USER,
+		f.UPDATE_DATE,
+		f.TENANT_ID_,
+		f.DATA_PRIVILEGE_CODE,
+		f.PROC_INST_ID_,
+		f.BUSINESS_ID,
 		f.SOCIALSECURITY_ID
 	</sql>
 
 	<!-- 字段用于新增 -->
 	<sql id="Field2">
-		COMPANY_NAME,	
-		CUSTOMER,	
-		REGISTERED_AREA,	
-		CUSTOMER_PHONE,	
-		ADDRESS,	
-		FEES,	
-		SALER,	
-		BUY_START_MONTH,	
-		IS_CREDIT_CARD,	
-		OPEN_ACCOUNT,	
-		BACK_ACCOUNT,	
-		BUY_TYPE,	
-		PERSONAL_INFORMATION,	
-		IS_LEGAL_PERSON_BUY,	
-		LEGAL_PERSON_CERTIFICATE,	
-		IS_CLERK_STOP_BUY_INSURANCE,	
-		IDENTITY_CARD_NUMBER,	
-		CREATE_USER,	
-		CREATE_DATE,	
-		UPDATE_USER,	
-		UPDATE_DATE,	
-		TENANT_ID_,	
-		DATA_PRIVILEGE_CODE,	
+		COMPANY_NAME,
+		CUSTOMER,
+		REGISTERED_AREA,
+		CUSTOMER_PHONE,
+		ADDRESS,
+		FEES,
+		SALER,
+		BUY_START_MONTH,
+		IS_CREDIT_CARD,
+		OPEN_ACCOUNT,
+		BACK_ACCOUNT,
+		BUY_TYPE,
+		PERSONAL_INFORMATION,
+		IS_LEGAL_PERSON_BUY,
+		LEGAL_PERSON_CERTIFICATE,
+		IS_CLERK_STOP_BUY_INSURANCE,
+		IDENTITY_CARD_NUMBER,
+		CREATE_USER,
+		CREATE_DATE,
+		UPDATE_USER,
+		UPDATE_DATE,
+		TENANT_ID_,
+		DATA_PRIVILEGE_CODE,
+		PROC_INST_ID_,
+		BUSINESS_ID,
 		SOCIALSECURITY_ID
 	</sql>
 
@@ -117,6 +123,8 @@
 		#{updateDate},
 		#{tenantId},
 		#{dataPrivilegeCode},
+		#{procInstId},
+		#{businessId},
 		#{socialSecurityId}
 	</sql>
 
@@ -175,6 +183,14 @@
 		<include refid="tableName"></include> f
 		where f.SOCIALSECURITY_ID = #{socialSecurityId}
 	</select>
+    <!--根据businessId获取数据-->
+    <select id="findByCode" parameterType="String" resultMap="socialSecurityMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include> f
+        where f.BUSINESS_ID = #{businessId}
+    </select>
 	<!-- 列表(全部) -->
 	<select id="list" parameterType="com.mzkj.bean.SocialSecurityBean" resultMap="socialSecurityMap">
 		select

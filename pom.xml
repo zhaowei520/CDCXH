@@ -7,8 +7,8 @@
     <groupId>com.mzkj</groupId>
     <artifactId>mzcsbackend</artifactId>
     <version>0.0.1</version>
-    <packaging>jar</packaging>
-    <!--<packaging>war</packaging>-->
+    <!--<packaging>jar</packaging>-->
+    <packaging>war</packaging>
 
     <name>CDCXH</name>
     <description>salary project for Spring Boot</description>
@@ -164,6 +164,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.0.9</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.5</version>
         </dependency>
     </dependencies>
     <build>
