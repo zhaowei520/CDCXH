@@ -1,14 +1,11 @@
 package com.mzkj.vo.usergroup;
 
-import io.swagger.annotations.ApiModel;
-
 /**
  * @Description: 查询vo
  * @Author: zw
  * @Date: 2019/3/26 17:21
  * @Version: 1.0
  */
-@ApiModel(value = "usergroup保存对象", description = "usergroup保存对象")
 public class UsergroupVo {
 
     private String usergroupId;    //主键

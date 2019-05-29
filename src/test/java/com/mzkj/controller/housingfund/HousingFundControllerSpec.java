@@ -4,9 +4,8 @@ import com.google.common.collect.ImmutableList;
 
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
-import com.mzkj.service.housingfund.HousingFundManager;
+import com.mzkj.facade.vo.Result;
 import com.mzkj.service.housingfund.impl.HousingFundService;
-import com.mzkj.vo.Result;
 import com.mzkj.vo.housingfund.HousingFundQueryVo;
 import com.mzkj.vo.housingfund.HousingFundVo;
 

@@ -1,19 +1,24 @@
 package com.mzkj.controller.system;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.facade.enums.HttpCode;
+import com.mzkj.facade.vo.Result;
+import com.mzkj.service.system.RoleManager;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
-import com.mzkj.util.enums.HttpCode;
-import com.mzkj.vo.Result;
 import com.mzkj.vo.system.RoleQueryVo;
 import com.mzkj.vo.system.RoleVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.mzkj.service.system.RoleManager;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 说明：系统角色

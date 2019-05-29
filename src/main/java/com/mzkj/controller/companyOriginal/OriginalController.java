@@ -2,22 +2,24 @@ package com.mzkj.controller.companyOriginal;
 
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
-import com.mzkj.util.Const;
+import com.mzkj.facade.enums.HttpCode;
+import com.mzkj.facade.vo.Result;
+import com.mzkj.service.companyOriginal.OriginalManager;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
-import com.mzkj.util.enums.HttpCode;
-import com.mzkj.vo.Result;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.mzkj.service.companyOriginal.OriginalManager;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 说明：公司原件详情

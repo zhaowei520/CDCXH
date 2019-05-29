@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableList;
 
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
+import com.mzkj.facade.vo.Result;
 import com.mzkj.service.insurance.impl.SocialSecurityService;
-import com.mzkj.vo.Result;
 import com.mzkj.vo.insurance.SocialSecurityQueryVo;
 import com.mzkj.vo.insurance.SocialSecurityVo;
 

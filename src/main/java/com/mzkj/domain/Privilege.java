@@ -8,6 +8,7 @@ public class Privilege {
     private String privilegeId;    //主键
     private String name;                    //名称
     private String type;
+    private String subType;
     private String tenantId;
     private String code;
     private String createUser;
@@ -19,6 +20,14 @@ public class Privilege {
 
     public String getPrivilegeId() {
         return privilegeId;
+    }
+
+    public String getSubType() {
+        return subType;
+    }
+
+    public void setSubType(String subType) {
+        this.subType = subType;
     }
 
     public void setPrivilegeId(String privilegeId) {
