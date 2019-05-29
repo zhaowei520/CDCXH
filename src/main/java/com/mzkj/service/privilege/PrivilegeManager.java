@@ -1,9 +1,14 @@
 package com.mzkj.service.privilege;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.domain.Privilege;
+import com.mzkj.facade.vo.AddUsers2PrivilegeVo;
+import com.mzkj.facade.vo.InsertPrivilegeVo;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
+
+import java.util.List;
 
 public interface PrivilegeManager {
 
@@ -13,11 +18,15 @@ public interface PrivilegeManager {
 
     public PrivilegeVo findById(String id);
 
-    public void insert(PrivilegeVo privilegeQueryVo);
+    public String insert(InsertPrivilegeVo insertPrivilegeVo);
 
     PageInfo findUsersByPrivilege(UserOfPrivilegeQueryVo privilegeId);
 
     PageInfo findUsersUnselectedByPrivilege(UserOfPrivilegeQueryVo userOfPrivilegeQueryVo);
 
-    void addUsers2Privileges(String privilegeId, String[] userIds, String[] operations);
+    void addUsers2Privilege(AddUsers2PrivilegeVo addUsers2PrivilegeVo);
+
+    void deleteUsersOfPrivilege(String[] mappingIds);
+
+    public List<Privilege> findPrivilegesByUser(String userId);
 }
