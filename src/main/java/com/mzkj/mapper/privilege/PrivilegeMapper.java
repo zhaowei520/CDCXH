@@ -2,6 +2,7 @@ package com.mzkj.mapper.privilege;
 
 import com.mzkj.bean.PrivilegeBean;
 import com.mzkj.bean.PrivilegeUnselected2UsergroupBean;
+import com.mzkj.domain.Privilege;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,6 @@ public interface PrivilegeMapper {
     public void insert(PrivilegeBean privilegeBean);
 
     List<PrivilegeBean> findPrivilegesUnselected(PrivilegeUnselected2UsergroupBean privilegesUnselected2UsergroupBean);
+
+    List<Privilege> findPrivilegesByUser(@Param("userId") String userId);
 }

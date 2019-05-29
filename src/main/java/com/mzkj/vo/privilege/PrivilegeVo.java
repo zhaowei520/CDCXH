@@ -1,19 +1,17 @@
 package com.mzkj.vo.privilege;
 
-import io.swagger.annotations.ApiModel;
-
 /**
  * @Description: 查询vo
  * @Author: zw
  * @Date: 2019/3/26 17:21
  * @Version: 1.0
  */
-@ApiModel(value = "usergroup查询对象", description = "usergroup查询")
 public class PrivilegeVo {
 
     private String privilegeId;    //主键
     private String name;                    //名称
     private String type;
+    private String subType;
     private String code;
     private String tenantId;
     private String createUser;
@@ -22,6 +20,14 @@ public class PrivilegeVo {
     private String updateDate;
     private String deleted;
 
+
+    public String getSubType() {
+        return subType;
+    }
+
+    public void setSubType(String subType) {
+        this.subType = subType;
+    }
 
     public String getPrivilegeId() {
         return privilegeId;

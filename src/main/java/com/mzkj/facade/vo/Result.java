@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2015-2020 <a href="http://www.xxx.com/">TBM</a> All rights reserved.
  */
-package com.mzkj.vo;
+package com.mzkj.facade.vo;
 
 /**
  * @Author: zw

@@ -2,9 +2,11 @@ package com.mzkj.controller.privilege;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.controller.usergroup.UsergroupController;
+import com.mzkj.facade.enums.HttpCode;
+import com.mzkj.facade.vo.AddUsers2PrivilegeVo;
+import com.mzkj.facade.vo.InsertPrivilegeVo;
+import com.mzkj.facade.vo.Result;
 import com.mzkj.service.privilege.PrivilegeManager;
-import com.mzkj.util.enums.HttpCode;
-import com.mzkj.vo.Result;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
@@ -12,6 +14,7 @@ import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -89,15 +92,35 @@ public class PrivilegeController {
         return result;
     }
 
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    @ApiOperation(value = "新增privilege", notes = "新增privilege")
-    public Result insert(PrivilegeVo privilegeVo) {
+    @RequestMapping(value = "/insert2", method = RequestMethod.POST)
+    @ApiOperation(value = "新增privilege2", notes = "新增privilege2")
+    public Result insert2(@RequestBody InsertPrivilegeVo insertPrivilegeVo) {
         Result result = new Result();
         try {
-            getPrivilegeService().insert(privilegeVo);
+            String privilegeId = getPrivilegeService().insert(insertPrivilegeVo);
             result.setSuccess(Boolean.TRUE);
             result.setStatus(HttpCode.OK.getCode());
             result.setMsg("新增权限成功");
+            result.setData(privilegeId);
+        } catch (RuntimeException e) {
+            logger.error("新增权限失败", e);
+            result.setSuccess(Boolean.FALSE);
+            result.setMsg("新增权限失败");
+            result.setStatus(HttpCode.ERROR.getCode());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @ApiOperation(value = "新增privilege", notes = "新增privilege")
+    public Result insert(InsertPrivilegeVo insertPrivilegeVo) {
+        Result result = new Result();
+        try {
+            String privilegeId = getPrivilegeService().insert(insertPrivilegeVo);
+            result.setSuccess(Boolean.TRUE);
+            result.setStatus(HttpCode.OK.getCode());
+            result.setMsg("新增权限成功");
+            result.setData(privilegeId);
         } catch (RuntimeException e) {
             logger.error("新增权限失败", e);
             result.setSuccess(Boolean.FALSE);
@@ -145,12 +168,12 @@ public class PrivilegeController {
         return result;
     }
 
-    @RequestMapping(value = "/addUsers2Privileges", method = RequestMethod.POST)
+    @RequestMapping(value = "/addUsers2Privilege", method = RequestMethod.POST)
     @ApiOperation(value = "添加用户到权限", notes = "添加用户到权限")
-    public Result addUsers2Privileges(String privilegeId, String[] userIds, String[] operations) {
+    public Result addUsers2Privilege(AddUsers2PrivilegeVo addUsers2PrivilegeVo) {
         Result result = new Result();
         try {
-            getPrivilegeService().addUsers2Privileges(privilegeId, userIds, operations);
+            getPrivilegeService().addUsers2Privilege(addUsers2PrivilegeVo);
             result.setSuccess(Boolean.TRUE);
             result.setStatus(HttpCode.OK.getCode());
             result.setMsg("添加用户到权限成功");
@@ -158,6 +181,24 @@ public class PrivilegeController {
             logger.error("添加用户到权限失败", e);
             result.setSuccess(Boolean.FALSE);
             result.setMsg("添加用户到权限失败");
+            result.setStatus(HttpCode.ERROR.getCode());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/deleteUsersOfPrivilege", method = RequestMethod.POST)
+    @ApiOperation(value = "删除权限下的用户", notes = "删除权限下的用户")
+    public Result deleteUsersOfPrivilege(String[] mappingIds) {
+        Result result = new Result();
+        try {
+            getPrivilegeService().deleteUsersOfPrivilege(mappingIds);
+            result.setSuccess(Boolean.TRUE);
+            result.setStatus(HttpCode.OK.getCode());
+            result.setMsg("删除权限下的用户成功");
+        } catch (RuntimeException e) {
+            logger.error("删除权限下的用户失败", e);
+            result.setSuccess(Boolean.FALSE);
+            result.setMsg("删除权限下的用户失败");
             result.setStatus(HttpCode.ERROR.getCode());
         }
         return result;

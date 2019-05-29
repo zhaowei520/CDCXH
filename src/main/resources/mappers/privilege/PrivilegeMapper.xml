@@ -7,6 +7,7 @@
         <id column="PRIVILEGE_ID" property="privilegeId"/>
         <result column="NAME" property="name"/>
         <result column="TYPE" property="type"/>
+        <result column="SUB_TYPE" property="subType"/>
         <result column="CODE" property="code"/>
         <result column="TENANT_ID_" property="tenantId"/>
         <result column="CREATE_USER" property="createUser"/>
@@ -29,6 +30,7 @@
     <sql id="Field">
 		f.NAME,	
 		f.TYPE,
+		f.SUB_TYPE,
 		f.CODE,	
 		f.TENANT_ID_,	
 		f.CREATE_USER,	
@@ -43,6 +45,7 @@
     <sql id="Field2">
 		NAME,	
 		TYPE,
+		SUB_TYPE,
 		CODE,	
 		TENANT_ID_,	
 		CREATE_USER,	
@@ -57,6 +60,7 @@
     <sql id="FieldValue">
 		#{name},
 		#{type},
+		#{subType},
 		#{code},
 		#{tenantId},
 		#{createUser},
@@ -98,6 +102,7 @@
         set
         name = #{name},
         type = #{type},
+        sub_type = #{subType},
         code = #{code},
         UPDATE_DATE = #{updateDate},
         UPDATE_USER = #{updateUser}
@@ -131,5 +136,22 @@
         and mapping.deleted='0'
         where
         mapping.master_access_operation_mapping_id IS null
+    </select>
+
+    <!-- 根据用户查权限 -->
+    <select id="findPrivilegesByUser" resultMap="privilegeResultMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        left join <include refid="tb_master_access_operation_mapping"></include> mapping on
+        mapping.access_value=f.privilege_id
+        and mapping.master_type = 'user'
+        and mapping.access_type='privilege'
+        and mapping.master_value=#{userId}
+        and mapping.deleted='0'
+        where
+        mapping.master_access_operation_mapping_id IS not null
     </select>
 </mapper>

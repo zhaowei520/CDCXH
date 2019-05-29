@@ -5,6 +5,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.MasterAccessOperationMappingBean;
 import com.mzkj.bean.PrivilegeBean;
+import com.mzkj.domain.Privilege;
+import com.mzkj.facade.vo.AddUsers2PrivilegeVo;
+import com.mzkj.facade.vo.InsertPrivilegeVo;
 import com.mzkj.mapper.masterAccessOperation.MasterAccessOperationMapper;
 import com.mzkj.mapper.privilege.PrivilegeMapper;
 import com.mzkj.mapper.system.UserMapper;
@@ -75,16 +78,20 @@ public class PrivilegeService implements PrivilegeManager {
         return privilegeVo;
     }
 
-    public void insert(PrivilegeVo privilegeVo) {
-        privilegeVo.setTenantId(getTenantId());
-        privilegeVo.setPrivilegeId(UuidUtil.get32UUID());
-        privilegeVo.setCreateUser(getUsername());
-        privilegeVo.setCreateDate(DateUtil.getTime());
-        privilegeVo.setUpdateUser(getUsername());
-        privilegeVo.setUpdateDate(DateUtil.getTime());
-        privilegeVo.setDeleted(DeleteStatus.NOT_YET.getCode());
-        PrivilegeBean privilegeBean = objectCopyParams(privilegeVo, PrivilegeBean.class);
+    public String insert(InsertPrivilegeVo insertPrivilegeVo) {
+        PrivilegeBean privilegeBean = new PrivilegeBean();
+        privilegeBean.setName(insertPrivilegeVo.getName());
+        privilegeBean.setType(insertPrivilegeVo.getType());
+        privilegeBean.setSubType(insertPrivilegeVo.getSubType());
+        privilegeBean.setTenantId(getTenantId());
+        privilegeBean.setPrivilegeId(UuidUtil.get32UUID());
+        privilegeBean.setCreateUser(getUsername());
+        privilegeBean.setCreateDate(DateUtil.getTime());
+        privilegeBean.setUpdateUser(getUsername());
+        privilegeBean.setUpdateDate(DateUtil.getTime());
+        privilegeBean.setDeleted(DeleteStatus.NOT_YET.getCode());
         getPrivilegeMapper().insert(privilegeBean);
+        return privilegeBean.getPrivilegeId();
     }
 
     @Override
@@ -106,15 +113,24 @@ public class PrivilegeService implements PrivilegeManager {
     }
 
     @Override
-    public void addUsers2Privileges(String privilegeId, String[] userIds, String[] operationParams) {
+    public void addUsers2Privilege(AddUsers2PrivilegeVo addUsers2PrivilegeVo) {
         String masterType = RelatingType.USER.getCode();
-        String[] masterValues = userIds;
+        String[] masterValues = addUsers2PrivilegeVo.getUserIds();
         String accessType = RelatingType.PRIVILEGE.getCode();
-        String accessValue = privilegeId;
-        String[] operations = operationParams;
+        String accessValue = addUsers2PrivilegeVo.getPrivilegeId();
+        String[] operations = addUsers2PrivilegeVo.getOperations();
         List<MasterAccessOperationMappingBean> masterAccessOperationMappingBeanList
                 = doMasterAccessOperationMappingBeanList(masterType, masterValues, accessType, accessValue, operations);
         getMasterAccessOperationMapper().addAccess2Master(masterAccessOperationMappingBeanList);
+    }
+
+    @Override
+    public void deleteUsersOfPrivilege(String[] mappingIds) {
+        getMasterAccessOperationMapper().deleteMasterAccessOperationMapping(mappingIds, getTenantId(), getUsername());
+    }
+
+    public List<Privilege> findPrivilegesByUser(String userId) {
+        return getPrivilegeMapper().findPrivilegesByUser(userId);
     }
 
     public List<MasterAccessOperationMappingBean> doMasterAccessOperationMappingBeanList(String masterType

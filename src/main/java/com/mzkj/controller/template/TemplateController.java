@@ -1,23 +1,24 @@
 package com.mzkj.controller.template;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.facade.enums.HttpCode;
+import com.mzkj.facade.vo.Result;
+import com.mzkj.service.template.TemplateManager;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
-import com.mzkj.util.enums.HttpCode;
-import com.mzkj.vo.Result;
 import com.mzkj.vo.template.TemplateQueryVo;
 import com.mzkj.vo.template.TemplateVo;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.mzkj.service.template.TemplateManager;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 说明：薪资模板表

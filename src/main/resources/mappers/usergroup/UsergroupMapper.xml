@@ -80,7 +80,7 @@
         from
         <include refid="tableName"></include>
         f
-        where 1=1
+        where deleted='0'
         <if test="name!= null and name != ''">
             and f.name like CONCAT(CONCAT('%', #{name}),'%')
         </if>

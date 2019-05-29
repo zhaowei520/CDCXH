@@ -1,4 +1,4 @@
-package com.mzkj.util.enums;
+package com.mzkj.facade.enums;
 
 public enum AccessOperation {
 

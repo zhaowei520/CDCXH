@@ -1,10 +1,12 @@
 package com.mzkj.controller.privilege;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.facade.enums.HttpCode;
+import com.mzkj.facade.vo.AddUsers2PrivilegeVo;
+import com.mzkj.facade.vo.InsertPrivilegeVo;
+import com.mzkj.facade.vo.Result;
 import com.mzkj.service.privilege.PrivilegeManager;
 import com.mzkj.service.privilege.impl.PrivilegeService;
-import com.mzkj.util.enums.HttpCode;
-import com.mzkj.vo.Result;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
@@ -26,17 +28,27 @@ public class PrivilegeControllerSpec {
     PrivilegeController privilegeController;
     PrivilegeManager privilegeService;
     PrivilegeVo privilegeVo;
+    InsertPrivilegeVo insertPrivilegeVo;
     String privilegeId = "123";
     UserOfPrivilegeQueryVo userOfPrivilegeQueryVo;
+    AddUsers2PrivilegeVo addUsers2PrivilegeVo;
 
     @Before
     public void before() {
+        insertPrivilegeVo = new InsertPrivilegeVo();
         privilegeQueryVo = new PrivilegeQueryVo();
         privilegeController = spy(PrivilegeController.class);
         privilegeService = mock(PrivilegeService.class);
         privilegeVo = new PrivilegeVo();
         doReturn(privilegeService).when(privilegeController).getPrivilegeService();
         userOfPrivilegeQueryVo = new UserOfPrivilegeQueryVo();
+        addUsers2PrivilegeVo = new AddUsers2PrivilegeVo();
+        String privilegeId = "123";
+        String[] userIds = {"123", "1233"};
+        String[] operations = {"read", "read"};
+        addUsers2PrivilegeVo.setPrivilegeId(privilegeId);
+        addUsers2PrivilegeVo.setUserIds(userIds);
+        addUsers2PrivilegeVo.setOperations(operations);
     }
 
     @Test
@@ -126,14 +138,14 @@ public class PrivilegeControllerSpec {
 
     @Test
     public void whenInsertThenInvokeServiceInsert() {
-        privilegeController.insert(privilegeVo);
-        verify(privilegeService, times(1)).insert(privilegeVo);
+        privilegeController.insert(insertPrivilegeVo);
+        verify(privilegeService, times(1)).insert(insertPrivilegeVo);
     }
 
     @Test
     public void whenInsertExceptionThenReturnFalseResult() {
-        doThrow(RuntimeException.class).when(privilegeService).insert(privilegeVo);
-        Result result = privilegeController.insert(privilegeVo);
+        doThrow(RuntimeException.class).when(privilegeService).insert(insertPrivilegeVo);
+        Result result = privilegeController.insert(insertPrivilegeVo);
         Assert.assertFalse(result.isSuccess());
         Assert.assertEquals("新增权限失败", result.getMsg());
         Assert.assertEquals(HttpCode.ERROR.getCode(), result.getStatus());
@@ -141,7 +153,7 @@ public class PrivilegeControllerSpec {
 
     @Test
     public void whenInsertSuccessfullyThenReturnTrueResult() {
-        Result result = privilegeController.insert(privilegeVo);
+        Result result = privilegeController.insert(insertPrivilegeVo);
         Assert.assertTrue(result.isSuccess());
         Assert.assertEquals("新增权限成功", result.getMsg());
         Assert.assertEquals(HttpCode.OK.getCode(), result.getStatus());
@@ -198,17 +210,15 @@ public class PrivilegeControllerSpec {
         String privilegeId = "123";
         String[] userIds = {"123", "1233"};
         String[] operations = {"read", "read"};
-        privilegeController.addUsers2Privileges(privilegeId, userIds, operations);
-        verify(privilegeService, times(1)).addUsers2Privileges(privilegeId, userIds, operations);
+        privilegeController.addUsers2Privilege(addUsers2PrivilegeVo);
+        verify(privilegeService, times(1)).addUsers2Privilege(addUsers2PrivilegeVo);
     }
 
     @Test
     public void whenAddUsers2PrivilegesFailThenReturnFalseResult() {
-        String privilegeId = "123";
-        String[] userIds = {"123", "1233"};
-        String[] operations = {"read", "read"};
-        doThrow(RuntimeException.class).when(privilegeService).addUsers2Privileges(privilegeId, userIds, operations);
-        Result result = privilegeController.addUsers2Privileges(privilegeId, userIds, operations);
+
+        doThrow(RuntimeException.class).when(privilegeService).addUsers2Privilege(addUsers2PrivilegeVo);
+        Result result = privilegeController.addUsers2Privilege(addUsers2PrivilegeVo);
         Assert.assertFalse(result.isSuccess());
         Assert.assertEquals("添加用户到权限失败", result.getMsg());
         Assert.assertEquals(HttpCode.ERROR.getCode(), result.getStatus());
@@ -219,9 +229,35 @@ public class PrivilegeControllerSpec {
         String privilegeId = "123";
         String[] userIds = {"123", "1233"};
         String[] operations = {"read", "read"};
-        Result result = privilegeController.addUsers2Privileges(privilegeId, userIds, operations);
+        Result result = privilegeController.addUsers2Privilege(addUsers2PrivilegeVo);
         Assert.assertTrue(result.isSuccess());
         Assert.assertEquals("添加用户到权限成功", result.getMsg());
+        Assert.assertEquals(HttpCode.OK.getCode(), result.getStatus());
+    }
+
+    @Test
+    public void whenDeleteUsersOfPrivilegeThenInvokeService() {
+        String[] mappingIds = {"123"};
+        privilegeController.deleteUsersOfPrivilege(mappingIds);
+        verify(privilegeService, times(1)).deleteUsersOfPrivilege(mappingIds);
+    }
+
+    @Test
+    public void whenDeleteUsersOfPrivilegeFailThenReturnFalseResult() {
+        String[] mappingIds = {"123"};
+        doThrow(RuntimeException.class).when(privilegeService).deleteUsersOfPrivilege(mappingIds);
+        Result result = privilegeController.deleteUsersOfPrivilege(mappingIds);
+        Assert.assertFalse(result.isSuccess());
+        Assert.assertEquals("删除权限下的用户失败", result.getMsg());
+        Assert.assertEquals(HttpCode.ERROR.getCode(), result.getStatus());
+    }
+
+    @Test
+    public void whenDeleteUsersOfPrivilegeSuccessfullyThenReturnTrueResult() {
+        String[] mappingIds = {"123"};
+        Result result = privilegeController.deleteUsersOfPrivilege(mappingIds);
+        Assert.assertTrue(result.isSuccess());
+        Assert.assertEquals("删除权限下的用户成功", result.getMsg());
         Assert.assertEquals(HttpCode.OK.getCode(), result.getStatus());
     }
 
