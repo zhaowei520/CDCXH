@@ -158,7 +158,7 @@
 		from 
 		<include refid="tableName"></include> f
 		where f.TENANT_ID_=#{tenantId}
-		<if test="userType != null and userType != ''">
+		<if test="userType != null ">
 			and f.USER_TYPE = #{userType}
 		</if>
 		<if test="name != null and name != ''">

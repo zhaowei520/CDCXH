@@ -1,37 +1,25 @@
 package com.mzkj.service.insurance.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.SocialSecurityBean;
 import com.mzkj.domain.User;
+import com.mzkj.mapper.insurance.SocialSecurityMapper;
 import com.mzkj.mapper.system.UserMapper;
-import com.mzkj.util.Const;
+import com.mzkj.service.insurance.SocialSecurityManager;
+import com.mzkj.service.oainterface.ProcessInterface;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.DateUtil;
-import com.mzkj.util.HttpUtils;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
-import com.mzkj.util.PropertiesUtil;
-import com.mzkj.util.UuidUtil;
 import com.mzkj.vo.insurance.SocialSecurityQueryVo;
 import com.mzkj.vo.insurance.SocialSecurityVo;
 
-import org.apache.commons.beanutils.BeanMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.github.pagehelper.PageHelper;
-
-import com.mzkj.service.insurance.SocialSecurityManager;
-import com.mzkj.mapper.insurance.SocialSecurityMapper;
-import com.oainterface.ProcessInterface;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 

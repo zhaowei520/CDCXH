@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.general.GeneralContractMapper">
+
+    <resultMap id="generalContractMap" type="com.mzkj.bean.GeneralContractBean">
+        <id column="GENERALCONTRACT_ID" javaType="string" property="generalContractId"/>
+        <result column="CONTRACT_CREATE_DATE" javaType="String" property="contractCreateDate"/>
+        <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+        <result column="REGISTER_AREA" javaType="String" property="registerArea"/>
+        <result column="CONTRACT_DATE" javaType="String" property="contractDate"/>
+        <result column="HAS_CONTRACT" javaType="String" property="hasContract"/>
+        <result column="INDUSTRY" javaType="String" property="industry"/>
+        <result column="DRAWER_DEPARTMENT" javaType="String" property="drawerDepartment"/>
+        <result column="DRAWER" javaType="String" property="drawer"/>
+        <result column="SIGN_PERSON" javaType="String" property="signPerson"/>
+        <result column="SOURCE_OF_CUSTOMER" javaType="String" property="sourceOfCustomer"/>
+        <result column="LINKMAN" javaType="String" property="linkman"/>
+        <result column="CONTRACT_TYPE" javaType="String" property="contractType"/>
+        <result column="CONTRACT_PRICE" javaType="Double" property="contractPrice"/>
+        <result column="ADVANCES_RECEIVED" javaType="Double" property="advancesReceived"/>
+        <result column="FINAL_PAYMENT" javaType="Double" property="finalPayment"/>
+        <result column="DEADLINE" javaType="String" property="deadline"/>
+        <result column="REMARK" javaType="String" property="remark"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="CREATE_USER" javaType="String" property="createUser"/>
+        <result column="CREATE_DATE" javaType="String" property="createDate"/>
+        <result column="UPDATE_USER" javaType="String" property="updateUser"/>
+        <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
+        <result column="BUSINESS_ID" javaType="String" property="businessId"/>
+
+    </resultMap>
+
+    <!--表名 -->
+    <sql id="tableName">
+		TB_GENERALCONTRACT
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		f.CONTRACT_CREATE_DATE,	
+		f.COMPANY_NAME,	
+		f.REGISTER_AREA,	
+		f.CONTRACT_DATE,	
+		f.HAS_CONTRACT,	
+		f.INDUSTRY,	
+		f.DRAWER_DEPARTMENT,	
+		f.DRAWER,	
+		f.SIGN_PERSON,	
+		f.SOURCE_OF_CUSTOMER,	
+		f.LINKMAN,	
+		f.CONTRACT_TYPE,	
+		f.CONTRACT_PRICE,	
+		f.ADVANCES_RECEIVED,	
+		f.FINAL_PAYMENT,	
+		f.DEADLINE,	
+		f.REMARK,	
+		f.TENANT_ID_,	
+		f.CREATE_USER,	
+		f.CREATE_DATE,	
+		f.UPDATE_USER,	
+		f.UPDATE_DATE,
+		f.BUSINESS_ID,
+		f.GENERALCONTRACT_ID
+	</sql>
+
+    <!-- 字段用于新增 -->
+    <sql id="Field2">
+		CONTRACT_CREATE_DATE,	
+		COMPANY_NAME,	
+		REGISTER_AREA,	
+		CONTRACT_DATE,	
+		HAS_CONTRACT,	
+		INDUSTRY,	
+		DRAWER_DEPARTMENT,	
+		DRAWER,	
+		SIGN_PERSON,	
+		SOURCE_OF_CUSTOMER,	
+		LINKMAN,	
+		CONTRACT_TYPE,	
+		CONTRACT_PRICE,	
+		ADVANCES_RECEIVED,	
+		FINAL_PAYMENT,	
+		DEADLINE,	
+		REMARK,	
+		TENANT_ID_,	
+		CREATE_USER,	
+		CREATE_DATE,	
+		UPDATE_USER,	
+		UPDATE_DATE,
+		BUSINESS_ID,
+		GENERALCONTRACT_ID
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{contractCreateDate},
+		#{companyName},
+		#{registerArea},
+		#{contractDate},
+		#{hasContract},
+		#{industry},
+		#{drawerDepartment},
+		#{drawer},
+		#{signPerson},
+		#{sourceOfCustomer},
+		#{linkman},
+		#{contractType},
+		#{contractPrice},
+		#{advancesReceived},
+		#{finalPayment},
+		#{deadline},
+		#{remark},
+		#{tenantId},
+		#{createUser},
+		#{createDate},
+		#{updateUser},
+		#{updateDate},
+		#{businessId},
+		#{generalContractId}
+	</sql>
+
+    <!-- 新增-->
+    <insert id="save" parameterType="com.mzkj.bean.GeneralContractBean">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field2"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="com.mzkj.bean.GeneralContractBean">
+        delete from
+        <include refid="tableName"></include>
+        where
+        GENERALCONTRACT_ID = #{generalContractId}
+    </delete>
+    <select id="findById" parameterType="string" resultMap="generalContractMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        where
+        GENERALCONTRACT_ID = #{generalContractId}
+    </select>
+    <select id="findByBusinessId" parameterType="string" resultMap="generalContractMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        where
+        BUSINESS_ID = #{businessId}
+    </select>
+    <!-- 修改 -->
+    <update id="edit" parameterType="com.mzkj.bean.GeneralContractBean">
+        update
+        <include refid="tableName"></include>
+        set
+        CONTRACT_CREATE_DATE = #{contractCreateDate},
+        COMPANY_NAME = #{companyName},
+        REGISTER_AREA = #{registerArea},
+        CONTRACT_DATE = #{contractDate},
+        HAS_CONTRACT = #{hasContract},
+        INDUSTRY = #{industry},
+        DRAWER_DEPARTMENT = #{drawerDepartment},
+        DRAWER = #{drawer},
+        SIGN_PERSON = #{signPerson},
+        SOURCE_OF_CUSTOMER = #{sourceOfCustomer},
+        LINKMAN = #{linkman},
+        CONTRACT_TYPE = #{contractType},
+        CONTRACT_PRICE = #{contractPrice},
+        ADVANCES_RECEIVED = #{advancesReceived},
+        FINAL_PAYMENT = #{finalPayment},
+        DEADLINE = #{deadline},
+        REMARK = #{remark},
+        UPDATE_USER = #{updateUser},
+        UPDATE_DATE = #{updateDate}
+        where
+        GENERALCONTRACT_ID = #{generalContractId}
+    </update>
+
+    <!-- 列表(全部) -->
+    <select id="list" parameterType="com.mzkj.bean.GeneralContractBean"
+            resultMap="generalContractMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        where f.TENANT_ID_= #{tenantId}
+        order by f.CREATE_DATE desc
+    </select>
+
+</mapper>

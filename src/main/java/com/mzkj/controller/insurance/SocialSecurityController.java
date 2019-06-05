@@ -154,30 +154,7 @@ public class SocialSecurityController {
         result.setSuccess(true);
         return result;
     }
-    /**
-     * 根据businessId查询数据
-     * return
-     * Author luosc
-     * param
-     * Date 2019-05-13 15:46
-     */
-    @RequestMapping(value = "/findByCode", method = RequestMethod.GET)
-    @ApiOperation(value = "根据businessId查询socialSecurity", notes = "根据businessId查询socialSecurity")
-    public Result<SocialSecurityQueryVo> findByCode( String businessId) {
-        logger.info(getUsernameFromSession() + "查询findByCode社保工单");
-        Result<SocialSecurityQueryVo> result = new Result<>();
-        try {
-            SocialSecurityQueryVo socialSecurityQueryVo = getSocialSecurityService().findByCode(businessId);
-            result.setData(socialSecurityQueryVo);
-        } catch (Exception e) {
-            logger.error(e.toString(), e);
-            result.setStatus(HttpCode.ERROR.getCode());
-            result.setSuccess(false);
-            result.setMsg(e.getMessage());
-        }
-        result.setSuccess(true);
-        return result;
-    }
+
     /**
      * 列表
      */

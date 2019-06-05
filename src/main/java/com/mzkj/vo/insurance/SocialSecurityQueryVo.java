@@ -38,6 +38,15 @@ public class SocialSecurityQueryVo extends BaseVo {
     private String dataPrivilegeCode;
     private String procInstId;
     private String businessId;
+    private String customerId;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
     public String getBusinessId() {
         return businessId;

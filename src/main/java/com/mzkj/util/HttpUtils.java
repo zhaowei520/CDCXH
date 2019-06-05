@@ -87,7 +87,6 @@ public class HttpUtils {
     public static void doGetRequest(String path, String sessionId) {
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-
         // 创建Get请求
         HttpGet httpGet = new HttpGet(path);
         httpGet.setHeader("Cookie", "custom.session="+sessionId);

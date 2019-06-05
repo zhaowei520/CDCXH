@@ -1,21 +1,19 @@
-package com.oainterface.impl;
+package com.mzkj.service.oainterface.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.fh.controller.springboot.trunkservice.OaInterfaceForSpringBoot;
+import com.fh.controller.springboot.trunkservice.OaInterfaceForSpringBootService;
 import com.mzkj.bean.SocialSecurityBean;
 import com.mzkj.facade.vo.Result;
+import com.mzkj.service.oainterface.ProcessInterface;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
-import com.mzkj.util.PropertiesUtil;
-import com.oainterface.ProcessInterface;
 
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import javax.annotation.Resource;
+import java.util.Properties;
 
 /**
  * @Author: luosc
@@ -23,11 +21,16 @@ import javax.annotation.Resource;
  * @Date:created in 9:50 2019-05-29
  */
 @Service("processInterfaceService")
-public class ProcessInterfaceService implements ProcessInterface {
-    @Resource
-    private OaInterfaceForSpringBoot oaInterfaceForSpringBootService;
+public class ProcessInterfaceService implements ProcessInterface{
+    public Properties getPprVue() throws Exception{
+        InputStream inputStream = ProcessInterfaceService.class.getClassLoader().getResourceAsStream("application.properties");
+        Properties p = new Properties();
+        p.load(inputStream);
+        inputStream.close();
+        return p;
+    }
     @Override
-    public String processStart(SocialSecurityBean socialSecurityBean) {
+    public String processStart(SocialSecurityBean socialSecurityBean) throws Exception {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         map.put("SERVERNAME", "socialSecurityService");
         //map.put("CONTRACTNAME", "indcomconService");    //合同service
@@ -45,8 +48,11 @@ public class ProcessInterfaceService implements ProcessInterface {
         requestData.put("processKey", "KEY_social_security");//社保工单流程标识
         requestData.put("idname", "socialSecurityId");
         String sessionId= (String) Jurisdiction.getSession().getId();
-        Result<String> result=oaInterfaceForSpringBootService.socialSecurityProcessStart("http://localhost:8080",requestData, sessionId);
-        //return HttpUtils.doPostrequest(url,data,sessionId);
+        String rootPath = getPprVue().getProperty("oa.server.url");
+        OaInterfaceForSpringBootService oaInterfaceForSpringBootService = OaInterfaceForSpringBootService.getInstance();
+        Result<String> result=oaInterfaceForSpringBootService.socialSecurityProcessStart(rootPath, requestData, sessionId);
         return result.getData();
     }
+
+
 }

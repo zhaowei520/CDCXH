@@ -1,4 +1,4 @@
-package com.oainterface;
+package com.mzkj.service.oainterface;
 
 import com.mzkj.bean.SocialSecurityBean;
 
@@ -16,5 +16,5 @@ public interface ProcessInterface {
      * param
      * Date 2019-05-29 9:52
      */
-    public String processStart(SocialSecurityBean socialSecurityBean);
+    public String processStart(SocialSecurityBean socialSecurityBean) throws Exception;
 }
