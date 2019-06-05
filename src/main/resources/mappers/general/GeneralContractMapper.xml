@@ -193,6 +193,9 @@
         <include refid="tableName"></include>
         f
         where f.TENANT_ID_= #{tenantId}
+        <if test="companyName!=null and companyName !=''">
+            and f.COMPANY_NAME like CONCAT(CONCAT('%', #{companyName}),'%')
+        </if>
         order by f.CREATE_DATE desc
     </select>
 
