@@ -5,9 +5,9 @@ import com.google.common.collect.ImmutableList;
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.facade.vo.Result;
+import com.mzkj.facade.vo.SocialSecurityQueryVo;
+import com.mzkj.facade.vo.SocialSecurityVo;
 import com.mzkj.service.insurance.impl.SocialSecurityService;
-import com.mzkj.vo.insurance.SocialSecurityQueryVo;
-import com.mzkj.vo.insurance.SocialSecurityVo;
 
 import org.junit.Assert;
 import org.junit.Before;

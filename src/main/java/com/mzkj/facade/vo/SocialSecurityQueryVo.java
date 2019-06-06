@@ -1,5 +1,6 @@
-package com.mzkj.vo.insurance;
+package com.mzkj.facade.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mzkj.vo.BaseVo;
 
 import io.swagger.annotations.ApiModel;
@@ -11,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 创建时间：2019-05-13
  */
 @ApiModel(value = "SocialSecurity查询对象", description = "SocialSecurity查询")
-public class SocialSecurityQueryVo extends BaseVo {
+public class SocialSecurityQueryVo {
     private String socialSecurityId;
     private String companyName;
     private String customer;
@@ -39,7 +40,29 @@ public class SocialSecurityQueryVo extends BaseVo {
     private String procInstId;
     private String businessId;
     private String customerId;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @ApiModelProperty(value="第几页",name="pageNum",example="1")
+    private Integer pageNum = 1;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @ApiModelProperty(value="每页数量",name="pageSize",example="10")
+    private Integer pageSize = 10;
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
     public String getCustomerId() {
         return customerId;
     }

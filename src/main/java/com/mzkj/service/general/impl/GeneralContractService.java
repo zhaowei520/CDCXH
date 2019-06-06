@@ -2,15 +2,15 @@ package com.mzkj.service.general.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.GeneralContractBean;
+import com.mzkj.facade.vo.GeneralContractVo;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.DateUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
 import com.mzkj.vo.general.GeneralContractQueryVo;
-import com.mzkj.vo.general.GeneralContractVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.github.pagehelper.PageHelper;
 
 import com.mzkj.service.general.GeneralContractManager;
 import com.mzkj.mapper.general.GeneralContractMapper;

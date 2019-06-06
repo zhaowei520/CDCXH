@@ -1,8 +1,8 @@
 package com.mzkj.service.general;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.facade.vo.GeneralContractVo;
 import com.mzkj.vo.general.GeneralContractQueryVo;
-import com.mzkj.vo.general.GeneralContractVo;
 
 /**
  * 说明： 其它合同管理接口

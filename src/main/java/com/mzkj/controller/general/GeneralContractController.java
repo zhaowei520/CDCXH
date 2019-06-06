@@ -3,11 +3,12 @@ package com.mzkj.controller.general;
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.facade.enums.HttpCode;
+import com.mzkj.facade.vo.GeneralContractVo;
 import com.mzkj.facade.vo.Result;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
 import com.mzkj.vo.general.GeneralContractQueryVo;
-import com.mzkj.vo.general.GeneralContractVo;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;

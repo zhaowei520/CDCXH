@@ -1,4 +1,4 @@
-package com.mzkj.vo.insurance;
+package com.mzkj.facade.vo;
 
 /**
  * 说明： 社保工单新增/修改vo

@@ -3,6 +3,8 @@ package com.mzkj.service.insurance.impl;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.SocialSecurityBean;
 import com.mzkj.domain.User;
+import com.mzkj.facade.vo.SocialSecurityQueryVo;
+import com.mzkj.facade.vo.SocialSecurityVo;
 import com.mzkj.mapper.insurance.SocialSecurityMapper;
 import com.mzkj.mapper.system.UserMapper;
 import com.mzkj.service.insurance.SocialSecurityManager;
@@ -11,8 +13,6 @@ import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.DateUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
-import com.mzkj.vo.insurance.SocialSecurityQueryVo;
-import com.mzkj.vo.insurance.SocialSecurityVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

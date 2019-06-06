@@ -4,11 +4,11 @@ import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.facade.enums.HttpCode;
 import com.mzkj.facade.vo.Result;
+import com.mzkj.facade.vo.SocialSecurityQueryVo;
+import com.mzkj.facade.vo.SocialSecurityVo;
 import com.mzkj.service.insurance.SocialSecurityManager;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
-import com.mzkj.vo.insurance.SocialSecurityQueryVo;
-import com.mzkj.vo.insurance.SocialSecurityVo;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

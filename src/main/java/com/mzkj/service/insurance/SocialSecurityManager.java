@@ -1,8 +1,8 @@
 package com.mzkj.service.insurance;
 
 import com.github.pagehelper.PageInfo;
-import com.mzkj.vo.insurance.SocialSecurityQueryVo;
-import com.mzkj.vo.insurance.SocialSecurityVo;
+import com.mzkj.facade.vo.SocialSecurityQueryVo;
+import com.mzkj.facade.vo.SocialSecurityVo;
 
 /** 
  * 说明： 社保工单接口

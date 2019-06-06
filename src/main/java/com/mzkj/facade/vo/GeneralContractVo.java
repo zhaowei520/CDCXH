@@ -1,4 +1,4 @@
-package com.mzkj.vo.general;
+package com.mzkj.facade.vo;
 
 /**
  * 说明： 其它合同管理新增/修改vo

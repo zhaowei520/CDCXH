@@ -1,9 +1,8 @@
-package com.fh.util;
+package com.mzkj.facade.service;
 
 import com.alibaba.fastjson.JSON;
+import com.mzkj.facade.vo.GeneralContractVo;
 import com.mzkj.facade.vo.Result;
-import com.mzkj.util.Jurisdiction;
-import com.mzkj.vo.general.GeneralContractVo;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
@@ -77,7 +76,7 @@ public class WorkOrderUtil {
      * param
      * Date 2019-06-04 11:57
      */
-    public static String generalContractEdit(String rootPath,GeneralContractVo generalContractVo,String sessionId) {
+    public static String generalContractEdit(String rootPath, GeneralContractVo generalContractVo, String sessionId) {
         String jsonString = JSON.toJSONString(generalContractVo);
         return doPostrequest(rootPath + "/generalContract/edit", jsonString, sessionId);
     }
