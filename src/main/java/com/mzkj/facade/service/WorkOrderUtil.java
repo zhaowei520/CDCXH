@@ -3,6 +3,7 @@ package com.mzkj.facade.service;
 import com.alibaba.fastjson.JSON;
 import com.mzkj.facade.vo.GeneralContractVo;
 import com.mzkj.facade.vo.Result;
+import com.mzkj.facade.vo.SocialSecurityVo;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
@@ -46,6 +47,19 @@ public class WorkOrderUtil {
     }
 
     /**
+     * 流程中修改社保工单数据
+     * return
+     * Author luosc
+     * param
+     * Date 2019-06-11 16:38
+     */
+    public static String editSocialSecurity(String rootPath, SocialSecurityVo  socialSecurityVo, String sessionId) {
+        String param = JSON.toJSONString(socialSecurityVo);
+        String result = doPostrequest(rootPath + "/socialSecurity/editProcess", param, sessionId);
+        return result;
+    }
+
+    /**
      * 根据businessId获取数据
      * return
      * Author luosc
@@ -63,7 +77,7 @@ public class WorkOrderUtil {
      * param
      * Date 2019-06-04 11:51
      */
-    public static String generalContractSave(String rootPath,GeneralContractVo generalContractVo,String sessionId) {
+    public static String generalContractSave(String rootPath, GeneralContractVo generalContractVo, String sessionId) {
         String jsonString = JSON.toJSONString(generalContractVo);
         return doPostrequest(rootPath + "/generalContract/save", jsonString, sessionId);
     }

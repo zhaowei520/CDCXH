@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -98,6 +99,21 @@ public class SocialSecurityController {
         return result;
     }
 
+    @RequestMapping(value = "/editProcess", method = RequestMethod.POST)
+    public Result editProcess(@RequestBody SocialSecurityVo socialSecurityVo) {
+        logger.info(getUsernameFromSession() + "修改社保工单");
+        Result result = new Result<>();
+        try {
+            getSocialSecurityService().edit(socialSecurityVo);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        result.setSuccess(true);
+        return result;
+    }
     /**
      * 修改
      */
