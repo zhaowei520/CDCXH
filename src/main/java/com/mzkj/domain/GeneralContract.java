@@ -32,6 +32,15 @@ public class GeneralContract implements Serializable {
     private String updateUser;
     private String updateDate;
     private String businessId;
+    private String customerId;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
     public String getBusinessId() {
         return businessId;

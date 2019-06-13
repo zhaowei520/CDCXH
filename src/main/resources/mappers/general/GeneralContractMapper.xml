@@ -28,7 +28,7 @@
         <result column="UPDATE_USER" javaType="String" property="updateUser"/>
         <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
         <result column="BUSINESS_ID" javaType="String" property="businessId"/>
-
+        <result column="CUSTOMER_ID" javaType="String" property="customerId"/>
     </resultMap>
 
     <!--表名 -->
@@ -61,7 +61,11 @@
 		f.UPDATE_USER,	
 		f.UPDATE_DATE,
 		f.BUSINESS_ID,
+		f.CUSTOMER_ID,
 		f.GENERALCONTRACT_ID
+
+
+
 	</sql>
 
     <!-- 字段用于新增 -->
@@ -89,6 +93,7 @@
 		UPDATE_USER,	
 		UPDATE_DATE,
 		BUSINESS_ID,
+		CUSTOMER_ID,
 		GENERALCONTRACT_ID
 	</sql>
 
@@ -117,6 +122,7 @@
 		#{updateUser},
 		#{updateDate},
 		#{businessId},
+		#{customerId},
 		#{generalContractId}
 	</sql>
 
@@ -188,10 +194,29 @@
     <select id="list" parameterType="com.mzkj.bean.GeneralContractBean"
             resultMap="generalContractMap">
         select
-        <include refid="Field"></include>
+        f.CONTRACT_CREATE_DATE,
+        c.COMPANY_NAME,
+        f.REGISTER_AREA,
+        f.CONTRACT_DATE,
+        f.HAS_CONTRACT,
+        f.INDUSTRY,
+        f.DRAWER_DEPARTMENT,
+        f.DRAWER,
+        f.SIGN_PERSON,
+        f.SOURCE_OF_CUSTOMER,
+        f.LINKMAN,
+        f.CONTRACT_TYPE,
+        f.CONTRACT_PRICE,
+        f.ADVANCES_RECEIVED,
+        f.FINAL_PAYMENT,
+        f.DEADLINE,
+        f.REMARK,
+        f.BUSINESS_ID,
+        f.CUSTOMER_ID,
+        f.GENERALCONTRACT_ID
         from
         <include refid="tableName"></include>
-        f
+        f left join TB_CUSTOMER c ON f.CUSTOMER_ID=c.CUSTOMER_ID
         where f.TENANT_ID_= #{tenantId}
         <if test="companyName!=null and companyName !=''">
             and f.COMPANY_NAME like CONCAT(CONCAT('%', #{companyName}),'%')
