@@ -4,28 +4,52 @@
 
     <resultMap id="userMap" type="com.mzkj.bean.UserBean">
         <id column="USER_ID" javaType="string" property="userId" />
-            <result column="USERNAME" javaType="String" property="username"/>
-            <result column="PASSWORD" javaType="String" property="password"/>
-            <result column="NAME" javaType="String" property="name"/>
-            <result column="RIGHTS" javaType="String" property="rights"/>
-            <result column="ROLE_ID" javaType="String" property="roleId"/>
-            <result column="LAST_LOGIN" javaType="String" property="lastLogin"/>
-            <result column="IP" javaType="String" property="ip"/>
-            <result column="STATUS" javaType="String" property="status"/>
-            <result column="BZ" javaType="String" property="bz"/>
-            <result column="SKIN" javaType="String" property="skin"/>
-            <result column="EMAIL" javaType="String" property="email"/>
-            <result column="NUMBER" javaType="String" property="number"/>
-            <result column="PHONE" javaType="String" property="phone"/>
-            <result column="ROLE_IDS" javaType="String" property="roleIds"/>
-            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
-            <result column="IS_TENANT_ADMIN" javaType="Integer" property="isTenantAdmin"/>
-            <result column="USER_TYPE" javaType="Integer" property="userType"/>
-            <result column="OPEN_ID" javaType="String" property="openId"/>
+        <result column="USERNAME" javaType="String" property="username"/>
+        <result column="PASSWORD" javaType="String" property="password"/>
+        <result column="NAME" javaType="String" property="name"/>
+        <result column="RIGHTS" javaType="String" property="rights"/>
+        <result column="ROLE_ID" javaType="String" property="roleId"/>
+        <result column="LAST_LOGIN" javaType="String" property="lastLogin"/>
+        <result column="IP" javaType="String" property="ip"/>
+        <result column="STATUS" javaType="String" property="status"/>
+        <result column="BZ" javaType="String" property="bz"/>
+        <result column="SKIN" javaType="String" property="skin"/>
+        <result column="EMAIL" javaType="String" property="email"/>
+        <result column="NUMBER" javaType="String" property="number"/>
+        <result column="PHONE" javaType="String" property="phone"/>
+        <result column="ROLE_IDS" javaType="String" property="roleIds"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="IS_TENANT_ADMIN" javaType="Integer" property="isTenantAdmin"/>
+        <result column="USER_TYPE" javaType="Integer" property="userType"/>
+        <result column="OPEN_ID" javaType="String" property="openId"/>
+    </resultMap>
+
+    <resultMap id="User4SelectedMap" type="com.mzkj.bean.User4SelectedBean">
+        <id column="USER_ID" javaType="string" property="userId"/>
+        <result column="USERNAME" javaType="String" property="username"/>
+        <result column="PASSWORD" javaType="String" property="password"/>
+        <result column="NAME" javaType="String" property="name"/>
+        <result column="RIGHTS" javaType="String" property="rights"/>
+        <result column="ROLE_ID" javaType="String" property="roleId"/>
+        <result column="LAST_LOGIN" javaType="String" property="lastLogin"/>
+        <result column="IP" javaType="String" property="ip"/>
+        <result column="STATUS" javaType="String" property="status"/>
+        <result column="BZ" javaType="String" property="bz"/>
+        <result column="SKIN" javaType="String" property="skin"/>
+        <result column="EMAIL" javaType="String" property="email"/>
+        <result column="NUMBER" javaType="String" property="number"/>
+        <result column="PHONE" javaType="String" property="phone"/>
+        <result column="ROLE_IDS" javaType="String" property="roleIds"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="IS_TENANT_ADMIN" javaType="Integer" property="isTenantAdmin"/>
+        <result column="USER_TYPE" javaType="Integer" property="userType"/>
+        <result column="OPEN_ID" javaType="String" property="openId"/>
+        <result column="master_access_operation_mapping_ID" javaType="String"
+                property="masterAccessOperationMappingId"/>
     </resultMap>
 
 
-	<!--表名 -->
+    <!--表名 -->
 	<sql id="tableName">
 		SYS_USER
 	</sql>
@@ -178,9 +202,9 @@
 
     <!-- 根据用户组查用户 -->
 	<select id="findUsersByUsergroup" parameterType="com.mzkj.bean.UserOfUsergroupBean"
-			resultMap="userMap">
+            resultMap="User4SelectedMap">
         select
-        <include refid="Field"></include>
+        <include refid="Field"></include>, master_access_operation_mapping_id
         from
         <include refid="tableName"></include>
         f
@@ -208,7 +232,7 @@
 		where mapping.master_access_operation_mapping_id IS null
 	</select>
 
-	<!-- 根据用户组查用户 -->
+    <!-- 根据权限查用户 -->
 	<select id="findUsersByPrivilege" resultMap="userMap">
 		select
 		<include refid="Field"></include>

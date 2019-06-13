@@ -2,19 +2,17 @@ package com.mzkj.service.system.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.UserBean;
+import com.mzkj.mapper.system.UserMapper;
+import com.mzkj.service.system.UserManager;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
 import com.mzkj.vo.system.UserQueryVo;
 import com.mzkj.vo.system.UserVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import com.github.pagehelper.PageHelper;
-
-import com.mzkj.service.system.UserManager;
-import com.mzkj.mapper.system.UserMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +75,7 @@ public class UserService implements UserManager {
     public PageInfo<UserQueryVo> list(UserQueryVo userQueryVo) throws Exception {
         //将vo转DO并将分页信息传到pageHelper
         UserBean userBean = PageUtil.startPageAndObjectCopyParams(userQueryVo, UserBean.class);
+        userBean.setTenantId(Jurisdiction.getTenant());
         List<UserBean> userPageBean = userMapper.list(userBean);
         PageInfo<UserBean> pageInfo = new PageInfo<>(userPageBean);
         //将DO转vo

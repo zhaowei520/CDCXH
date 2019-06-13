@@ -157,14 +157,14 @@ public class UsergroupControllerSpec {
 
     @Test
     public void whenTreeThenThenInvokeServiceTree() {
-        usergroupController.findByParentId();
+        usergroupController.findByParentId(Const.ROOF_ID_FOR_TREE);
         verify(usergroupService, times(1)).findByParentId(Const.ROOF_ID_FOR_TREE);
     }
 
     @Test
     public void whenTreeExceptionThenReturnFalseResult() {
         doThrow(RuntimeException.class).when(usergroupService).findByParentId(Const.ROOF_ID_FOR_TREE);
-        Result result = usergroupController.findByParentId();
+        Result result = usergroupController.findByParentId(Const.ROOF_ID_FOR_TREE);
         Assert.assertFalse(result.isSuccess());
         Assert.assertEquals("查询树状用户组异常", result.getMsg());
         Assert.assertEquals(HttpCode.ERROR.getCode(), result.getStatus());
@@ -172,7 +172,7 @@ public class UsergroupControllerSpec {
 
     @Test
     public void whenTreeSuccessfullyThenReturnTrueResult() {
-        Result result = usergroupController.findByParentId();
+        Result result = usergroupController.findByParentId(Const.ROOF_ID_FOR_TREE);
         Assert.assertTrue(result.isSuccess());
         Assert.assertEquals("查询树状用户组成功", result.getMsg());
         Assert.assertEquals(HttpCode.OK.getCode(), result.getStatus());
@@ -182,7 +182,7 @@ public class UsergroupControllerSpec {
     public void whenTreeThenReturnTree() {
         JSONArray treeResult = new JSONArray();
         doReturn(treeResult).when(usergroupService).findByParentId(Const.ROOF_ID_FOR_TREE);
-        Result result = usergroupController.findByParentId();
+        Result result = usergroupController.findByParentId(Const.ROOF_ID_FOR_TREE);
         Assert.assertNotNull(result.getData());
     }
 

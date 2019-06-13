@@ -71,12 +71,23 @@ public class UsergroupService implements UsergroupManager {
      * 列表
      */
     public PageInfo list(UsergroupQueryVo usergroupQueryVo) throws Exception {
+        List<String> usergroupIds = new ArrayList();
+        findByParentId(usergroupQueryVo.getParentId(), usergroupIds);
         UsergroupBean usergroupBean =
                 convertVO2Bean(usergroupQueryVo, UsergroupBean.class);
+        usergroupBean.setUsergroupIds(usergroupIds);
         List<UsergroupBean> usergroupBeans = getUsergroupMapper().datalistPage(usergroupBean);
         PageInfo pageInfo = new PageInfo(usergroupBeans);
         pageInfo.setList(usergroupBeans);
         return pageInfo;
+    }
+
+    private List<String> getUsergroupIdsByParentId(String parentId) {
+        if (parentId == null || "".equals(parentId)) {
+            return null;
+        }
+        JSONArray usergroupIds = findByParentId(parentId);
+        return null;
     }
 
     /**
@@ -122,6 +133,17 @@ public class UsergroupService implements UsergroupManager {
             usergroups.add(usergroup);
         }
         return usergroups;
+    }
+
+    public void findByParentId(String parentID, List<String> usergroupIds) {
+        List<UsergroupBean> usergroupBeanChildren = getUsergroupMapper().findByParentId(parentID);
+        if (usergroupBeanChildren == null || usergroupBeanChildren.size() == 0) {
+            return;
+        }
+        for (UsergroupBean usergroupBean : usergroupBeanChildren) {
+            usergroupIds.add(usergroupBean.getUsergroupId());
+            this.findByParentId(usergroupBean.getUsergroupId(), usergroupIds);
+        }
     }
 
     public void delete(List<String> ids) {

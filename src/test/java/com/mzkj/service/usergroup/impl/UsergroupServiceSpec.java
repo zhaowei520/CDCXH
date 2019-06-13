@@ -17,6 +17,7 @@ import com.mzkj.mapper.masterAccessOperation.MasterAccessOperationMapper;
 import com.mzkj.mapper.privilege.PrivilegeMapper;
 import com.mzkj.mapper.system.UserMapper;
 import com.mzkj.mapper.usergroup.UsergroupMapper;
+import com.mzkj.util.Const;
 import com.mzkj.util.enums.RelatingType;
 import com.mzkj.vo.usergroup.PrivilegeOfUsergroupQueryVo;
 import com.mzkj.vo.usergroup.PrivilegeUnselected2UsergroupQueryVo;
@@ -31,6 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.doReturn;
@@ -328,5 +330,22 @@ public class UsergroupServiceSpec {
         verify(privilegeMapper, times(1)).findPrivilegesUnselected(privilegesUnselected2UsergroupBean);
     }
 
+    @Test
+    public void whenFindByParentIdWithNoChildrenThenReturnNull() {
+        String parentId = "-1";
+        List<String> usegroupIds = new ArrayList();
+//        doReturn(usergroupMapper).when(usergroupService)
+//        UsergroupService usergroupService = new UsergroupService();
+        usergroupService.findByParentId(parentId, usegroupIds);
+        Assert.assertNotNull(usegroupIds);
+    }
+
+    @Test
+    public void whenFindByParentIdThenInvokeMapper() {
+        String parentId = Const.ROOF_ID_FOR_TREE;
+        List<String> usegroupIds = new ArrayList();
+        usergroupService.findByParentId(parentId, usegroupIds);
+        verify(usergroupMapper, times(1)).findByParentId(parentId);
+    }
 
 }

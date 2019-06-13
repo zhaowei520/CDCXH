@@ -22,6 +22,7 @@ import com.mzkj.util.enums.RelatingType;
 import com.mzkj.vo.BaseVo;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
+import com.mzkj.vo.privilege.QueryPrivilegesByUserVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,6 +132,23 @@ public class PrivilegeService implements PrivilegeManager {
 
     public List<Privilege> findPrivilegesByUser(String userId) {
         return getPrivilegeMapper().findPrivilegesByUser(userId);
+    }
+
+    public PageInfo findPrivilegesByUser(QueryPrivilegesByUserVo queryPrivilegesByUserVo) {
+        startPage(queryPrivilegesByUserVo);
+        List<PrivilegeBean> privilegeBeans = getPrivilegeMapper().findPrivilegesByUserInPage(queryPrivilegesByUserVo);
+        PageInfo<List<PrivilegeBean>> pageInfo = new PageInfo(privilegeBeans);
+        return pageInfo;
+    }
+
+    public PageInfo findPrivilegesUnselectedByUser(QueryPrivilegesByUserVo queryPrivilegesByUserVo) {
+        startPage(queryPrivilegesByUserVo);
+        List<PrivilegeBean> privilegeBeans = getPrivilegeMapper().findPrivilegesUnselectedByUser(queryPrivilegesByUserVo);
+        PageInfo<List<PrivilegeBean>> pageInfo = new PageInfo(privilegeBeans);
+        return pageInfo;
+    }
+
+    public void addPrivileges2User(String[] privilegeIds, String userId, String[] operations) {
     }
 
     public List<MasterAccessOperationMappingBean> doMasterAccessOperationMappingBeanList(String masterType

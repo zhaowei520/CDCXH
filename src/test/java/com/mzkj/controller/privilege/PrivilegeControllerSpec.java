@@ -9,11 +9,15 @@ import com.mzkj.service.privilege.PrivilegeManager;
 import com.mzkj.service.privilege.impl.PrivilegeService;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
+import com.mzkj.vo.privilege.QueryPrivilegesByUserVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -32,6 +36,7 @@ public class PrivilegeControllerSpec {
     String privilegeId = "123";
     UserOfPrivilegeQueryVo userOfPrivilegeQueryVo;
     AddUsers2PrivilegeVo addUsers2PrivilegeVo;
+    QueryPrivilegesByUserVo queryPrivilegesByUserVo;
 
     @Before
     public void before() {
@@ -40,6 +45,7 @@ public class PrivilegeControllerSpec {
         privilegeController = spy(PrivilegeController.class);
         privilegeService = mock(PrivilegeService.class);
         privilegeVo = new PrivilegeVo();
+        queryPrivilegesByUserVo = new QueryPrivilegesByUserVo();
         doReturn(privilegeService).when(privilegeController).getPrivilegeService();
         userOfPrivilegeQueryVo = new UserOfPrivilegeQueryVo();
         addUsers2PrivilegeVo = new AddUsers2PrivilegeVo();
@@ -259,6 +265,71 @@ public class PrivilegeControllerSpec {
         Assert.assertTrue(result.isSuccess());
         Assert.assertEquals("删除权限下的用户成功", result.getMsg());
         Assert.assertEquals(HttpCode.OK.getCode(), result.getStatus());
+    }
+
+    @Test
+    public void whenFindPrivilegeTypesThenReturnPrivilegeTypes() {
+        List<Map<String, String>> privilegeTypes = privilegeController.findPrivilegeTypes();
+        Assert.assertTrue(privilegeTypes != null && privilegeTypes.size() > 0);
+    }
+
+    @Test
+    public void whenFindPrivilegeSubTypesThenReturnPrivilegeSubTypes() {
+        List<Map<String, String>> privilegeSubTypes = privilegeController.findPrivilegeSubTypes();
+        Assert.assertTrue(privilegeSubTypes != null && privilegeSubTypes.size() > 0);
+    }
+
+    @Test
+    public void whenFindPrivilegesByUserThenInvokeService() {
+        doReturn(privilegeService).when(privilegeController).getPrivilegeService();
+        privilegeController.findPrivilegesByUser(queryPrivilegesByUserVo);
+        verify(privilegeService, times(1))
+                .findPrivilegesByUser(queryPrivilegesByUserVo);
+    }
+
+    @Test
+    public void whenFindPrivilegesByUserFailThenReturnFalseResult() {
+//        doReturn(privilegeService).when(privilegeController).getPrivilegeService();
+        doThrow(RuntimeException.class).when(privilegeService)
+                .findPrivilegesByUser(queryPrivilegesByUserVo);
+        Result result = privilegeController.findPrivilegesByUser(queryPrivilegesByUserVo);
+        Assert.assertFalse(result.isSuccess());
+        Assert.assertEquals("按用户分页查询权限失败", result.getMsg());
+        Assert.assertEquals(HttpCode.ERROR.getCode(), result.getStatus());
+    }
+
+
+    @Test
+    public void whenFindPrivilegesUnselectedByUserThenInvokeService() {
+        privilegeController.findPrivilegesUnselectedByUser(queryPrivilegesByUserVo);
+        verify(privilegeService, times(1)).findPrivilegesUnselectedByUser(queryPrivilegesByUserVo);
+    }
+
+    @Test
+    public void whenFindPrivilegesUnselectedByUserFailThenReturnFalseResult() {
+        doThrow(RuntimeException.class).when(privilegeService).findPrivilegesUnselectedByUser(queryPrivilegesByUserVo);
+        Result result = privilegeController.findPrivilegesUnselectedByUser(queryPrivilegesByUserVo);
+        Assert.assertFalse(result.isSuccess());
+        Assert.assertEquals("获取未被用户选中的权限失败", result.getMsg());
+        Assert.assertEquals(HttpCode.ERROR.getCode(), result.getStatus());
+    }
+
+    @Test
+    public void whenAddPrivileges2UserThenInvokeService() {
+        String privilegeIds[] = {"12", "121"};
+        String userId = "dfs";
+        String operations[] = {"read", "write"};
+        privilegeController.addPrivileges2User(privilegeIds, userId, operations);
+        verify(privilegeService, times(1)).addPrivileges2User(privilegeIds, userId, operations);
+    }
+
+    @Test
+    public void whenAddPrivileges2UserFailThenReturnFalseResult() {
+        String privilegeIds[] = {"12", "121"};
+        String userId = "dfs";
+        String operations[] = {"read", "write"};
+//        doThrow(RuntimeException.class).when(privilegeService).addPrivileges2User();
+        privilegeController.addPrivileges2User(privilegeIds, userId, operations);
     }
 
 }

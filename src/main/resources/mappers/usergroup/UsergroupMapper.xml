@@ -84,9 +84,10 @@
         <if test="name!= null and name != ''">
             and f.name like CONCAT(CONCAT('%', #{name}),'%')
         </if>
-        <if test="parentId!= null and parentId != ''">
-            and f.PARENT_ID = #{parentId}
-        </if>
+        and f.PARENT_ID in
+        <foreach collection="usergroupIds" open="(" close=")" separator="," item="usergroupId">
+            #{usergroupId}
+        </foreach>
     </select>
 
     <insert id="save" parameterType="com.mzkj.bean.UsergroupBean">

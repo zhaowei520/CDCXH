@@ -127,10 +127,14 @@ public class UsergroupController {
 
     @RequestMapping(value = "/findByParentId", method = RequestMethod.POST)
     @ApiOperation(value = "按照父节点查找usergroup", notes = "按照父节点查找usergroup")
-    public Result<JSONArray> findByParentId() {
+    public Result<JSONArray> findByParentId(String parentIdParam) {
+        String parentId = parentIdParam;
+        if (parentId == null || "".equals(parentId)) {
+            parentId = Const.ROOF_ID_FOR_TREE;
+        }
         Result<JSONArray> result = new Result();
         try {
-            JSONArray jsonArray = getUsergroupService().findByParentId(Const.ROOF_ID_FOR_TREE);
+            JSONArray jsonArray = getUsergroupService().findByParentId(parentId);
             result.setMsg("查询树状用户组成功");
             result.setSuccess(Boolean.TRUE);
             result.setStatus(HttpCode.OK.getCode());

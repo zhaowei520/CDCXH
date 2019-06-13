@@ -6,6 +6,7 @@ import com.mzkj.facade.vo.AddUsers2PrivilegeVo;
 import com.mzkj.facade.vo.InsertPrivilegeVo;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
+import com.mzkj.vo.privilege.QueryPrivilegesByUserVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
 
 import java.util.List;
@@ -29,4 +30,10 @@ public interface PrivilegeManager {
     void deleteUsersOfPrivilege(String[] mappingIds);
 
     public List<Privilege> findPrivilegesByUser(String userId);
+
+    PageInfo findPrivilegesByUser(QueryPrivilegesByUserVo queryPrivilegesByUserVo);
+
+    PageInfo findPrivilegesUnselectedByUser(QueryPrivilegesByUserVo queryPrivilegesByUserVo);
+
+    void addPrivileges2User(String[] privilegeIds, String userId, String[] operations);
 }

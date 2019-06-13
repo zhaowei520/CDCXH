@@ -11,6 +11,7 @@ import com.mzkj.mapper.system.UserMapper;
 import com.mzkj.util.enums.RelatingType;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
+import com.mzkj.vo.privilege.QueryPrivilegesByUserVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
 
 import org.junit.Assert;
@@ -39,6 +40,7 @@ public class PrivilegeServiceSpec {
     private PrivilegeMapper privilegeMapper;
     private List<PrivilegeBean> privilegeBeans;
     MasterAccessOperationMapper masterAccessOperationMapper;
+    QueryPrivilegesByUserVo queryPrivilegesByUserVo;
     PrivilegeVo privilegeVo;
     String privilegeId = "123";
     UserMapper userMapper;
@@ -50,6 +52,7 @@ public class PrivilegeServiceSpec {
         privilegeQueryVo = new PrivilegeQueryVo();
         privilegeService = spy(PrivilegeService.class);
         privilegeMapper = mock(PrivilegeMapper.class);
+        queryPrivilegesByUserVo = new QueryPrivilegesByUserVo();
         userMapper = mock(UserMapper.class);
         masterAccessOperationMapper = mock(MasterAccessOperationMapper.class);
         doReturn(privilegeBean).when(privilegeService).convertVO2Bean(privilegeQueryVo, PrivilegeBean.class);
@@ -150,5 +153,20 @@ public class PrivilegeServiceSpec {
         doReturn(updateUser).when(privilegeService).getUsername();
         privilegeService.deleteUsersOfPrivilege(mappingIds);
         verify(masterAccessOperationMapper, times(1)).deleteMasterAccessOperationMapping(mappingIds, tenantId, updateUser);
+    }
+
+    @Test
+    public void whenFindPrivilegesByUsersThenInvokeMapper() {
+
+        doReturn(null).when(privilegeService).startPage(queryPrivilegesByUserVo);
+        privilegeService.findPrivilegesByUser(queryPrivilegesByUserVo);
+        verify(privilegeMapper, times(1)).findPrivilegesByUserInPage(queryPrivilegesByUserVo);
+    }
+
+    @Test
+    public void whenFindPrivilegesUnselectedByUserThenInvokeService() {
+        doReturn(null).when(privilegeService).startPage(queryPrivilegesByUserVo);
+        privilegeService.findPrivilegesUnselectedByUser(queryPrivilegesByUserVo);
+        verify(privilegeMapper, times(1)).findPrivilegesUnselectedByUser(queryPrivilegesByUserVo);
     }
 }
