@@ -204,13 +204,34 @@
     <select id="list" parameterType="com.mzkj.bean.SocialSecurityBean"
             resultMap="socialSecurityMap">
         select
-        <include refid="Field"></include>
+        c.COMPANY_NAME,
+        f.CUSTOMER,
+        f.REGISTERED_AREA,
+        f.CUSTOMER_PHONE,
+        f.ADDRESS,
+        f.FEES,
+        f.SALER,
+        f.BUY_START_MONTH,
+        f.IS_CREDIT_CARD,
+        f.OPEN_ACCOUNT,
+        f.BACK_ACCOUNT,
+        f.BUY_TYPE,
+        f.PERSONAL_INFORMATION,
+        f.IS_LEGAL_PERSON_BUY,
+        f.LEGAL_PERSON_CERTIFICATE,
+        f.IS_CLERK_STOP_BUY_INSURANCE,
+        f.IDENTITY_CARD_NUMBER,
+        f.DATA_PRIVILEGE_CODE,
+        f.PROC_INST_ID_,
+        f.BUSINESS_ID,
+        f.CUSTOMER_ID,
+        f.SOCIALSECURITY_ID
         from
         <include refid="tableName"></include>
-        f
+        f left join TB_CUSTOMER c ON f.CUSTOMER_ID=c.CUSTOMER_ID
         where f.TENANT_ID_=#{tenantId}
         <if test="companyName!=null and companyName !=''">
-            and f.COMPANY_NAME like CONCAT(CONCAT('%', #{companyName}),'%')
+            and c.COMPANY_NAME like CONCAT(CONCAT('%', #{companyName}),'%')
         </if>
         order by f.CREATE_DATE DESC
     </select>
