@@ -7,6 +7,7 @@
         <id column="PRIVILEGE_ID" property="privilegeId"/>
         <result column="NAME" property="name"/>
         <result column="TYPE" property="type"/>
+        <result column="SUB_TYPE" property="subType"/>
         <result column="CODE" property="code"/>
         <result column="TENANT_ID_" property="tenantId"/>
         <result column="CREATE_USER" property="createUser"/>

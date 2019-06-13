@@ -36,6 +36,7 @@ public class FacadePrivilegeController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ApiOperation(value = "新增privilege", notes = "新增privilege2")
     public Result insert(@RequestBody InsertPrivilegeVo insertPrivilegeVo) {
+
         Result result = new Result();
         try {
             String privilegeId = getPrivilegeService().insert(insertPrivilegeVo);
