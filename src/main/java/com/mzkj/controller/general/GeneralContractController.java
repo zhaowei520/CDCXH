@@ -157,7 +157,7 @@ public class GeneralContractController {
     }
 
     /**
-     * 删除
+     * 删除数据
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除generalContract", notes = "删除generalContract")
