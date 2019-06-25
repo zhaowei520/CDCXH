@@ -28,4 +28,6 @@ public interface PrivilegeMapper {
     List<PrivilegeBean> findPrivilegesByUserInPage(QueryPrivilegesByUserVo queryPrivilegesByUserVo);
 
     List<PrivilegeBean> findPrivilegesUnselectedByUser(QueryPrivilegesByUserVo queryPrivilegesByUserVo);
+
+    public void updatePrivilegeByUserId(PrivilegeBean privilegeBean);
 }

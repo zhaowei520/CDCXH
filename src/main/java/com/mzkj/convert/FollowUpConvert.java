@@ -4,8 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.mzkj.bean.CommerceBean;
 import com.mzkj.bean.GShangChangeBean;
 import com.mzkj.bean.TallyBean;
+import com.mzkj.bean.UserBean;
 import com.mzkj.vo.followUp.FollowUpQueryVo;
 import com.mzkj.vo.process.CommerceProcessQueryVo;
+import com.mzkj.vo.system.UserQueryVo;
+
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -151,5 +154,19 @@ public class FollowUpConvert {
             gShangChangeBean.setSignMan(followUpQueryVo.getSignPerson());
         }
         return gShangChangeBean;
+    }
+
+    public static List<UserQueryVo> userBeanToFollowUpVo(List<UserBean> userBeanList) {
+        List<UserQueryVo> userQueryVolist = new ArrayList<>();
+        if (userBeanList != null && userBeanList.size() > 0) {
+            for (UserBean userBean : userBeanList) {
+                UserQueryVo userQueryVo = new UserQueryVo();
+                userQueryVo.setUserId(userBean.getUserId());
+                userQueryVo.setUsername(userBean.getUsername());
+                userQueryVo.setName(userBean.getName());
+                userQueryVolist.add(userQueryVo);
+            }
+        }
+        return userQueryVolist;
     }
 }

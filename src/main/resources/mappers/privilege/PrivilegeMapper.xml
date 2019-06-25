@@ -192,4 +192,13 @@
         where
         mapping.master_access_operation_mapping_id IS null
     </select>
+
+    <update id="updatePrivilegeByUserId" parameterType="com.mzkj.bean.PrivilegeBean">
+        update
+        <include refid="tb_master_access_operation_mapping"></include>
+        set
+        master_value = #{newUserId}
+        where
+        master_value = #{oldUserId}
+    </update>
 </mapper>

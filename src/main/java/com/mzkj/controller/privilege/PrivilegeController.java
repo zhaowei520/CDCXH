@@ -13,6 +13,7 @@ import com.mzkj.service.privilege.PrivilegeManager;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
 import com.mzkj.vo.privilege.QueryPrivilegesByUserVo;
+import com.mzkj.vo.privilege.UpdatePrivilegeByUserVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
 
 import org.apache.logging.log4j.LogManager;
@@ -261,6 +262,24 @@ public class PrivilegeController {
     @ApiOperation(value = "删除权限", notes = "删除权限")
     public void delete(String[] privilegeIds) {
 
+    }
+
+    @RequestMapping(value = "/updatePrivilegeByUserId", method = RequestMethod.POST)
+    @ApiOperation(value = "替换指定用户下所有权限为新用户", notes = "替换指定用户下所有权限为新用户")
+    public Result updatePrivilegeByUserId(UpdatePrivilegeByUserVo updatePrivilegeByUserVo) {
+        Result result = new Result();
+        try {
+            getPrivilegeService().updatePrivilegeByUserId(updatePrivilegeByUserVo);
+            result.setSuccess(Boolean.TRUE);
+            result.setStatus(HttpCode.OK.getCode());
+            result.setMsg("修改用户权限成功");
+        } catch (Exception e) {
+            logger.error("修改用户权限成功", e);
+            result.setSuccess(Boolean.FALSE);
+            result.setMsg("修改用户权限成功");
+            result.setStatus(HttpCode.ERROR.getCode());
+        }
+        return result;
     }
 
 
