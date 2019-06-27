@@ -23,6 +23,7 @@ import com.mzkj.vo.BaseVo;
 import com.mzkj.vo.privilege.PrivilegeQueryVo;
 import com.mzkj.vo.privilege.PrivilegeVo;
 import com.mzkj.vo.privilege.QueryPrivilegesByUserVo;
+import com.mzkj.vo.privilege.UpdatePrivilegeByUserVo;
 import com.mzkj.vo.privilege.UserOfPrivilegeQueryVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,6 +150,12 @@ public class PrivilegeService implements PrivilegeManager {
     }
 
     public void addPrivileges2User(String[] privilegeIds, String userId, String[] operations) {
+    }
+
+    @Override
+    public void updatePrivilegeByUserId(UpdatePrivilegeByUserVo updatePrivilegeByUserVo) {
+        PrivilegeBean privilegeBean = objectCopyParams(updatePrivilegeByUserVo, PrivilegeBean.class);
+        getPrivilegeMapper().updatePrivilegeByUserId(privilegeBean);
     }
 
     public List<MasterAccessOperationMappingBean> doMasterAccessOperationMappingBeanList(String masterType

@@ -2,11 +2,15 @@ package com.mzkj.service.system.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.UserBean;
+import com.mzkj.convert.FollowUpConvert;
 import com.mzkj.mapper.system.UserMapper;
 import com.mzkj.service.system.UserManager;
+import com.mzkj.util.Const;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
+import com.mzkj.vo.companyOriginal.CompanyInformationQueryVo;
+import com.mzkj.vo.followUp.FollowUpQueryVo;
 import com.mzkj.vo.system.UserQueryVo;
 import com.mzkj.vo.system.UserVo;
 
@@ -17,7 +21,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 
+/**
  * 说明： 用户管理
  * 创建人：CDCXH
  * 创建时间：2019-04-18
@@ -30,9 +34,6 @@ public class UserService implements UserManager {
 
     /**
      * 新增
-     *
-     * @param userVo
-     * @throws Exception
      */
     @Override
     public UserVo save(UserVo userVo) throws Exception {
@@ -44,9 +45,6 @@ public class UserService implements UserManager {
 
     /**
      * 删除
-     *
-     * @param USER_ID
-     * @throws Exception
      */
     @Override
     public void delete(String USER_ID) throws Exception {
@@ -55,9 +53,6 @@ public class UserService implements UserManager {
 
     /**
      * 修改
-     *
-     * @param userVo
-     * @throws Exception
      */
     @Override
     public void edit(UserVo userVo) throws Exception {
@@ -67,20 +62,19 @@ public class UserService implements UserManager {
 
     /**
      * 列表
-     *
-     * @param userQueryVo
-     * @throws Exception
      */
     @Override
     public PageInfo<UserQueryVo> list(UserQueryVo userQueryVo) throws Exception {
         //将vo转DO并将分页信息传到pageHelper
         UserBean userBean = PageUtil.startPageAndObjectCopyParams(userQueryVo, UserBean.class);
         userBean.setTenantId(Jurisdiction.getTenant());
+        userBean.setUserType(Const.STATUS_0);
         List<UserBean> userPageBean = userMapper.list(userBean);
-        PageInfo<UserBean> pageInfo = new PageInfo<>(userPageBean);
+        PageInfo<UserQueryVo> pageInfo = new PageInfo(userPageBean);
         //将DO转vo
-        PageInfo<UserQueryVo> userPageVo = ConvertUtil.objectCopyParams(pageInfo, PageInfo.class);
-        return userPageVo;
+        List<UserQueryVo> followUpQueryVoList = FollowUpConvert.userBeanToFollowUpVo(userPageBean);
+        pageInfo.setList(followUpQueryVoList);
+        return pageInfo;
     }
 
     @Override
@@ -90,35 +84,35 @@ public class UserService implements UserManager {
         return userVo;
     }
 
-	/**
-	 * 获取所有用户,不包含当前登录人
-	 * return
-	 * Author luosc
-	 * param
-	 * Date 2019-04-25 11:04
-	 */
-	@Override
-	public List<UserQueryVo> listAllAndFilterSelf(UserQueryVo userQueryVo) throws Exception {
-		//将vo转DO
-		UserBean userBean = ConvertUtil.objectCopyParams(userQueryVo, UserBean.class);
-		userBean.setTenantId(Jurisdiction.getTenant());
-        if (null==userBean.getUserType()) {
+    /**
+     * 获取所有用户,不包含当前登录人
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-25 11:04
+     */
+    @Override
+    public List<UserQueryVo> listAllAndFilterSelf(UserQueryVo userQueryVo) throws Exception {
+        //将vo转DO
+        UserBean userBean = ConvertUtil.objectCopyParams(userQueryVo, UserBean.class);
+        userBean.setTenantId(Jurisdiction.getTenant());
+        if (null == userBean.getUserType()) {
             userBean.setUserType(0);//员工
         }
-		List<UserBean> userBeanList = userMapper.list(userBean);
-		//将DO转VO
-		List<UserQueryVo> userQueryVoList = new ArrayList<>();
-		for (UserBean userBean1:userBeanList
-			 ) {
-			UserQueryVo queryVo = ConvertUtil.objectCopyParams(userBean1, UserQueryVo.class);
-			//过滤当前登录人
+        List<UserBean> userBeanList = userMapper.list(userBean);
+        //将DO转VO
+        List<UserQueryVo> userQueryVoList = new ArrayList<>();
+        for (UserBean userBean1 : userBeanList) {
+            UserQueryVo queryVo = ConvertUtil.objectCopyParams(userBean1, UserQueryVo.class);
+            //过滤当前登录人
             if (!StringUtils.isEmpty(Jurisdiction.getUsername()) && Jurisdiction.getUsername().equals(queryVo.getUsername())) {
             } else {
                 userQueryVoList.add(queryVo);
             }
-		}
-		return userQueryVoList;
-	}
+        }
+        return userQueryVoList;
+    }
+
     /**
      * 获取所有用户
      * return
@@ -131,16 +125,15 @@ public class UserService implements UserManager {
         //将vo转DO
         UserBean userBean = ConvertUtil.objectCopyParams(userQueryVo, UserBean.class);
         userBean.setTenantId(Jurisdiction.getTenant());
-        if (null==userBean.getUserType()) {
+        if (null == userBean.getUserType()) {
             userBean.setUserType(0);//员工
         }
         List<UserBean> userBeanList = userMapper.list(userBean);
         //将DO转VO
         List<UserQueryVo> userQueryVoList = new ArrayList<>();
-        for (UserBean userBean1:userBeanList
-                ) {
+        for (UserBean userBean1 : userBeanList) {
             UserQueryVo queryVo = ConvertUtil.objectCopyParams(userBean1, UserQueryVo.class);
-                userQueryVoList.add(queryVo);
+            userQueryVoList.add(queryVo);
 
         }
         return userQueryVoList;

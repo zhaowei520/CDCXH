@@ -113,7 +113,7 @@ public class UserController {
 	/**列表
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/list", method = RequestMethod.GET)
+	@RequestMapping(value="/list", method = RequestMethod.POST)
     @ApiOperation(value = "分页查询template", notes = "分页查询template")
 	public Result<PageInfo<UserQueryVo>> list(UserQueryVo userQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看用户管理");
