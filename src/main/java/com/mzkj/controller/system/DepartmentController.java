@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.annotations.Api;
@@ -141,17 +142,21 @@ public class DepartmentController {
      */
     @RequestMapping(value="/listHierarchy", method = RequestMethod.POST)
     @ApiOperation(value = "部门分层", notes = "部门分层")
-    public Result<DepartmentListVo> listHierarchy(DepartmentListVo departmentListVo) {
+    public Result<List<DepartmentListVo>> listHierarchy(DepartmentListVo departmentListVo) {
         logger.info(Jurisdiction.getUsername()+"部门分层");
-        Result<DepartmentListVo> result = new Result<>();
+        Result<List<DepartmentListVo>> result = new Result<>();
         if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
         try {
+            result.setStatus(HttpCode.OK.getCode());
+            result.setSuccess(true);
             DepartmentListVo data = departmentService.listHierarchy(departmentListVo);
-            result.setData(data);
+            List<DepartmentListVo> list = new ArrayList();
+            list.add(data);
+            result.setData(list);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());

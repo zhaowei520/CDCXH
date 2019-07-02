@@ -85,11 +85,10 @@ public class DepartmentService implements DepartmentManager {
         DepartmentListVo newDepartmentListVo = new DepartmentListVo();
         if (headMans != null && headMans.size() > 0) {
             for (DepartmentBean headMan : headMans) {
-                DepartmentListVo oldDepartmentListVo = DepartmentConvert.departmentBeanToDepartmentVo(headMan);
+                newDepartmentListVo = DepartmentConvert.departmentBeanToDepartmentVo(headMan);
                 String departmentId = headMan.getDepartmentId();
                 List<DepartmentListVo> departmentListVos = listAllDepartmentToSelect(departmentId);
-                oldDepartmentListVo.getNodes().addAll(departmentListVos);
-                newDepartmentListVo.getNodes().add(oldDepartmentListVo);
+                newDepartmentListVo.getNodes().addAll(departmentListVos);
             }
         }
         return newDepartmentListVo;

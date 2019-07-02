@@ -14,6 +14,7 @@ import com.mzkj.vo.process.CommerceQueryVo;
 import com.mzkj.vo.process.CommerceVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.mzkj.service.process.CommerceManager;
 import com.mzkj.mapper.process.CommerceMapper;
@@ -100,7 +101,12 @@ public class CommerceService implements CommerceManager {
             FollowUpConvert.followUpVoToCommerceProcessBean(followUpQueryVo);
         //设置租户ID
         commerceBean.setTenantId(Jurisdiction.getTenant());
-        commerceBean.setSaler(Jurisdiction.getU_name());
+        if(StringUtils.isEmpty(followUpQueryVo.getStaffId())){
+            commerceBean.setSaler(Jurisdiction.getU_name());
+        }else{
+            followUpQueryVo.getStaffId();
+            commerceBean.setSaler(Jurisdiction.getU_name());
+        }
         List<CommerceBean> commercePageBean = commerceMapper.listProcessByUser(commerceBean);
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(commercePageBean);
         //DO转VO

@@ -17,7 +17,7 @@ public class DepartmentListVo extends BaseVo {
     //id
     private String key;
     //name
-    private String lable;
+    private String label;
     //子部门
     private List<DepartmentListVo> nodes = new ArrayList();
 
@@ -29,12 +29,12 @@ public class DepartmentListVo extends BaseVo {
         this.key = key;
     }
 
-    public String getLable() {
-        return lable;
+    public String getLabel() {
+        return label;
     }
 
-    public void setLable(String lable) {
-        this.lable = lable;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public List<DepartmentListVo> getNodes() {

@@ -28,12 +28,12 @@ public class DepartmentConvert {
         DepartmentListVo departmentListVo = new DepartmentListVo();
         if(newDepartmentBean != null){
             departmentListVo.setKey(newDepartmentBean.getDepartmentId());
-            departmentListVo.setLable(newDepartmentBean.getName());
+            departmentListVo.setLabel(newDepartmentBean.getName());
             if(newDepartmentBean.getDepartmentBeans() != null && newDepartmentBean.getDepartmentBeans().size() > 0){
                 for(DepartmentBean oneBean : newDepartmentBean.getDepartmentBeans()){
                     DepartmentListVo oneVo = new DepartmentListVo();
                     oneVo.setKey(oneBean.getDepartmentId());
-                    oneVo.setLable(oneBean.getName());
+                    oneVo.setLabel(oneBean.getName());
                     departmentListVo.getNodes().add(oneVo);
                 }
             }
@@ -54,7 +54,7 @@ public class DepartmentConvert {
             for(DepartmentBean oneBean : departmentList){
                 DepartmentListVo oneVo = new DepartmentListVo();
                 oneVo.setKey(oneBean.getDepartmentId());
-                oneVo.setLable(oneBean.getName());
+                oneVo.setLabel(oneBean.getName());
                 voList.add(oneVo);
             }
         }
