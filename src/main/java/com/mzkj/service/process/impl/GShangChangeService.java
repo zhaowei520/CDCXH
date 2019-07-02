@@ -2,18 +2,20 @@ package com.mzkj.service.process.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.GShangChangeBean;
+import com.mzkj.bean.StaffBean;
 import com.mzkj.convert.FollowUpConvert;
 import com.mzkj.domain.MyPageInfo;
 import com.mzkj.service.followUp.FollowUpManager;
+import com.mzkj.service.system.StaffManager;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
 import com.mzkj.vo.followUp.FollowUpQueryVo;
-import com.mzkj.vo.process.GShangChangeProcessQueryVo;
 import com.mzkj.vo.process.GShangChangeQueryVo;
 import com.mzkj.vo.process.GShangChangeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.mzkj.service.process.GShangChangeManager;
 import com.mzkj.mapper.process.GShangChangeMapper;
@@ -34,6 +36,9 @@ public class GShangChangeService implements GShangChangeManager {
 
     @Autowired
     private FollowUpManager followUpService;
+
+    @Autowired
+    private StaffManager staffService;
     /**
      * 新增
      *
@@ -101,7 +106,17 @@ public class GShangChangeService implements GShangChangeManager {
             FollowUpConvert.followUpVoToGShangChangeProcessBean(followUpQueryVo);
         //设置租户ID
         gShangChangeBean.setTenantId(Jurisdiction.getTenant());
-        gShangChangeBean.setSignMan(Jurisdiction.getU_name());
+        if(StringUtils.isEmpty(followUpQueryVo.getStaffId())){
+            gShangChangeBean.setSignMan(Jurisdiction.getU_name());
+            followUpQueryVo.setStaffName(Jurisdiction.getU_name());
+        }else{
+            String staffId = followUpQueryVo.getStaffId();
+            StaffBean staffBean = new StaffBean();
+            staffBean.setStaffId(staffId);
+            StaffBean oneById = staffService.findOneById(staffBean);
+            gShangChangeBean.setSignMan(oneById.getName());
+            followUpQueryVo.setStaffName(oneById.getName());
+        }
         List<GShangChangeBean> gShangChangeBeanPageBean =
             gShangChangeMapper.listProcessByUser(gShangChangeBean);
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(gShangChangeBeanPageBean);
@@ -109,7 +124,7 @@ public class GShangChangeService implements GShangChangeManager {
         List<FollowUpQueryVo> followUpQueryVoList =
             FollowUpConvert.gShangChangeProcessBeanToFollowUpVo(gShangChangeBeanPageBean);
         //统计所有工单数量
-        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber();
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
         myPageInfo.setMap(allProcessNumber);
         myPageInfo.setList(followUpQueryVoList);
         myPageInfo.setPageSize(followUpQueryVo.getPageSize());
@@ -119,8 +134,8 @@ public class GShangChangeService implements GShangChangeManager {
 
 
     @Override
-    public Integer countProcessNumber() throws Exception {
-        return gShangChangeMapper.countProcessNumber(Jurisdiction.getTenant(), Jurisdiction.getU_name());
+    public Integer countProcessNumber(String name) throws Exception {
+        return gShangChangeMapper.countProcessNumber(Jurisdiction.getTenant(), name);
     }
 }
 

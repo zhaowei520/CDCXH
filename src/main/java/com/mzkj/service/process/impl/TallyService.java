@@ -1,22 +1,21 @@
 package com.mzkj.service.process.impl;
 
 import com.github.pagehelper.PageInfo;
-import com.mzkj.bean.CommerceBean;
+import com.mzkj.bean.StaffBean;
 import com.mzkj.bean.TallyBean;
 import com.mzkj.convert.FollowUpConvert;
 import com.mzkj.domain.MyPageInfo;
 import com.mzkj.service.followUp.FollowUpManager;
+import com.mzkj.service.system.StaffManager;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
 import com.mzkj.vo.followUp.FollowUpQueryVo;
-import com.mzkj.vo.process.CommerceProcessQueryVo;
-import com.mzkj.vo.process.TallyProcessQueryVo;
 import com.mzkj.vo.process.TallyQueryVo;
 import com.mzkj.vo.process.TallyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.github.pagehelper.PageHelper;
+import org.springframework.util.StringUtils;
 
 import com.mzkj.service.process.TallyManager;
 import com.mzkj.mapper.process.TallyMapper;
@@ -37,6 +36,9 @@ public class TallyService implements TallyManager {
 
     @Autowired
     private FollowUpManager followUpService;
+
+    @Autowired
+    private StaffManager staffService;
     /**
      * 新增
      *
@@ -101,13 +103,24 @@ public class TallyService implements TallyManager {
         //设置租户ID
         tallyBean.setTenantId(Jurisdiction.getTenant());
         tallyBean.setSignPerson(Jurisdiction.getU_name());
+        if(StringUtils.isEmpty(followUpQueryVo.getStaffId())){
+            tallyBean.setSignPerson(Jurisdiction.getU_name());
+            followUpQueryVo.setStaffName(Jurisdiction.getU_name());
+        }else{
+            String staffId = followUpQueryVo.getStaffId();
+            StaffBean staffBean = new StaffBean();
+            staffBean.setStaffId(staffId);
+            StaffBean oneById = staffService.findOneById(staffBean);
+            tallyBean.setSignPerson(oneById.getName());
+            followUpQueryVo.setStaffName(oneById.getName());
+        }
         List<TallyBean> tallyBeanPageBean = tallyMapper.listProcessByUser(tallyBean);
         //DO转VO
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(tallyBeanPageBean);
         List<FollowUpQueryVo> followUpQueryVoList =
             FollowUpConvert.tallyProcessBeanToFollowUpVo(tallyBeanPageBean);
         //统计所有工单数量
-        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber();
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
         myPageInfo.setMap(allProcessNumber);
         myPageInfo.setList(followUpQueryVoList);
         myPageInfo.setPageSize(followUpQueryVo.getPageSize());
@@ -116,8 +129,8 @@ public class TallyService implements TallyManager {
     }
 
     @Override
-    public Integer countProcessNumber() throws Exception {
-        return tallyMapper.countProcessNumber(Jurisdiction.getTenant(), Jurisdiction.getU_name());
+    public Integer countProcessNumber(String name) throws Exception {
+        return tallyMapper.countProcessNumber(Jurisdiction.getTenant(), name);
     }
 }
 

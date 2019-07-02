@@ -30,6 +30,7 @@ public class FollowUpQueryVo extends BaseVo {
 
     //模糊查询
     private String staffId;
+    private String staffName;
 
     //所有工单统计数量
     private Map<String, Integer> allProcessNumber = new HashMap();
@@ -144,6 +145,14 @@ public class FollowUpQueryVo extends BaseVo {
 
     public void setStaffId(String staffId) {
         this.staffId = staffId;
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 }
 

@@ -43,5 +43,11 @@ public interface StaffMapper{
      * @throws Exception
      */
     public List<StaffBean> listAllByDepartId(StaffBean staffBean);
+
+    /**根据id查询员工
+     * @param staffBean
+     * @throws Exception
+     */
+    public StaffBean findOneById(StaffBean staffBean);
 }
 

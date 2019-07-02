@@ -3,7 +3,6 @@ package com.mzkj.service.process;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.domain.MyPageInfo;
 import com.mzkj.vo.followUp.FollowUpQueryVo;
-import com.mzkj.vo.process.TallyProcessQueryVo;
 import com.mzkj.vo.process.TallyQueryVo;
 import com.mzkj.vo.process.TallyVo;
 
@@ -58,8 +57,9 @@ public interface TallyManager {
      * 根据创建人查询工商注册流程
      *
      * @param
+     * @param name
      * @throws Exception
      */
-    public Integer countProcessNumber() throws Exception;
+    public Integer countProcessNumber(String name) throws Exception;
 }
 

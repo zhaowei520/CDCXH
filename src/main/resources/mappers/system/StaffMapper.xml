@@ -242,5 +242,14 @@
         <include refid="tableName"></include> f
         where f.DEPARTMENT_ID = #{departmentId}
     </select>
+
+    <!-- 根据id查询员工 -->
+    <select id="findOneById" parameterType="com.mzkj.bean.StaffBean" resultMap="staffMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include> f
+        where f.STAFF_ID = #{staffId}
+    </select>
 	
 </mapper>

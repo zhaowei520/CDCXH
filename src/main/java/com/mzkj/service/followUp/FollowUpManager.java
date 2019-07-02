@@ -1,5 +1,7 @@
 package com.mzkj.service.followUp;
 
+import com.mzkj.vo.followUp.FollowUpQueryVo;
+
 import java.util.Map;
 
 /**
@@ -9,5 +11,5 @@ import java.util.Map;
  * @Version: 1.0
  */
 public interface FollowUpManager {
-    Map<String, Integer> countAllProcessNumber() throws Exception;
+    Map<String, Integer> countAllProcessNumber(FollowUpQueryVo followUpQueryVo) throws Exception;
 }

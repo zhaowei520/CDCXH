@@ -86,5 +86,11 @@ public class StaffService implements StaffManager {
         return staffQueryVoList;
     }
 
+    @Override
+    public StaffBean findOneById(StaffBean staffBean) throws Exception {
+
+        return staffMapper.findOneById(staffBean);
+    }
+
 }
 

@@ -2,14 +2,15 @@ package com.mzkj.service.process.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.CommerceBean;
+import com.mzkj.bean.StaffBean;
 import com.mzkj.convert.FollowUpConvert;
 import com.mzkj.domain.MyPageInfo;
 import com.mzkj.service.followUp.FollowUpManager;
+import com.mzkj.service.system.StaffManager;
 import com.mzkj.util.ConvertUtil;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.PageUtil;
 import com.mzkj.vo.followUp.FollowUpQueryVo;
-import com.mzkj.vo.process.CommerceProcessQueryVo;
 import com.mzkj.vo.process.CommerceQueryVo;
 import com.mzkj.vo.process.CommerceVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class CommerceService implements CommerceManager {
 
     @Autowired
     private FollowUpManager followUpService;
+
+    @Autowired
+    private StaffManager staffService;
 
     /**
      * 新增
@@ -103,9 +107,14 @@ public class CommerceService implements CommerceManager {
         commerceBean.setTenantId(Jurisdiction.getTenant());
         if(StringUtils.isEmpty(followUpQueryVo.getStaffId())){
             commerceBean.setSaler(Jurisdiction.getU_name());
+            followUpQueryVo.setStaffName(Jurisdiction.getU_name());
         }else{
-            followUpQueryVo.getStaffId();
-            commerceBean.setSaler(Jurisdiction.getU_name());
+            String staffId = followUpQueryVo.getStaffId();
+            StaffBean staffBean = new StaffBean();
+            staffBean.setStaffId(staffId);
+            StaffBean oneById = staffService.findOneById(staffBean);
+            commerceBean.setSaler(oneById.getName());
+            followUpQueryVo.setStaffName(oneById.getName());
         }
         List<CommerceBean> commercePageBean = commerceMapper.listProcessByUser(commerceBean);
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(commercePageBean);
@@ -113,7 +122,7 @@ public class CommerceService implements CommerceManager {
         List<FollowUpQueryVo> followUpQueryVoList =
             FollowUpConvert.commerceProcessBeanToFollowUpVo(commercePageBean);
         //统计所有工单数量
-        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber();
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
         myPageInfo.setMap(allProcessNumber);
         myPageInfo.setList(followUpQueryVoList);
         myPageInfo.setPageSize(followUpQueryVo.getPageSize());
@@ -122,8 +131,8 @@ public class CommerceService implements CommerceManager {
     }
 
     @Override
-    public Integer countProcessNumber() throws Exception {
-        return commerceMapper.countProcessNumber(Jurisdiction.getTenant(), Jurisdiction.getU_name());
+    public Integer countProcessNumber(String name) throws Exception {
+        return commerceMapper.countProcessNumber(Jurisdiction.getTenant(), name);
     }
 
 }

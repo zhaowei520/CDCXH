@@ -58,8 +58,9 @@ public interface CommerceManager {
      * 根据创建人查询工商注册流程
      *
      * @param
+     * @param name
      * @throws Exception
      */
-    public Integer countProcessNumber() throws Exception;
+    public Integer countProcessNumber(String name) throws Exception;
 }
 
