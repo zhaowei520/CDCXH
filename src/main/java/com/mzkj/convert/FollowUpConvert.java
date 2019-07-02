@@ -2,11 +2,13 @@ package com.mzkj.convert;
 
 import com.github.pagehelper.PageHelper;
 import com.mzkj.bean.CommerceBean;
+import com.mzkj.bean.DepartmentBean;
 import com.mzkj.bean.GShangChangeBean;
 import com.mzkj.bean.TallyBean;
 import com.mzkj.bean.UserBean;
 import com.mzkj.vo.followUp.FollowUpQueryVo;
 import com.mzkj.vo.process.CommerceProcessQueryVo;
+import com.mzkj.vo.system.DepartmentListVo;
 import com.mzkj.vo.system.UserQueryVo;
 
 import org.springframework.util.StringUtils;

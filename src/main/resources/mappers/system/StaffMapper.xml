@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mzkj.mapper.system.StaffMapper">
+
+    <resultMap id="staffMap" type="com.mzkj.bean.StaffBean">
+        <id column="STAFF_ID" javaType="string" property="staffId" />
+            <result column="NAME" javaType="String" property="name"/>
+            <result column="NAME_EN" javaType="String" property="nameEn"/>
+            <result column="BIANMA" javaType="String" property="bianma"/>
+            <result column="DEPARTMENT_ID" javaType="String" property="departmentId"/>
+            <result column="FUNCTIONS" javaType="String" property="functions"/>
+            <result column="TEL" javaType="String" property="tel"/>
+            <result column="EMAIL" javaType="String" property="email"/>
+            <result column="SEX" javaType="String" property="sex"/>
+            <result column="BIRTHDAY" javaType="String" property="birthday"/>
+            <result column="NATION" javaType="String" property="nation"/>
+            <result column="JOBTYPE" javaType="String" property="jobtype"/>
+            <result column="JOBJOINTIME" javaType="String" property="jobjointime"/>
+            <result column="FADDRESS" javaType="String" property="faddress"/>
+            <result column="POLITICAL" javaType="String" property="political"/>
+            <result column="PJOINTIME" javaType="String" property="pjointime"/>
+            <result column="SFID" javaType="String" property="sfid"/>
+            <result column="MARITAL" javaType="String" property="marital"/>
+            <result column="DJOINTIME" javaType="String" property="djointime"/>
+            <result column="POST" javaType="String" property="post"/>
+            <result column="POJOINTIME" javaType="String" property="pojointime"/>
+            <result column="EDUCATION" javaType="String" property="education"/>
+            <result column="SCHOOL" javaType="String" property="school"/>
+            <result column="MAJOR" javaType="String" property="major"/>
+            <result column="FTITLE" javaType="String" property="ftitle"/>
+            <result column="CERTIFICATE" javaType="String" property="certificate"/>
+            <result column="CONTRACTLENGTH" javaType="Integer" property="contractlength"/>
+            <result column="CSTARTTIME" javaType="String" property="cstarttime"/>
+            <result column="CENDTIME" javaType="String" property="cendtime"/>
+            <result column="ADDRESS" javaType="String" property="address"/>
+            <result column="USER_ID" javaType="String" property="userId"/>
+            <result column="BZ" javaType="String" property="bz"/>
+            <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+            <result column="DD_USER_ID" javaType="String" property="ddUserId"/>
+            <result column="DD_NAME" javaType="String" property="ddName"/>
+    </resultMap>
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		OA_STAFF
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		f.NAME,	
+		f.NAME_EN,	
+		f.BIANMA,	
+		f.DEPARTMENT_ID,	
+		f.FUNCTIONS,	
+		f.TEL,	
+		f.EMAIL,	
+		f.SEX,	
+		f.BIRTHDAY,	
+		f.NATION,	
+		f.JOBTYPE,	
+		f.JOBJOINTIME,	
+		f.FADDRESS,	
+		f.POLITICAL,	
+		f.PJOINTIME,	
+		f.SFID,	
+		f.MARITAL,	
+		f.DJOINTIME,	
+		f.POST,	
+		f.POJOINTIME,	
+		f.EDUCATION,	
+		f.SCHOOL,	
+		f.MAJOR,	
+		f.FTITLE,	
+		f.CERTIFICATE,	
+		f.CONTRACTLENGTH,	
+		f.CSTARTTIME,	
+		f.CENDTIME,	
+		f.ADDRESS,	
+		f.USER_ID,	
+		f.BZ,	
+		f.TENANT_ID_,	
+		f.DD_USER_ID,	
+		f.DD_NAME,	
+		f.STAFF_ID
+	</sql>
+	
+	<!-- 字段用于新增 -->
+	<sql id="Field2">
+		NAME,	
+		NAME_EN,	
+		BIANMA,	
+		DEPARTMENT_ID,	
+		FUNCTIONS,	
+		TEL,	
+		EMAIL,	
+		SEX,	
+		BIRTHDAY,	
+		NATION,	
+		JOBTYPE,	
+		JOBJOINTIME,	
+		FADDRESS,	
+		POLITICAL,	
+		PJOINTIME,	
+		SFID,	
+		MARITAL,	
+		DJOINTIME,	
+		POST,	
+		POJOINTIME,	
+		EDUCATION,	
+		SCHOOL,	
+		MAJOR,	
+		FTITLE,	
+		CERTIFICATE,	
+		CONTRACTLENGTH,	
+		CSTARTTIME,	
+		CENDTIME,	
+		ADDRESS,	
+		USER_ID,	
+		BZ,	
+		TENANT_ID_,	
+		DD_USER_ID,	
+		DD_NAME,	
+		STAFF_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{name},
+		#{nameEn},
+		#{bianma},
+		#{departmentId},
+		#{functions},
+		#{tel},
+		#{email},
+		#{sex},
+		#{birthday},
+		#{nation},
+		#{jobtype},
+		#{jobjointime},
+		#{faddress},
+		#{political},
+		#{pjointime},
+		#{sfid},
+		#{marital},
+		#{djointime},
+		#{post},
+		#{pojointime},
+		#{education},
+		#{school},
+		#{major},
+		#{ftitle},
+		#{certificate},
+		#{contractlength},
+		#{cstarttime},
+		#{cendtime},
+		#{address},
+		#{userId},
+		#{bz},
+		#{tenantId},
+		#{ddUserId},
+		#{ddName},
+		#{staffId}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.mzkj.bean.StaffBean">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field2"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="com.mzkj.bean.StaffBean">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			STAFF_ID = #{staffId}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="com.mzkj.bean.StaffBean">
+		update
+		<include refid="tableName"></include>
+		set 
+			NAME = #{name},
+			NAME_EN = #{nameEn},
+			BIANMA = #{bianma},
+			DEPARTMENT_ID = #{departmentId},
+			FUNCTIONS = #{functions},
+			TEL = #{tel},
+			EMAIL = #{email},
+			SEX = #{sex},
+			BIRTHDAY = #{birthday},
+			NATION = #{nation},
+			JOBTYPE = #{jobtype},
+			JOBJOINTIME = #{jobjointime},
+			FADDRESS = #{faddress},
+			POLITICAL = #{political},
+			PJOINTIME = #{pjointime},
+			SFID = #{sfid},
+			MARITAL = #{marital},
+			DJOINTIME = #{djointime},
+			POST = #{post},
+			POJOINTIME = #{pojointime},
+			EDUCATION = #{education},
+			SCHOOL = #{school},
+			MAJOR = #{major},
+			FTITLE = #{ftitle},
+			CERTIFICATE = #{certificate},
+			CONTRACTLENGTH = #{contractlength},
+			CSTARTTIME = #{cstarttime},
+			CENDTIME = #{cendtime},
+			ADDRESS = #{address},
+			USER_ID = #{userId},
+			BZ = #{bz},
+			TENANT_ID_ = #{tenantId},
+			DD_USER_ID = #{ddUserId},
+			DD_NAME = #{ddName},
+			STAFF_ID = #{staffId}
+		where 
+			STAFF_ID = #{staffId}
+	</update>
+	
+	<!-- 列表(全部) -->
+	<select id="list" parameterType="com.mzkj.bean.StaffBean" resultMap="staffMap">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+	</select>
+
+    <!-- 根据部门id查询员工列表 -->
+    <select id="listAllByDepartId" parameterType="com.mzkj.bean.StaffBean" resultMap="staffMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include> f
+        where f.DEPARTMENT_ID = #{departmentId}
+    </select>
+	
+</mapper>

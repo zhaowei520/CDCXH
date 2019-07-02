@@ -118,5 +118,28 @@
 		from 
 		<include refid="tableName"></include> f
 	</select>
+
+    <select id="findByHeadMan" parameterType="com.mzkj.bean.DepartmentBean" resultMap="departmentMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include> f
+        where
+        find_in_set(#{username}, HEADMAN)
+        and TENANT_ID_ =#{tenantId}
+    </select>
+
+    <select id="listSubDepartmentByParentId" parameterType="com.mzkj.bean.DepartmentBean" resultMap="departmentMap">
+        select
+        son.*
+        from
+        <include refid="tableName"></include> son
+        LEFT JOIN <include refid="tableName"></include> father
+        ON son.PARENT_ID=father.DEPARTMENT_ID and father.TENANT_ID_ =#{tenantId}
+        where
+        son.PARENT_ID = #{parentId}
+        and son.TENANT_ID_ =#{tenantId}
+        order by son.NAME
+    </select>
 	
 </mapper>

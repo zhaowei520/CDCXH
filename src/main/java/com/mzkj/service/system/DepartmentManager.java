@@ -1,8 +1,11 @@
 package com.mzkj.service.system;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.vo.system.DepartmentListVo;
 import com.mzkj.vo.system.DepartmentQueryVo;
 import com.mzkj.vo.system.DepartmentVo;
+
+import java.util.List;
 
 /** 
  * 说明： 部门管理接口
@@ -35,6 +38,11 @@ public interface DepartmentManager{
 	 * @throws Exception
 	 */
 	public PageInfo<DepartmentQueryVo> list(DepartmentQueryVo departmentQueryVo)throws Exception;
-	
+
+    /**查询当前登录人所负责的部门层级列表
+     * @param departmentListVo
+     * @throws Exception
+     */
+    DepartmentListVo listHierarchy(DepartmentListVo departmentListVo) throws Exception;
 }
 
