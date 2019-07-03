@@ -1,5 +1,6 @@
 package com.mzkj.service.process.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.StaffBean;
 import com.mzkj.bean.TallyBean;
@@ -114,6 +115,7 @@ public class TallyService implements TallyManager {
             tallyBean.setSignPerson(oneById.getName());
             followUpQueryVo.setStaffName(oneById.getName());
         }
+        PageHelper.startPage(followUpQueryVo);
         List<TallyBean> tallyBeanPageBean = tallyMapper.listProcessByUser(tallyBean);
         //DO转VO
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(tallyBeanPageBean);

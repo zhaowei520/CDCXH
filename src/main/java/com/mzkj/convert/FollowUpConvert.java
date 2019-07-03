@@ -56,8 +56,6 @@ public class FollowUpConvert {
     public static CommerceBean followUpVoToCommerceProcessBean(FollowUpQueryVo followUpQueryVo) {
         CommerceBean commerceBean = new CommerceBean();
         if (followUpQueryVo != null ) {
-            PageHelper.startPage(followUpQueryVo);
-
             commerceBean.setActAssignee(followUpQueryVo.getActAssignee());
             commerceBean.setActName(followUpQueryVo.getActName());
             commerceBean.setBusinessTypes(followUpQueryVo.getBusinessTypes());
@@ -68,6 +66,7 @@ public class FollowUpConvert {
             commerceBean.setNote(followUpQueryVo.getNote());
             commerceBean.setProcInstId(followUpQueryVo.getProcInstId());
             commerceBean.setSaler(followUpQueryVo.getSignPerson());
+            commerceBean.setStaffId(followUpQueryVo.getStaffId());
         }
         return commerceBean;
     }
@@ -99,8 +98,6 @@ public class FollowUpConvert {
     public static TallyBean followUpVoToTallyProcessBean(FollowUpQueryVo followUpQueryVo) {
         TallyBean tallyBean = new TallyBean();
         if (followUpQueryVo != null ) {
-            PageHelper.startPage(followUpQueryVo);
-
             tallyBean.setActAssignee(followUpQueryVo.getActAssignee());
             tallyBean.setActName(followUpQueryVo.getActName());
             tallyBean.setBusinessTypes(followUpQueryVo.getBusinessTypes());
@@ -142,8 +139,6 @@ public class FollowUpConvert {
     public static GShangChangeBean followUpVoToGShangChangeProcessBean(FollowUpQueryVo followUpQueryVo) {
         GShangChangeBean gShangChangeBean = new GShangChangeBean();
         if (followUpQueryVo != null ) {
-            PageHelper.startPage(followUpQueryVo);
-
             gShangChangeBean.setActAssignee(followUpQueryVo.getActAssignee());
             gShangChangeBean.setActName(followUpQueryVo.getActName());
             gShangChangeBean.setBusinessTypes(followUpQueryVo.getBusinessTypes());

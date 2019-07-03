@@ -16,6 +16,9 @@ public class CommerceBean extends Commerce {
 
     private String excutionId;
 
+    //模糊查询
+    private String staffId;
+
     public String getActAssignee() {
         return actAssignee;
     }
@@ -38,6 +41,14 @@ public class CommerceBean extends Commerce {
 
     public void setExcutionId(String excutionId) {
         this.excutionId = excutionId;
+    }
+
+    public String getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
     }
 }
 

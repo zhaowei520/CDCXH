@@ -1,5 +1,6 @@
 package com.mzkj.service.process.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.CommerceBean;
 import com.mzkj.bean.StaffBean;
@@ -113,9 +114,10 @@ public class CommerceService implements CommerceManager {
             StaffBean staffBean = new StaffBean();
             staffBean.setStaffId(staffId);
             StaffBean oneById = staffService.findOneById(staffBean);
-            commerceBean.setSaler(oneById.getName());
+            commerceBean.setSaler(Jurisdiction.getU_name());
             followUpQueryVo.setStaffName(oneById.getName());
         }
+        PageHelper.startPage(followUpQueryVo);
         List<CommerceBean> commercePageBean = commerceMapper.listProcessByUser(commerceBean);
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(commercePageBean);
         //DO转VO

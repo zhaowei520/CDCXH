@@ -1,5 +1,6 @@
 package com.mzkj.service.process.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.GShangChangeBean;
 import com.mzkj.bean.StaffBean;
@@ -117,6 +118,7 @@ public class GShangChangeService implements GShangChangeManager {
             gShangChangeBean.setSignMan(oneById.getName());
             followUpQueryVo.setStaffName(oneById.getName());
         }
+        PageHelper.startPage(followUpQueryVo);
         List<GShangChangeBean> gShangChangeBeanPageBean =
             gShangChangeMapper.listProcessByUser(gShangChangeBean);
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(gShangChangeBeanPageBean);
