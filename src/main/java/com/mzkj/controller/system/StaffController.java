@@ -138,11 +138,6 @@ public class StaffController {
     public Result<List<StaffQueryVo>> listAllByDepartId(StaffQueryVo staffQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看员工");
         Result<List<StaffQueryVo>> result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             List<StaffQueryVo> varList = staffService.listAllByDepartId(staffQueryVo);
             result.setData(varList);
