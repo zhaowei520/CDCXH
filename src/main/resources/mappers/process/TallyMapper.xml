@@ -459,7 +459,7 @@
 		f.TALLY_ID,
 		f.COMPANY_NAME,
 		f.SIGN_PERSON,
-		f.CONTRACT_DATE,
+		tc.CONTRACT_DATE,
 		f.LEGAL_REPRESENTATIVE,
 		f.NOTE,
 		f.C_USER,
@@ -474,11 +474,12 @@
 		f
 		LEFT JOIN
 		act_ru_task art ON f.PROC_INST_ID_ = art.PROC_INST_ID_
+        left join tb_customer tc on tc.CUSTOMER_ID=f.CUSTOMER_ID
 		WHERE 1=1
 		<if test="companyName!= null and companyName != ''">
 			and
 			(
-			f.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
+			tc.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
 
 			)
 		</if>

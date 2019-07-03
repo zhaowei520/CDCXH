@@ -386,7 +386,7 @@
             resultMap="commerceProcessMap">
         select
         f.COMMERCE_ID,
-        f.COMPANY_NAME,
+        tc.COMPANY_NAME,
         f.SALER,
         f.SIGNING_DATE,
         f.CUSTOMER,
@@ -403,13 +403,12 @@
         f
         LEFT JOIN
         act_ru_task art ON f.PROC_INST_ID_ = art.PROC_INST_ID_
+        left join tb_customer tc on tc.CUSTOMER_ID=f.CUSTOMER_ID
         WHERE 1=1
         <if test="companyName!= null and companyName != ''">
             and
             (
-            f.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%') or
-            f.CUSTOMER LIKE CONCAT(CONCAT('%', #{companyName}),'%')
-
+            tc.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
             )
         </if>
         and f.SALER = #{saler} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
