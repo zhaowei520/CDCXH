@@ -240,6 +240,12 @@
         <include refid="Field"></include>
         from
         <include refid="tableName"></include> f
+        <if test="name!= null and name != ''">
+            and
+            (
+              f.NAME LIKE CONCAT(CONCAT('%', #{name}),'%')
+            )
+        </if>
         where f.DEPARTMENT_ID = #{departmentId}
     </select>
 
