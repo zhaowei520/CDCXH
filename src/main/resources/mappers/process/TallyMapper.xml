@@ -457,9 +457,9 @@
 			resultMap="tallyProcessMap">
 		select
 		f.TALLY_ID,
-		f.COMPANY_NAME,
+		tc.COMPANY_NAME,
 		f.SIGN_PERSON,
-		tc.CONTRACT_DATE,
+        f.CONTRACT_DATE,
 		f.LEGAL_REPRESENTATIVE,
 		f.NOTE,
 		f.C_USER,
