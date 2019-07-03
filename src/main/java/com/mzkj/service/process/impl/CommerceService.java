@@ -114,7 +114,7 @@ public class CommerceService implements CommerceManager {
             StaffBean staffBean = new StaffBean();
             staffBean.setStaffId(staffId);
             StaffBean oneById = staffService.findOneById(staffBean);
-            commerceBean.setSaler(Jurisdiction.getU_name());
+            commerceBean.setSaler(oneById.getName());
             followUpQueryVo.setStaffName(oneById.getName());
         }
         PageHelper.startPage(followUpQueryVo);
