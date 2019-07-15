@@ -47,6 +47,14 @@ public interface CommerceManager {
 
 
     /**
+     * 根据部门ID查询工商注册流程跟进表
+     * return
+     * Author luosc
+     * param
+     * Date 2019-07-15 9:41
+     */
+    public MyPageInfo<String,Integer,FollowUpQueryVo> listProcessByDepartmentId(FollowUpQueryVo followUpQueryVo) throws Exception;
+    /**
      * 根据创建人查询工商注册流程
      *
      * @param followUpQueryVo

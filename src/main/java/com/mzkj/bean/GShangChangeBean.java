@@ -13,6 +13,24 @@ public class GShangChangeBean extends GShangChange {
     private String actName;
     private String excutionId;
 
+    private String departmentId;
+    private String staffName;
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public String getActAssignee() {
         return actAssignee;
     }

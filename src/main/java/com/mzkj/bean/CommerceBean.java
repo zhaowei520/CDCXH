@@ -16,8 +16,26 @@ public class CommerceBean extends Commerce {
 
     private String excutionId;
 
+    private String departmentId;
     //模糊查询
     private String staffId;
+    private String staffName;
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
 
     public String getActAssignee() {
         return actAssignee;

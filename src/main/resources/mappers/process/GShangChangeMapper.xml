@@ -259,7 +259,53 @@
         <include refid="tableName"></include>
         f
     </select>
+	<select id="listProcessByDepartmentId" parameterType="com.mzkj.bean.GShangChangeBean"
+			resultMap="gShangChangeProcessMap">
+		select
+		f.GSHANGCHANGE_ID,
+		tc.COMPANY_NAME,
+		f.SIGN_MAN,
+		f.SIGN_DATE,
+		f.DELEGATE_MAN,
+		f.NOTE,
+		f.CREATEER,
+		f.BUSINESS_TYPES,
+		f.PROC_INST_ID_,
+		f.TENANT_ID_,
+		art.ASSIGNEE_,
+		art.EXECUTION_ID_,
+		art.NAME_
+		from
+		<include refid="tableName"></include>
+		f
+		LEFT JOIN
+		act_ru_task art ON f.PROC_INST_ID_ = art.PROC_INST_ID_
+		left join tb_customer tc on tc.CUSTOMER_ID=f.CUSTOMER_ID
+		LEFT JOIN oa_staff s ON f.SIGN_MAN = s.`NAME`
+		WHERE 1=1
+		<if test="companyName!= null and companyName != ''">
+			and
+			(
+			tc.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
 
+			)
+		</if>
+        <if test="companyName!= null and companyName != ''">
+            and
+            (
+            tc.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
+
+            )
+        </if>
+		<if test="staffName!= null and staffName != ''">
+			and
+			(
+			s.`NAME` LIKE CONCAT(CONCAT('%', #{staffName}),'%')
+			)
+		</if>
+		and s.DEPARTMENT_ID = #{departmentId} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
+		order by f.CREATE_DATE DESC
+	</select>
 
 	<!-- 根据创建人查询代理记账流程 -->
 	<select id="listProcessByUser" parameterType="com.mzkj.bean.GShangChangeBean"

@@ -98,6 +98,28 @@ public class TallyService implements TallyManager {
     }
 
     @Override
+    public MyPageInfo<String, Integer, FollowUpQueryVo> listProcessByDepartmentId(FollowUpQueryVo followUpQueryVo) throws Exception {
+        //将vo转DO并将分页信息传到pageHelper
+        TallyBean tallyBean =
+                FollowUpConvert.followUpVoToTallyProcessBean(followUpQueryVo);
+        //设置租户ID
+        tallyBean.setTenantId(Jurisdiction.getTenant());
+        PageHelper.startPage(followUpQueryVo);
+        List<TallyBean> tallyPageBean = tallyMapper.listProcessByDepartmentId(tallyBean);
+        MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(tallyPageBean);
+        //DO转VO
+        List<FollowUpQueryVo> followUpQueryVoList =
+                FollowUpConvert.tallyProcessBeanToFollowUpVo(tallyPageBean);
+        //统计所有工单数量
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
+        myPageInfo.setMap(allProcessNumber);
+        myPageInfo.setList(followUpQueryVoList);
+        myPageInfo.setPageSize(followUpQueryVo.getPageSize());
+        myPageInfo.setPageNum(followUpQueryVo.getPageNum());
+        return myPageInfo;
+    }
+
+    @Override
     public MyPageInfo<String,Integer,FollowUpQueryVo> listProcessByUser(FollowUpQueryVo followUpQueryVo) throws Exception {
         //将vo转DO并将分页信息传到pageHelper
         TallyBean tallyBean = FollowUpConvert.followUpVoToTallyProcessBean(followUpQueryVo);

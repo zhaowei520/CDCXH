@@ -47,6 +47,13 @@ public interface TallyMapper {
     public List<TallyBean> list(TallyBean tallyBean) throws Exception;
 
     /**
+     * 根据部门Id查询代理记账流程
+     *
+     * @param tallyBean
+     * @throws Exception
+     */
+    public List<TallyBean> listProcessByDepartmentId(TallyBean tallyBean) throws Exception;
+    /**
      * 根据创建人查询代理记账流程
      *
      * @param tallyBean

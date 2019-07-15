@@ -46,6 +46,8 @@ public interface GShangChangeMapper {
      */
     public List<GShangChangeBean> list(GShangChangeBean gShangChangeBean) throws Exception;
 
+
+    List<GShangChangeBean> listProcessByDepartmentId(GShangChangeBean gShangChangeBean) throws Exception;
     /**
      * 根据创建人查询工商变更流程
      *
