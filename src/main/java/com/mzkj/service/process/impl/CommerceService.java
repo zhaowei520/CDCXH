@@ -113,12 +113,25 @@ public class CommerceService implements CommerceManager {
         List<FollowUpQueryVo> followUpQueryVoList =
                 FollowUpConvert.commerceProcessBeanToFollowUpVo(commercePageBean);
         //统计所有工单数量
-        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
         myPageInfo.setMap(allProcessNumber);
         myPageInfo.setList(followUpQueryVoList);
         myPageInfo.setPageSize(followUpQueryVo.getPageSize());
         myPageInfo.setPageNum(followUpQueryVo.getPageNum());
         return myPageInfo;
+    }
+
+    @Override
+    public Integer countProcessNumberByDepartment(FollowUpQueryVo followUpQueryVo) throws Exception {
+        //将vo转DO并将分页信息传到pageHelper
+        CommerceBean commerceBean =
+                FollowUpConvert.followUpVoToCommerceProcessBean(followUpQueryVo);
+        //设置租户ID
+        commerceBean.setTenantId(Jurisdiction.getTenant());
+        //PageHelper.startPage(followUpQueryVo);
+        Integer count = commerceMapper.countProcessNumberByDepartment(commerceBean);
+
+        return count;
     }
 
     @Override

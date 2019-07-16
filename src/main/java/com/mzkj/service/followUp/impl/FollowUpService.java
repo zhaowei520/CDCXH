@@ -49,4 +49,17 @@ public class FollowUpService implements FollowUpManager {
         allProcessNumber.put("gShangChangeNum",gShangChangeProcessNumber);
         return allProcessNumber;
     }
+
+    @Override
+    public Map<String, Integer> countAllProcessNumberByDepartmentId(FollowUpQueryVo followUpQueryVo) throws Exception {
+        Map<String, Integer> allProcessNumber = new HashMap<>();
+        //工商注册流程中的数量统计
+        Integer commerceProcessNumber = commerceService.countProcessNumberByDepartment(followUpQueryVo);
+        allProcessNumber.put("commerceNum",commerceProcessNumber);
+        Integer tallyProcessNumber = tallyService.countProcessNumberByDepartment(followUpQueryVo);
+        allProcessNumber.put("tallyNum",tallyProcessNumber);
+        Integer gShangChangeProcessNumber = gShangChangeService.countProcessNumberByDepartment(followUpQueryVo);
+        allProcessNumber.put("gShangChangeNum",gShangChangeProcessNumber);
+        return allProcessNumber;
+    }
 }

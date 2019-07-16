@@ -419,6 +419,31 @@
         AND s.DEPARTMENT_ID = #{departmentId} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
         order by f.C_DATE DESC
     </select>
+    <select id="countProcessNumberByDepartment" resultType="Integer">
+        select
+        COUNT(f.COMMERCE_ID)
+        from
+        <include refid="tableName"></include>
+        f
+        LEFT JOIN
+        act_ru_task art ON f.PROC_INST_ID_ = art.PROC_INST_ID_
+        left join tb_customer tc on tc.CUSTOMER_ID=f.CUSTOMER_ID
+        left JOIN oa_staff s ON f.SALER =s.`NAME`
+        WHERE 1=1
+        <if test="companyName!= null and companyName != ''">
+            and
+            (
+            tc.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
+            )
+        </if>
+        <if test="staffName!= null and staffName != ''">
+            and
+            (
+            s.`NAME` LIKE CONCAT(CONCAT('%', #{staffName}),'%')
+            )
+        </if>
+        AND s.DEPARTMENT_ID = #{departmentId} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
+    </select>
     <!-- 列表(全部) -->
     <select id="listProcessByUser" parameterType="com.mzkj.bean.CommerceBean"
             resultMap="commerceProcessMap">

@@ -48,6 +48,7 @@ public interface TallyManager {
 
     public MyPageInfo<String,Integer,FollowUpQueryVo> listProcessByDepartmentId(FollowUpQueryVo followUpQueryVo) throws Exception;
 
+    public Integer countProcessNumberByDepartment(FollowUpQueryVo followUpQueryVo) throws Exception;
     /**
      * 根据创建人查询工商注册流程
      *

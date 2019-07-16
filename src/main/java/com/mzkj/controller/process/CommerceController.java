@@ -177,7 +177,7 @@ public class CommerceController extends BaseController {
         }
         try {
             MyPageInfo<String,Integer,FollowUpQueryVo>	varList = commerceService.listProcessByUser(followUpQueryVo);
-            varList.setList(addCHNName(varList.getList()));
+            //varList.setList(addCHNName(varList.getList()));
             result.setData(varList);
         } catch (Exception e) {
             logger.error(e.toString(), e);

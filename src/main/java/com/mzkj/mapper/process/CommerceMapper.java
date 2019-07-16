@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+import io.swagger.models.auth.In;
+
 /**
  * 说明： 工商注册接口
  * 创建人：CDCXH
@@ -55,6 +57,9 @@ public interface CommerceMapper {
      * Date 2019-07-15 9:48
      */
     public List<CommerceBean> listProcessByDepartmentId(CommerceBean commerceBean) throws Exception;
+
+    public Integer countProcessNumberByDepartment(CommerceBean commerceBean) throws Exception;
+
     /**
      * 根据创建人查询工商注册流程
      *

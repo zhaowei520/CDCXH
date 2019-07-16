@@ -111,12 +111,22 @@ public class TallyService implements TallyManager {
         List<FollowUpQueryVo> followUpQueryVoList =
                 FollowUpConvert.tallyProcessBeanToFollowUpVo(tallyPageBean);
         //统计所有工单数量
-        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
         myPageInfo.setMap(allProcessNumber);
         myPageInfo.setList(followUpQueryVoList);
         myPageInfo.setPageSize(followUpQueryVo.getPageSize());
         myPageInfo.setPageNum(followUpQueryVo.getPageNum());
         return myPageInfo;
+    }
+
+    @Override
+    public Integer countProcessNumberByDepartment(FollowUpQueryVo followUpQueryVo) throws Exception {
+        TallyBean tallyBean =
+                FollowUpConvert.followUpVoToTallyProcessBean(followUpQueryVo);
+        //设置租户ID
+        tallyBean.setTenantId(Jurisdiction.getTenant());
+        Integer count = tallyMapper.countProcessNumberByDepartment(tallyBean);
+        return count;
     }
 
     @Override

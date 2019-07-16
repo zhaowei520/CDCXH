@@ -12,4 +12,6 @@ import java.util.Map;
  */
 public interface FollowUpManager {
     Map<String, Integer> countAllProcessNumber(FollowUpQueryVo followUpQueryVo) throws Exception;
+
+    Map<String, Integer> countAllProcessNumberByDepartmentId(FollowUpQueryVo followUpQueryVo) throws Exception;
 }
