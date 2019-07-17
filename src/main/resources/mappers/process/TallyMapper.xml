@@ -482,10 +482,10 @@
 
 			)
 		</if>
-		<if test="staffName!= null and staffName != ''">
+		<if test="signPerson!= null and signPerson != ''">
 			and
 			(
-			s.`NAME` LIKE CONCAT(CONCAT('%', #{staffName}),'%')
+			f.SIGN_PERSON LIKE CONCAT(CONCAT('%', #{signPerson}),'%')
 			)
 		</if>
 		and s.DEPARTMENT_ID=#{departmentId} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null

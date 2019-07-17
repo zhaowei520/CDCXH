@@ -410,10 +410,10 @@
             tc.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
             )
         </if>
-        <if test="staffName!= null and staffName != ''">
+        <if test="signPerson!= null and signPerson != ''">
             and
             (
-            s.`NAME` LIKE CONCAT(CONCAT('%', #{staffName}),'%')
+            f.SALER LIKE CONCAT(CONCAT('%', #{signPerson}),'%')
             )
         </if>
         AND s.DEPARTMENT_ID = #{departmentId} and f.TENANT_ID_ = #{tenantId} and art.PROC_INST_ID_ is not null
