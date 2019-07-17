@@ -156,6 +156,7 @@ public class GShangChangeController extends BaseController{
         Result<MyPageInfo<String,Integer,FollowUpQueryVo>> result = new Result<>();
         try {
             MyPageInfo<String,Integer,FollowUpQueryVo>	varList = gShangChangeService.listProcessByDepartmentId(followUpQueryVo);
+            varList.setList(addCHNName(varList.getList()));
             result.setData(varList);
         } catch (Exception e) {
             logger.error(e.toString(), e);
