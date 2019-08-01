@@ -101,6 +101,41 @@ public class GShangChangeService implements GShangChangeManager {
     }
 
     @Override
+    public MyPageInfo<String, Integer, FollowUpQueryVo> listProcessByDepartmentId(FollowUpQueryVo followUpQueryVo) throws Exception {
+        //将vo转DO并将分页信息传到pageHelper
+        GShangChangeBean gShangChangeBean =
+                FollowUpConvert.followUpVoToGShangChangeProcessBean(followUpQueryVo);
+        //设置租户ID
+        gShangChangeBean.setTenantId(Jurisdiction.getTenant());
+        PageHelper.startPage(followUpQueryVo);
+        List<GShangChangeBean> gShangChangeBeanPageBean =
+                gShangChangeMapper.listProcessByDepartmentId(gShangChangeBean);
+        MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(gShangChangeBeanPageBean);
+        //DO转VO
+        List<FollowUpQueryVo> followUpQueryVoList =
+                FollowUpConvert.gShangChangeProcessBeanToFollowUpVo(gShangChangeBeanPageBean);
+        //统计所有工单数量
+        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
+        myPageInfo.setMap(allProcessNumber);
+        myPageInfo.setList(followUpQueryVoList);
+        myPageInfo.setPageSize(followUpQueryVo.getPageSize());
+        myPageInfo.setPageNum(followUpQueryVo.getPageNum());
+        return myPageInfo;
+
+    }
+
+    @Override
+    public Integer countProcessNumberByDepartment(FollowUpQueryVo followUpQueryVo) throws Exception {
+        //将vo转DO并将分页信息传到pageHelper
+        GShangChangeBean gShangChangeBean =
+                FollowUpConvert.followUpVoToGShangChangeProcessBean(followUpQueryVo);
+        //设置租户ID
+        gShangChangeBean.setTenantId(Jurisdiction.getTenant());
+       Integer count= gShangChangeMapper.countProcessNumberByDepartment(gShangChangeBean);
+         return count;
+    }
+
+    @Override
     public MyPageInfo<String,Integer,FollowUpQueryVo> listProcessByUser(FollowUpQueryVo followUpQueryVo) throws Exception {
         //将vo转DO并将分页信息传到pageHelper
         GShangChangeBean gShangChangeBean =

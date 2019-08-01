@@ -1,5 +1,6 @@
 package com.mzkj.mapper.process;
 
+import com.mzkj.bean.CommerceBean;
 import com.mzkj.bean.TallyBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -46,6 +47,14 @@ public interface TallyMapper {
      */
     public List<TallyBean> list(TallyBean tallyBean) throws Exception;
 
+    /**
+     * 根据部门Id查询代理记账流程
+     *
+     * @param tallyBean
+     * @throws Exception
+     */
+    public List<TallyBean> listProcessByDepartmentId(TallyBean tallyBean) throws Exception;
+    public Integer countProcessNumberByDepartment(TallyBean tallyBean) throws Exception;
     /**
      * 根据创建人查询代理记账流程
      *

@@ -23,7 +23,8 @@ public class FollowUpQueryVo extends BaseVo {
     private String cUser;
     private String procInstId;
     private String tenantId;
-
+    //根据部门ID查询流程跟进表用d
+    private String departmentId;
     //工作流act_ru_task表信息
     private String actAssignee;
     private String actName;
@@ -31,6 +32,15 @@ public class FollowUpQueryVo extends BaseVo {
     //模糊查询
     private String staffId;
     private String staffName;
+
+
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
 
     //所有工单统计数量
     private Map<String, Integer> allProcessNumber = new HashMap();

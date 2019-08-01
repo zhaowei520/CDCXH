@@ -67,6 +67,8 @@ public class FollowUpConvert {
             commerceBean.setProcInstId(followUpQueryVo.getProcInstId());
             commerceBean.setSaler(followUpQueryVo.getSignPerson());
             commerceBean.setStaffId(followUpQueryVo.getStaffId());
+            commerceBean.setDepartmentId(followUpQueryVo.getDepartmentId());
+            commerceBean.setStaffName(followUpQueryVo.getStaffName());
         }
         return commerceBean;
     }
@@ -108,6 +110,8 @@ public class FollowUpConvert {
             tallyBean.setNote(followUpQueryVo.getNote());
             tallyBean.setProcInstId(followUpQueryVo.getProcInstId());
             tallyBean.setSignPerson(followUpQueryVo.getSignPerson());
+            tallyBean.setDepartmentId(followUpQueryVo.getDepartmentId());
+            tallyBean.setStaffName(followUpQueryVo.getStaffName());
         }
         return tallyBean;
     }
@@ -149,6 +153,8 @@ public class FollowUpConvert {
             gShangChangeBean.setNote(followUpQueryVo.getNote());
             gShangChangeBean.setProcInstId(followUpQueryVo.getProcInstId());
             gShangChangeBean.setSignMan(followUpQueryVo.getSignPerson());
+            gShangChangeBean.setDepartmentId(followUpQueryVo.getDepartmentId());
+            gShangChangeBean.setStaffName(followUpQueryVo.getStaffName());
         }
         return gShangChangeBean;
     }

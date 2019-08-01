@@ -123,6 +123,30 @@ public class TallyController extends BaseController {
         return result;
     }
 
+    /**
+     * 根据部门ID查询流程
+     * return
+     * Author luosc
+     * param
+     * Date 2019-07-15 9:36
+     */
+    @RequestMapping(value ="/listProcessByDepartmentId",method = RequestMethod.POST)
+    @ApiOperation(value = "根据部门查询当前部门下所有代理记账跟进流程",notes = "根据部门ID查询代理记账跟进流程")
+    public Result<MyPageInfo<String, Integer, FollowUpQueryVo>> listProcessByDepartmentId(FollowUpQueryVo followUpQueryVo) {
+        logger.info(Jurisdiction.getUsername()+"查看工商变更跟进信息");
+        Result<MyPageInfo<String,Integer,FollowUpQueryVo>> result = new Result<>();
+        try {
+            MyPageInfo<String,Integer,FollowUpQueryVo>	varList = tallyService.listProcessByDepartmentId(followUpQueryVo);
+            varList.setList(addCHNName(varList.getList()));
+            result.setData(varList);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
     /**根据创建人查询代理记账跟进流程
      * @throws Exception
      */

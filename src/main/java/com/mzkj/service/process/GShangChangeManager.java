@@ -45,6 +45,8 @@ public interface GShangChangeManager {
      */
     public PageInfo<GShangChangeQueryVo> list(GShangChangeQueryVo gShangChangeQueryVo) throws Exception;
 
+    public MyPageInfo<String,Integer,FollowUpQueryVo> listProcessByDepartmentId(FollowUpQueryVo followUpQueryVo) throws Exception;
+    public Integer countProcessNumberByDepartment(FollowUpQueryVo followUpQueryVo) throws Exception;
     /**
      * 根据创建人查询工商变更流程
      *

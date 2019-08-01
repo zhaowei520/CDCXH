@@ -1,5 +1,6 @@
 package com.mzkj.mapper.process;
 
+import com.mzkj.bean.CommerceBean;
 import com.mzkj.bean.GShangChangeBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -46,6 +47,9 @@ public interface GShangChangeMapper {
      */
     public List<GShangChangeBean> list(GShangChangeBean gShangChangeBean) throws Exception;
 
+    List<GShangChangeBean> listProcessByDepartmentId(GShangChangeBean gShangChangeBean) throws Exception;
+
+    public Integer countProcessNumberByDepartment(GShangChangeBean gShangChangeBean) throws Exception;
     /**
      * 根据创建人查询工商变更流程
      *
