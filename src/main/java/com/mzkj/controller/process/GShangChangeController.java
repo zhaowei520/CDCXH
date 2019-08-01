@@ -48,11 +48,6 @@ public class GShangChangeController extends BaseController{
     public Result<GShangChangeVo> save(GShangChangeVo gShangChangeVo) {
         logger.info(Jurisdiction.getUsername() + "查询工商变更");
         Result<GShangChangeVo> result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         gShangChangeVo.setGShangChangeId(UuidUtil.get32UUID());
         try {
             gShangChangeVo = gShangChangeService.save(gShangChangeVo);
@@ -74,11 +69,6 @@ public class GShangChangeController extends BaseController{
     public Result delete(@PathVariable("id") String gShangChangeId) {
         logger.info(Jurisdiction.getUsername() + "删除工商变更");
         Result result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             gShangChangeService.delete(gShangChangeId);
         } catch (Exception e) {
@@ -100,11 +90,6 @@ public class GShangChangeController extends BaseController{
     public Result edit(GShangChangeVo gShangChangeVo) {
         logger.info(Jurisdiction.getUsername() + "修改工商变更");
         Result result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             gShangChangeService.edit(gShangChangeVo);
         } catch (Exception e) {
@@ -126,11 +111,6 @@ public class GShangChangeController extends BaseController{
     public Result<PageInfo<GShangChangeQueryVo>> list(GShangChangeQueryVo gShangChangeQueryVo) {
         logger.info(Jurisdiction.getUsername() + "查看工商变更");
         Result<PageInfo<GShangChangeQueryVo>> result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "cha")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             PageInfo<GShangChangeQueryVo> varList = gShangChangeService.list(gShangChangeQueryVo);
             result.setData(varList);
@@ -153,11 +133,6 @@ public class GShangChangeController extends BaseController{
     public Result<MyPageInfo<String,Integer,FollowUpQueryVo>> listProcessByUser(FollowUpQueryVo followUpQueryVo) {
         logger.info(Jurisdiction.getUsername() + "查看工商变更跟进信息");
         Result<MyPageInfo<String,Integer,FollowUpQueryVo>> result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "cha")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             MyPageInfo<String,Integer,FollowUpQueryVo> varList =
                 gShangChangeService.listProcessByUser(followUpQueryVo);

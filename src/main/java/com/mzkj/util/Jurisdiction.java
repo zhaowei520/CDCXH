@@ -136,7 +136,7 @@ public class Jurisdiction {
                     map.remove("del");
                     map.remove("edit");
                     map.remove("cha");
-                    String MENU_ID =  menuList.get(i).getMENU_ID();
+                    Integer MENU_ID =  menuList.get(i).getMENU_ID();
                     Boolean isAdmin = "admin".equals(USERNAME);
                     Boolean badd = false;
                     Boolean bdel = false;
@@ -226,7 +226,7 @@ public class Jurisdiction {
                     Map<String, List<String>> maps =
                         (Map<String, List<String>>) session.getAttribute(
                             USERNAME + Const.SESSION_QX2);//副职角色按钮权限(增删改查)
-                    String MENU_ID = menuList.get(i).getMENU_ID();
+                    Integer MENU_ID = menuList.get(i).getMENU_ID();
                     Boolean isAdmin = "admin".equals(USERNAME);
                     if (isAdmin) {
                         return true;

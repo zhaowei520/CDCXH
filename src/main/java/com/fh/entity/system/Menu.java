@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Menu implements Serializable {
 
-    private String MENU_ID;    //菜单ID
+    private Integer MENU_ID;    //菜单ID
     private String MENU_NAME;  //菜单名称
     private String MENU_URL;  //链接
     private String PARENT_ID;  //上级菜单ID
@@ -30,12 +30,12 @@ public class Menu implements Serializable {
     private List<Menu> subMenu;
     private boolean hasMenu = false;
 
-    public String getMENU_ID() {
+    public Integer getMENU_ID() {
         return MENU_ID;
     }
 
-    public void setMENU_ID(String mENU_ID) {
-        MENU_ID = mENU_ID;
+    public void setMENU_ID(Integer MENU_ID) {
+        this.MENU_ID = MENU_ID;
     }
 
     public String getMENU_NAME() {

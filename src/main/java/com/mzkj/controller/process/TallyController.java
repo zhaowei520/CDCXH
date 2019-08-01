@@ -48,11 +48,6 @@ public class TallyController extends BaseController {
     public Result<TallyVo> save(TallyVo tallyVo) {
         logger.info(Jurisdiction.getUsername() + "查询代理记账");
         Result<TallyVo> result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         tallyVo.setTallyId(UuidUtil.get32UUID());
         try {
             tallyVo = tallyService.save(tallyVo);
@@ -74,11 +69,6 @@ public class TallyController extends BaseController {
     public Result delete(@PathVariable("id") String tallyId) {
         logger.info(Jurisdiction.getUsername() + "删除代理记账");
         Result result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             tallyService.delete(tallyId);
         } catch (Exception e) {
@@ -100,11 +90,6 @@ public class TallyController extends BaseController {
     public Result edit(TallyVo tallyVo) {
         logger.info(Jurisdiction.getUsername() + "修改代理记账");
         Result result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             tallyService.edit(tallyVo);
         } catch (Exception e) {
@@ -126,11 +111,6 @@ public class TallyController extends BaseController {
     public Result<PageInfo<TallyQueryVo>> list(TallyQueryVo tallyQueryVo) {
         logger.info(Jurisdiction.getUsername() + "查看代理记账");
         Result<PageInfo<TallyQueryVo>> result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "cha")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             PageInfo<TallyQueryVo> varList = tallyService.list(tallyQueryVo);
             result.setData(varList);
@@ -151,11 +131,6 @@ public class TallyController extends BaseController {
     public Result<MyPageInfo<String,Integer,FollowUpQueryVo>> listProcessByUser(FollowUpQueryVo followUpQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看代理记账流程跟进信息");
         Result<MyPageInfo<String,Integer,FollowUpQueryVo>> result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             MyPageInfo<String,Integer,FollowUpQueryVo>	varList = tallyService.listProcessByUser(followUpQueryVo);
             varList.setList(addCHNName(varList.getList()));

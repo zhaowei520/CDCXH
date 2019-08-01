@@ -17,7 +17,7 @@ public class RightsHelper {
      * @param targetRights
      * @return
      */
-    public static boolean testRights(String sum,String targetRights){
+    public static boolean testRights(String sum,Integer targetRights){
         if(StringUtils.isEmpty(sum))
             return false;
         return testRights(new BigInteger(sum),targetRights);

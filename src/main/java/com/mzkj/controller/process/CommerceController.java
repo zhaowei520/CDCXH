@@ -46,11 +46,6 @@ public class CommerceController extends BaseController {
 	public Result<CommerceVo> save(CommerceVo commerceVo) {
         logger.info(Jurisdiction.getUsername()+"查询工商注册");
         Result<CommerceVo> result = new Result<>();
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         commerceVo.setCommerceId(UuidUtil.get32UUID());
         try {
             commerceVo = commerceService.save(commerceVo);
@@ -71,11 +66,6 @@ public class CommerceController extends BaseController {
 	public Result delete(@PathVariable("id") String commerceId) {
         logger.info(Jurisdiction.getUsername()+"删除工商注册");
         Result result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             commerceService.delete(commerceId);
         } catch (Exception e) {
@@ -95,11 +85,6 @@ public class CommerceController extends BaseController {
 	public Result edit(CommerceVo commerceVo) {
         logger.info(Jurisdiction.getUsername()+"修改工商注册");
         Result result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             commerceService.edit(commerceVo);
         } catch (Exception e) {
@@ -119,11 +104,6 @@ public class CommerceController extends BaseController {
 	public Result<PageInfo<CommerceQueryVo>> list(CommerceQueryVo commerceQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看工商注册");
         Result<PageInfo<CommerceQueryVo>> result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             PageInfo<CommerceQueryVo>	varList = commerceService.list(commerceQueryVo);
             result.setData(varList);
@@ -145,11 +125,6 @@ public class CommerceController extends BaseController {
     public Result<MyPageInfo<String,Integer,FollowUpQueryVo>> listProcessByUser(FollowUpQueryVo followUpQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看工商注册跟进信息");
         Result<MyPageInfo<String,Integer,FollowUpQueryVo>> result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             MyPageInfo<String,Integer,FollowUpQueryVo>	varList = commerceService.listProcessByUser(followUpQueryVo);
             varList.setList(addCHNName(varList.getList()));
