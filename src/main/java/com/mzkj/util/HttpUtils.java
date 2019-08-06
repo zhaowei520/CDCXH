@@ -84,35 +84,23 @@ public class HttpUtils {
      * param
      * Date 2019-05-27 18:32
      */
-    public static void doGetRequest(String path, String sessionId) {
+    public static String doGetRequest(String path, String sessionId) {
+        String result = "";
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         // 创建Get请求
         HttpGet httpGet = new HttpGet(path);
+        httpGet.setHeader("Content-Type", "application/json;charset=utf8");
         httpGet.setHeader("Cookie", "custom.session="+sessionId);
         // 响应模型
         CloseableHttpResponse response = null;
         try {
-            // 配置信息
-            RequestConfig requestConfig = RequestConfig.custom()
-                    // 设置连接超时时间(单位毫秒)
-                    .setConnectTimeout(50000)
-                    // 设置请求超时时间(单位毫秒)
-                    .setConnectionRequestTimeout(50000)
-                    // socket读写超时时间(单位毫秒)
-                    .setSocketTimeout(50000)
-                    // 设置是否允许重定向(默认为true)
-                    .setRedirectsEnabled(true).build();
-            // 将上面的配置信息 运用到这个Get请求里
-            httpGet.setConfig(requestConfig);
             // 由客户端执行(发送)Get请求
             response = httpClient.execute(httpGet);
             // 从响应模型中获取响应实体
             HttpEntity responseEntity = response.getEntity();
-            System.out.println("响应状态为:" + response.getStatusLine());
             if (responseEntity != null) {
-                System.out.println("响应内容长度为:" + responseEntity.getContentLength());
-                System.out.println("响应内容为:" + EntityUtils.toString(responseEntity));
+                result = EntityUtils.toString(responseEntity);
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
@@ -133,6 +121,6 @@ public class HttpUtils {
                 e.printStackTrace();
             }
         }
-
+        return result;
     }
 }
