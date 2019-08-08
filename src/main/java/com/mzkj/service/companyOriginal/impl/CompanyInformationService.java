@@ -398,7 +398,7 @@ public class CompanyInformationService implements CompanyInformationManager {
         for(Object key: original.keySet()) {
             originalbean.setOriginalId(UuidUtil.get32UUID());
             if("其它".equals((String)key)) {
-                originalbean.setOtherBusiness((String)original.get(key));
+                originalbean.setOtherFinance((String)original.get(key));
                 originalbean.setOriginalAmount("1");
             }else {
                 originalbean.setOriginalName((String)key);
