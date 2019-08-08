@@ -14,7 +14,7 @@ import java.util.Map;
  * @Version: 1.0
  */
 public class Jurisdiction {
-
+    public static final String SESSION_COMBINE_ROLEIDS = "COMBINE_ROLEIDS"; // 主副角色
 
     /**
      * 获取当前登录的用户名
@@ -33,7 +33,16 @@ public class Jurisdiction {
     public static String getU_name() {
         return getSession().getAttribute(Const.SESSION_U_NAME).toString();
     }
-
+    /**
+     * 获取当前登录人角色ID List
+     * return
+     * Author luosc
+     * param
+     * Date 2019-07-31 16:23
+     */
+    public static List<String> getRoleIds() {
+        return (List<String>) getSession().getAttribute(SESSION_COMBINE_ROLEIDS);
+    }
     /**
      * 获取当前登录用户的角色编码
      *

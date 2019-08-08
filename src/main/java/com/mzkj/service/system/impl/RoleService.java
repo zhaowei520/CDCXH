@@ -1,5 +1,6 @@
 package com.mzkj.service.system.impl;
 
+import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.RoleBean;
 import com.mzkj.util.ConvertUtil;
@@ -14,6 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.mzkj.service.system.RoleManager;
 import com.mzkj.mapper.system.RoleMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,6 +84,37 @@ public class RoleService implements RoleManager{
 		RoleVo roleVo = ConvertUtil.objectCopyParams(roleBean, RoleVo.class);
 		return roleVo;
 	}
-
+	/**
+	 * 根据 RoleId 及 UrlPrefix 获取按钮权限及页面元素权限
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-07-31 15:35
+	 */
+	@Override
+	public PageData getPowerByRoleIdAndUrlPrefix(String urlPrefix) throws Exception {
+		//从Session中获取RoleIds
+		List<String> roleIds = Jurisdiction.getRoleIds();
+		List<PageData> powerList = new ArrayList<>();
+		PageData param = new PageData();
+		param.put("tenantId", Jurisdiction.getTenant());
+		param.put("urlPrefix", urlPrefix);
+		if (Jurisdiction.getUsername().equals("admin")) {
+			List<PageData> list = roleMapper.getPowerByRoleIdAndUrlPrefix(param);
+			powerList.addAll(list);
+		} else {
+			for (String roleId:roleIds) {
+				param.put("roleId", roleId);
+				List<PageData> list = roleMapper.getPowerByRoleIdAndUrlPrefix(param);
+				powerList.addAll(list);
+			}
+		}
+		PageData QX = new PageData();
+		for (PageData qxPageData:powerList) {
+			QX.put(qxPageData.getString("OPERATION_CODE"), 1);//按钮权限
+			//QX.put(qxPageData.getString("PAGE_ELEMENT_NAME"), 1);//页面元素权限
+		}
+		return QX;
+	}
 }
 

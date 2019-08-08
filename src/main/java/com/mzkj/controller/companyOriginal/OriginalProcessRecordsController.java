@@ -43,11 +43,11 @@ public class OriginalProcessRecordsController {
 	public Result<OriginalProcessRecordsVo> save(OriginalProcessRecordsVo originalprocessrecordsVo) {
         logger.info(Jurisdiction.getUsername()+"查询原件流转记录");
         Result<OriginalProcessRecordsVo> result = new Result<>();
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         originalprocessrecordsVo.setOriginalProcessRecordsId(UuidUtil.get32UUID());
         try {
             originalprocessrecordsVo = originalprocessrecordsService.save(originalprocessrecordsVo);
@@ -68,11 +68,11 @@ public class OriginalProcessRecordsController {
 	public Result delete(@PathVariable("id") String originalProcessRecordsId) {
         logger.info(Jurisdiction.getUsername()+"删除原件流转记录");
         Result result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             originalprocessrecordsService.delete(originalProcessRecordsId);
         } catch (Exception e) {
@@ -92,11 +92,11 @@ public class OriginalProcessRecordsController {
 	public Result edit(OriginalProcessRecordsVo originalprocessrecordsVo) {
         logger.info(Jurisdiction.getUsername()+"修改原件流转记录");
         Result result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             originalprocessrecordsService.edit(originalprocessrecordsVo);
         } catch (Exception e) {
@@ -116,11 +116,11 @@ public class OriginalProcessRecordsController {
 	public Result<PageInfo<OriginalProcessRecordsQueryVo>> list(OriginalProcessRecordsQueryVo originalprocessrecordsQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看原件流转记录");
         Result<PageInfo<OriginalProcessRecordsQueryVo>> result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             PageInfo<OriginalProcessRecordsQueryVo>	varList = originalprocessrecordsService.list(originalprocessrecordsQueryVo);
             result.setData(varList);

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.mzkj.facade.enums.HttpCode;
 import com.mzkj.facade.vo.Result;
 import com.mzkj.service.companyOriginal.CompanyInformationManager;
+import com.mzkj.service.system.RoleManager;
 import com.mzkj.service.system.impl.UserService;
 import com.mzkj.util.Const;
 import com.mzkj.util.ExcelRead;
@@ -48,7 +49,8 @@ public class CompanyInformationController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private RoleManager roleService;
     /**
      * 保存
      */
@@ -57,11 +59,11 @@ public class CompanyInformationController {
     public Result<CompanyInformationVo> save(List <CompanyInformationVo> companyinformationVoList) {
         logger.info(Jurisdiction.getUsername() + "查询原件管理客户信息");
         Result<CompanyInformationVo> result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             result = companyinformationService.save(companyinformationVoList);
         } catch (Exception e) {
@@ -81,11 +83,11 @@ public class CompanyInformationController {
     public Result delete(@PathVariable("id") String companyInformationId) {
         logger.info(Jurisdiction.getUsername() + "删除原件管理客户信息");
         Result result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if (!Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             companyinformationService.delete(companyInformationId);
         } catch (Exception e) {
@@ -105,11 +107,11 @@ public class CompanyInformationController {
     public Result edit(CompanyInformationVo companyinformationVo) {
         logger.info(Jurisdiction.getUsername() + "修改原件管理客户信息");
         Result result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if (!Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             companyinformationService.edit(companyinformationVo);
         } catch (Exception e) {
@@ -129,18 +131,19 @@ public class CompanyInformationController {
     public Result<PageData> list(CompanyInformationQueryVo companyinformationQueryVo) {
         logger.info(Jurisdiction.getUsername() + "查看原件管理客户信息");
         Result<PageData> result = new Result<>();
-        if (!Jurisdiction.buttonJurisdiction(menuUrl, "cha")) {
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if (!Jurisdiction.buttonJurisdiction(menuUrl, "cha")) {
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             PageInfo<CompanyInformationQueryVo> varList = companyinformationService.list(companyinformationQueryVo);
             //设置原件信息
             constOriginalListToString(varList);
             PageData resultdata = new PageData();
             resultdata.put("varList", varList);
-            resultdata.put("QX", Jurisdiction.getHC());
+            PageData QX = roleService.getPowerByRoleIdAndUrlPrefix("companyInformation");
+            resultdata.put("QX", QX);
             result.setData(resultdata);
         } catch (Exception e) {
             logger.error(e.toString(), e);

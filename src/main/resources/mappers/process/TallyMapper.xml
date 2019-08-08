@@ -480,7 +480,7 @@
 			(
 			tc.COMPANY_NAME LIKE CONCAT(CONCAT('%', #{companyName}),'%')
 
-			)
+            )
 		</if>
 		<if test="signPerson!= null and signPerson != ''">
 			and

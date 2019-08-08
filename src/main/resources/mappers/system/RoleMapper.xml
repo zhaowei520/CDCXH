@@ -121,4 +121,20 @@
         f
         where f.RNUMBER = #{rnumber} and f.TENANT_ID_ = #{tenantId}
     </select>
+
+    <select id="getPowerByRoleIdAndUrlPrefix" parameterType="com.fh.util.PageData" resultType="com.fh.util.PageData">
+        SELECT
+        o.OPERATION_ID,o.OPERATION_NAME,o.OPERATION_CODE,o.INTERCEPT_URL_PREFIX,o.MENU_ID,o.TENANT_ID_
+        FROM
+        sys_operation o
+        LEFT JOIN sys_power_operation po ON po.OPERATION_ID = o.OPERATION_ID
+        LEFT JOIN sys_role_power rp ON rp.POWER_ID = po.POWER_ID
+        WHERE 1=1
+        <if test="roleId != null and roleId != ''">
+            AND rp.ROLE_ID =#{roleId}
+        </if>
+        AND o.INTERCEPT_URL_PREFIX = #{urlPrefix}
+        AND o.TENANT_ID_ = #{tenantId}
+        GROUP BY o.OPERATION_ID
+    </select>
 </mapper>

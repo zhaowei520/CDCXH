@@ -1,5 +1,6 @@
 package com.mzkj.mapper.system;
 
+import com.fh.util.PageData;
 import com.mzkj.bean.RoleBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -53,5 +54,9 @@ public interface RoleMapper {
      * @throws Exception
      */
     public RoleBean getRoleByRnumber(@Param("rnumber") String rnumber,@Param("tenantId") String tenantId);
+
+
+    public List<PageData> getPowerByRoleIdAndUrlPrefix(PageData pd);
+
 }
 

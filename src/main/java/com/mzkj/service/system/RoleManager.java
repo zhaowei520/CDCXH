@@ -1,5 +1,6 @@
 package com.mzkj.service.system;
 
+import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.vo.system.RoleQueryVo;
 import com.mzkj.vo.system.RoleVo;
@@ -50,5 +51,14 @@ public interface RoleManager {
      * @throws Exception
      */
     public RoleVo getRoleByRnumber(String rnumber) throws Exception;
+
+    /**
+     * 根据角色ID 及 urlPrefix URL前缀获取权限
+     * return
+     * Author luosc
+     * param
+     * Date 2019-07-31 15:34
+     */
+    public PageData getPowerByRoleIdAndUrlPrefix(String urlPrefix) throws Exception;
 }
 

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.mzkj.facade.enums.HttpCode;
 import com.mzkj.facade.vo.Result;
 import com.mzkj.service.companyOriginal.OriginalManager;
+import com.mzkj.service.system.RoleManager;
 import com.mzkj.util.Jurisdiction;
 import com.mzkj.util.UuidUtil;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
@@ -37,7 +38,8 @@ public class OriginalController {
 	String menuUrl = "/original"; //菜单地址(权限用)
     @Autowired
 	private OriginalManager originalService;
-
+    @Autowired
+    private RoleManager roleService;
 	/**保存
 	 * @param
 	 */
@@ -46,11 +48,11 @@ public class OriginalController {
 	public Result<List<OriginalVo>> save(List<OriginalVo> originalVoList) {
         logger.info(Jurisdiction.getUsername()+"查询公司原件详情");
         Result<List<OriginalVo>> result = new Result<>();
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             result.setData(originalService.save(originalVoList));
         } catch (Exception e) {
@@ -69,11 +71,11 @@ public class OriginalController {
 	public Result delete(@PathVariable("id") String originalId) {
         logger.info(Jurisdiction.getUsername()+"删除公司原件详情");
         Result result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             originalService.delete(originalId);
         } catch (Exception e) {
@@ -93,11 +95,11 @@ public class OriginalController {
 	public Result edit(OriginalVo originalVo) {
         logger.info(Jurisdiction.getUsername()+"修改公司原件详情");
         Result result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             originalService.edit(originalVo);
         } catch (Exception e) {
@@ -142,16 +144,17 @@ public class OriginalController {
 	public Result<PageData> list(OriginalQueryVo originalQueryVo) {
         logger.info(Jurisdiction.getUsername()+"查看公司原件详情");
         Result<PageData> result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
+//        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
+//            result.setMsg("没有操作权限，请联系管理员");
+//            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
+//            return result;
+//        }
         try {
             PageInfo<OriginalQueryVo>	varList = originalService.list(originalQueryVo);
             PageData resultdata = new PageData();
             resultdata.put("varList", varList);
-            resultdata.put("QX", Jurisdiction.getHC());
+            PageData QX = roleService.getPowerByRoleIdAndUrlPrefix("companyInformation");
+            resultdata.put("QX", QX);
             result.setData(resultdata);
         } catch (Exception e) {
             logger.error(e.toString(), e);
