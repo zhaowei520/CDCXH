@@ -56,6 +56,7 @@
             <result column="OFFICE_WORKER" javaType="String" property="officeWorker"/>
             <result column="CUSTOMER_TYPE" javaType="String" property="customerType"/>
             <result column="FILED_MANAGER" javaType="String" property="filedManager"/>
+			<result column="STATE" javaType="String" property="state"/>
     </resultMap>
 
 	<!--表名 -->
@@ -117,7 +118,8 @@
 		f.OFFICE_WORKER,	
 		f.CUSTOMER_TYPE,	
 		f.FILED_MANAGER,	
-		f.CUSTOMER_ID
+		f.CUSTOMER_ID,
+		f.STATE
 	</sql>
 	
 	<!-- 字段用于新增 -->
@@ -174,7 +176,8 @@
 		OFFICE_WORKER,	
 		CUSTOMER_TYPE,	
 		FILED_MANAGER,	
-		CUSTOMER_ID
+		CUSTOMER_ID,
+		STATE
 	</sql>
 	
 	<!-- 字段值 -->
@@ -231,7 +234,8 @@
 		#{officeWorker},
 		#{customerType},
 		#{filedManager},
-		#{customerId}
+		#{customerId},
+		#{state}
 	</sql>
 	
 	<!-- 新增-->
@@ -310,7 +314,8 @@
 			OFFICE_WORKER = #{officeWorker},
 			CUSTOMER_TYPE = #{customerType},
 			FILED_MANAGER = #{filedManager},
-			CUSTOMER_ID = #{customerId}
+			CUSTOMER_ID = #{customerId},
+			STATE =#{state}
 		where 
 			CUSTOMER_ID = #{customerId}
 	</update>
@@ -339,4 +344,15 @@
 		<include refid="tableName"></include> f
 		where f.COMPANY_NAME = #{companyName}
 	</select>
+
+	<!--查询所有激活和自己创建的公司-->
+	<select id="queryAllCompanyInformation" parameterType="com.mzkj.bean.CustomerBean" resultMap="customerMap">
+		select
+		f.COMPANY_NAME,f.CUSTOMER_ID
+		from
+		<include refid="tableName"></include> f
+		where f.STATE = #{state}
+		or  f.CREATER = #{creater}
+	</select>
+
 </mapper>

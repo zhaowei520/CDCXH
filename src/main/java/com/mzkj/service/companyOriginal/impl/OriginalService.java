@@ -6,6 +6,8 @@ import com.mzkj.bean.DictionariesBean;
 import com.mzkj.bean.OriginalBean;
 import com.mzkj.bean.OriginalProcessRecordsBean;
 import com.mzkj.bean.UserBean;
+import com.mzkj.domain.Original;
+import com.mzkj.facade.vo.Result;
 import com.mzkj.mapper.companyOriginal.CompanyInformationMapper;
 import com.mzkj.mapper.companyOriginal.OriginalMapper;
 import com.mzkj.mapper.companyOriginal.OriginalProcessRecordsMapper;
@@ -27,7 +29,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -329,5 +333,30 @@ public class OriginalService implements OriginalManager {
         originalProcessRecordsMapper.save(originalProcessRecordsBean);
     }
 
+    /**
+     * 更新原件表交接原件、并且插入原件交接流程
+     */
+    public Result handoverOriginal(String holder, String fromHolder, List originalIds) throws Exception {
+        SimpleDateFormat dateRule = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Result result = new Result();
+        for(Object originalId : originalIds) {
+            originalMapper.handoverOriginalByHolderAndOriginalId(holder,(String) originalId);
+            OriginalBean originalBean = new OriginalBean();
+            originalBean.setOriginalId((String)originalId);
+            originalBean = originalMapper.findById(originalBean);
+            insertOriginalProcess(holder,fromHolder,originalBean,dateRule);
+        }
+        return result;
+    };
+    //插入原件交接流程
+    private void insertOriginalProcess(String holder, String fromHolder,OriginalBean originalBean,SimpleDateFormat dateRule) throws Exception{
+
+        OriginalProcessRecordsBean originalProcessRecord = ConvertUtil.objectCopyParams(originalBean,OriginalProcessRecordsBean.class);
+        originalProcessRecord.setOriginalFromUsername(holder);
+        originalProcessRecord.setOriginalOutUsername(fromHolder);
+        originalProcessRecord.setOriginalFromTime(dateRule.format(new Date()));
+        originalProcessRecord.setOriginalOutTime(dateRule.format(new Date()));
+        originalProcessRecordsMapper.save(originalProcessRecord);
+    }
 }
 

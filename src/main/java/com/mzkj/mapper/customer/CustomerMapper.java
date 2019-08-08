@@ -55,5 +55,14 @@ public interface CustomerMapper{
      * Date 2019-08-6
      */
     public List<CustomerBean> queryCompanyInformationByCompanyName(CustomerBean customerBean)throws Exception;
+
+	/**
+	 * 查询激活和自己创建的公司信息
+	 * return
+	 * Author dzw
+	 * param
+	 * Date 2019-08-6
+	 */
+	public List<CustomerBean> queryAllCompanyInformation(CustomerBean customerBean)throws Exception;
 }
 

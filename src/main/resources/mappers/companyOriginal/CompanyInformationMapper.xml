@@ -22,6 +22,11 @@
 		TB_COMPANYINFORMATION
 	</sql>
 
+    <!--表名 -->
+    <sql id="original">
+		TB_ORIGINAL
+	</sql>
+
     <!-- 字段 -->
     <sql id="Field">
 		f.COMPANY_NAME,	
@@ -135,5 +140,19 @@
 
 
     </select>
+
+    <!-- 根据ID查询 -->
+    <select id="findOriginalNumberByCustomerIdAndHolder" parameterType="String" resultMap="originalMap">
+        select
+        <include refid="Field"></include>,o.ORIGINAL_ID,o.ORIGINAL_NAME,o.ORIGINAL_AMOUNT,o.OTHER_BUSINESS,o.OTHER_FINANCE,o.FINANCE_EFFECTIVE_TIME,o.ORIGINAL_TYPE
+        from
+        <include refid="tableName"></include> f
+        join
+        <include refid="original"></include> o
+        on f.COMPANYINFORMATION_ID = o.COMPANY_INFORMATION_ID
+        WHERE f.CUSTOMER_ID = #{customerId}
+        and o.ORIGINAL_HOLDER = #{holder}
+    </select>
+
 
 </mapper>

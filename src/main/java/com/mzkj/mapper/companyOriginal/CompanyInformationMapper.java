@@ -1,6 +1,8 @@
 package com.mzkj.mapper.companyOriginal;
 
 import com.mzkj.bean.CompanyInformationBean;
+import com.mzkj.bean.OriginalBean;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -52,10 +54,10 @@ public interface CompanyInformationMapper{
 	public CompanyInformationBean findCompanyInformationByCompanyName(CompanyInformationBean companyInformation)throws Exception;
 
 	/**根据customerId与原件持有人查询出持有人所拥有的原件
-	 * @param companyInformation
+	 * @param cutomerId,userName
 	 * @throws Exception
 	 */
-	public CompanyInformationBean findCompanyInformationByCompanyName1(CompanyInformationBean companyInformation)throws Exception;
+	public List<OriginalBean> findOriginalNumberByCustomerIdAndHolder(String cutomerId, String userName)throws Exception;
 
 }
 

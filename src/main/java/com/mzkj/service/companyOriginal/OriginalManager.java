@@ -1,6 +1,7 @@
 package com.mzkj.service.companyOriginal;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.facade.vo.Result;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalVo;
 
@@ -76,5 +77,9 @@ public interface OriginalManager {
      */
     public PageInfo<OriginalQueryVo> list(OriginalQueryVo originalQueryVo) throws Exception;
 
+    /**
+     * 交接原价
+     */
+    public Result handoverOriginal(String holder,String fromHolder,List originalIds) throws Exception;
 }
 

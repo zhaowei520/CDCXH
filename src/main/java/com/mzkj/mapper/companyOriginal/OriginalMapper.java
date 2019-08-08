@@ -99,5 +99,15 @@ public interface OriginalMapper{
 	 * Date 2019-04-30 17:27
 	 */
 	public List<OriginalBean> holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount(OriginalBean originalBean) throws Exception;
+
+
+	/**
+	 * 根据交接人及被交接人和原件ID更新原件持有人
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-23 13:59
+	 */
+	public void handoverOriginalByHolderAndOriginalId(String holder,String originalId) throws Exception;
 }
 

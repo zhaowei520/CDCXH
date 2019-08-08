@@ -111,5 +111,19 @@ public class CustomerService implements CustomerManager{
 	public List<CustomerBean> queryCompanyInformationByCompanyName(CustomerBean customerBean)throws Exception {
 		return customerMapper.queryCompanyInformationByCompanyName(customerBean);
 	};
+
+	/**
+	 * 查询激活和自己创建的公司信息
+	 * return
+	 * Author dzw
+	 * param
+	 * Date 2019-08-6
+	 */
+	public List<CustomerBean> queryAllCompanyInformation()throws Exception {
+		CustomerBean customerBean = new CustomerBean();
+		customerBean.setCreater(Jurisdiction.getUsername());
+		customerBean.setState("1");//1为正式客户
+		return customerMapper.queryAllCompanyInformation(customerBean);
+	};
 }
 

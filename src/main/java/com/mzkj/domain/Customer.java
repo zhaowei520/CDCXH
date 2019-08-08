@@ -62,6 +62,15 @@ private String customerId;
         private String officeWorker;
         private String customerType;
         private String filedManager;
+        private String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public String getCustomerId(){
         return customerId;

@@ -256,4 +256,26 @@ public class OriginalController {
         return result;
     }
 
+    /**
+     * 交接原件
+     * return
+     * Author dzw
+     * param holder,
+     * Date 2019-08-8
+     */
+    @RequestMapping(value="/handoverOriginal/{holder}/{fromHolder}/{originalIds}", method = RequestMethod.POST)
+    @ApiOperation(value = "交接原件", notes = "交接原件")
+    public Result handoverOriginal(@PathVariable("holder") String holder,@PathVariable("fromHolder") String  fromHolder,@PathVariable("originalIds")List originalIds) {
+        logger.info(Jurisdiction.getUsername()+"交接原件");
+        Result result = new Result();
+        try {
+            originalService.handoverOriginal(holder,fromHolder,originalIds);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
 }

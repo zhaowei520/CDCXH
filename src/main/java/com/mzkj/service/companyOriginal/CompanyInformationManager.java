@@ -53,6 +53,15 @@ public interface CompanyInformationManager{
 	 */
 	public CompanyInformationVo findById(String CompanyInformationId)throws Exception;
 
+	/**
+	 * 根据customerId及holder查询公司持有人持有的原件
+	 * return
+	 * Author dzw
+	 * param
+	 * Date 2019-8-8
+	 */
+	public List<OriginalBean>  findOriginalNumberByCustomerIdAndHolder(String customerId,String holder)throws Exception;
+
 	public Map<String, Integer> holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount() throws Exception;
 
 	/*

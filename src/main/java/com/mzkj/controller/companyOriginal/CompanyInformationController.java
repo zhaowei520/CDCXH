@@ -2,9 +2,11 @@ package com.mzkj.controller.companyOriginal;
 
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
+import com.mzkj.bean.OriginalBean;
 import com.mzkj.facade.enums.HttpCode;
 import com.mzkj.facade.vo.Result;
 import com.mzkj.service.companyOriginal.CompanyInformationManager;
+import com.mzkj.service.customer.impl.CustomerService;
 import com.mzkj.service.system.RoleManager;
 import com.mzkj.service.system.impl.UserService;
 import com.mzkj.util.Const;
@@ -46,7 +48,8 @@ public class CompanyInformationController {
     String menuUrl = "/companyInformation"; //菜单地址(权限用)
     @Autowired
     private CompanyInformationManager companyinformationService;
-
+    @Autowired
+    private CustomerService customerService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -231,6 +234,7 @@ public class CompanyInformationController {
         Result result = new Result();
         try {
             CompanyInformationVo companyInformationVo = companyinformationService.findById(companyInformationId);
+
             result.setData(companyInformationVo);
         } catch (Exception e) {
             logger.error(e.toString(), e);
@@ -248,13 +252,37 @@ public class CompanyInformationController {
      * param
      * Date 2019-04-23 8:46
      */
-    @RequestMapping(value = "/requeyAllFormalCompany", method = RequestMethod.GET)
+    @RequestMapping(value = "/requeyAllFormalCompany", method = RequestMethod.POST)
     @ApiOperation(value = "根据ID查询CompanyInformation", notes = "根据ID查询CompanyInformation")
     public Result queryAllFormalCompany() {
         logger.info(Jurisdiction.getUsername() + "查询所有正式或自己创建的公司信息");
         Result result = new Result();
         try {
-            result.setData(HttpUtils.doPostrequest("/springBoot/springBootFormalCompany","",Jurisdiction.getSession().getId().toString()));
+            result.setData(customerService.queryAllCompanyInformation());
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 根据ID查询
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-23 8:46
+     */
+    @RequestMapping(value = "/findOrigni/{customerId}/{holder}", method = RequestMethod.GET)
+    @ApiOperation(value = "根据customerId及持holder查询公司持有原件数", notes = "根据customerId及持holder查询公司持有原件数")
+    public Result findOrigninalNumber(@PathVariable("customerId") String customerId,@PathVariable("holder") String holder) {
+        logger.info(Jurisdiction.getUsername() + "findOrigninalNumber查看公司持有人持有原件");
+        Result result = new Result();
+        try {
+            List<OriginalBean>  original= companyinformationService.findOriginalNumberByCustomerIdAndHolder(customerId,holder);
+            result.setData(original);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
