@@ -254,7 +254,7 @@ public class CompanyInformationController {
         logger.info(Jurisdiction.getUsername() + "查询所有正式或自己创建的公司信息");
         Result result = new Result();
         try {
-            result.setData(HttpUtils.doGetRequest("/springBoot/springBootFormalCompany",Jurisdiction.getSession().getId().toString()));
+            result.setData(HttpUtils.doPostrequest("/springBoot/springBootFormalCompany","",Jurisdiction.getSession().getId().toString()));
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());

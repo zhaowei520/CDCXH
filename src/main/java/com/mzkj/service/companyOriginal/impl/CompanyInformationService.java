@@ -158,26 +158,26 @@ public class CompanyInformationService implements CompanyInformationManager {
             //如果原件持有人和当前登录人相同
             if (!StringUtils.isEmpty(originalBean1.getOriginalHolder())&&originalBean1.getOriginalHolder().equals(Jurisdiction.getUsername())) {
                 //如果流转状态为入库
-                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)) {
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals("2")) {
                     holdCount++;
                 }
                 //如果流转状态为出库中
-                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_1)) {
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals("1")) {
                     outgoingCount++;
                 }
                 //如果流转状态为待借入
-                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_3)) {
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals("3")) {
                     toBeConfirmedCount++;
                 }
             }
             //如果流转对象和当前登录人相同
             if (!StringUtils.isEmpty(originalBean1.getOriginalOutTo())&&originalBean1.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
                 //如果流转状态为出库中
-                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_1)) {
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals("1")) {
                     toBeConfirmedCount++;
                 }
                 //如果流转状态为待借入
-                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_3)) {
+                if (!StringUtils.isEmpty(originalBean1.getOriginalOutStatus()) && originalBean1.getOriginalOutStatus().equals("3")) {
                     loanInCount++;
                 }
             }
@@ -391,6 +391,7 @@ public class CompanyInformationService implements CompanyInformationManager {
             staffBean.setUserId(originalprocess.getOriginalFromUsername());
             staffBean = staffService.findOneByUserName(staffBean);
             originalbean.setOriginalHoldStatus("2");//持有人在公司内部
+            originalbean.setOriginalOutStatus("2");//流转状态入库
             originalbean.setOriginalType("2");//财务原件
             originalbean.setOriginalHolderDepartment(staffBean.getDepartmentId());
             originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
@@ -427,6 +428,7 @@ public class CompanyInformationService implements CompanyInformationManager {
             staffBean.setUserId(originalprocess.getOriginalFromUsername());
             staffBean = staffService.findOneByUserName(staffBean);
             originalbean.setOriginalHoldStatus("2");//持有人在公司内部
+            originalbean.setOriginalOutStatus("2");//流转状态入库
             originalbean.setOriginalType("1");//工商原件
             originalbean.setOriginalHolderDepartment(staffBean.getDepartmentId());
             originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());

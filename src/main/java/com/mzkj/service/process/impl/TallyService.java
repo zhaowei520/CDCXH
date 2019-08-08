@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 import com.mzkj.service.process.TallyManager;
 import com.mzkj.mapper.process.TallyMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -105,13 +106,26 @@ public class TallyService implements TallyManager {
         //设置租户ID
         tallyBean.setTenantId(Jurisdiction.getTenant());
         PageHelper.startPage(followUpQueryVo);
-        List<TallyBean> tallyPageBean = tallyMapper.listProcessByDepartmentId(tallyBean);
+        List<TallyBean> tallyPageBean;
+        //如果没有勾选部门，那么就查找当前登录人的数据
+        if(!StringUtils.isEmpty(tallyBean.getDepartmentId())){
+            tallyPageBean = tallyMapper.listProcessByDepartmentId(tallyBean);
+        }else{
+            tallyBean.setSignPerson(Jurisdiction.getU_name());
+            tallyPageBean = tallyMapper.listProcessByUser(tallyBean);
+        }
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(tallyPageBean);
         //DO转VO
         List<FollowUpQueryVo> followUpQueryVoList =
                 FollowUpConvert.tallyProcessBeanToFollowUpVo(tallyPageBean);
         //统计所有工单数量
-        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
+        Map<String, Integer> allProcessNumber;
+        if(!StringUtils.isEmpty(tallyBean.getDepartmentId())){
+            allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
+        }else{
+            followUpQueryVo.setStaffName(Jurisdiction.getU_name());
+            allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
+        }
         myPageInfo.setMap(allProcessNumber);
         myPageInfo.setList(followUpQueryVoList);
         myPageInfo.setPageSize(followUpQueryVo.getPageSize());
