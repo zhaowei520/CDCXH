@@ -21,6 +21,8 @@ import org.springframework.util.StringUtils;
 import com.mzkj.service.process.CommerceManager;
 import com.mzkj.mapper.process.CommerceMapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -107,13 +109,26 @@ public class CommerceService implements CommerceManager {
         //设置租户ID
         commerceBean.setTenantId(Jurisdiction.getTenant());
         PageHelper.startPage(followUpQueryVo);
-        List<CommerceBean> commercePageBean = commerceMapper.listProcessByDepartmentId(commerceBean);
+        List<CommerceBean> commercePageBean = new ArrayList();
+        //如果没有勾选部门，那么就查找当前登录人的数据
+        if(!StringUtils.isEmpty(commerceBean.getDepartmentId())){
+            commercePageBean = commerceMapper.listProcessByDepartmentId(commerceBean);
+        }else{
+            commerceBean.setSaler(Jurisdiction.getU_name());
+            commercePageBean = commerceMapper.listProcessByUser(commerceBean);
+        }
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(commercePageBean);
         //DO转VO
         List<FollowUpQueryVo> followUpQueryVoList =
                 FollowUpConvert.commerceProcessBeanToFollowUpVo(commercePageBean);
+        Map<String, Integer> allProcessNumber = new HashMap();
         //统计所有工单数量
-        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
+        if(!StringUtils.isEmpty(commerceBean.getDepartmentId())){
+            allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
+        }else{
+            followUpQueryVo.setStaffName(Jurisdiction.getU_name());
+            allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
+        }
         myPageInfo.setMap(allProcessNumber);
         myPageInfo.setList(followUpQueryVoList);
         myPageInfo.setPageSize(followUpQueryVo.getPageSize());

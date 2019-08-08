@@ -145,11 +145,6 @@ public class DepartmentController {
     public Result<List<DepartmentListVo>> listHierarchy(DepartmentListVo departmentListVo) {
         logger.info(Jurisdiction.getUsername()+"部门分层");
         Result<List<DepartmentListVo>> result = new Result<>();
-        if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){
-            result.setMsg("没有操作权限，请联系管理员");
-            result.setStatus(HttpCode.UNAUTHORIZED.getCode());
-            return result;
-        }
         try {
             result.setStatus(HttpCode.OK.getCode());
             result.setSuccess(true);

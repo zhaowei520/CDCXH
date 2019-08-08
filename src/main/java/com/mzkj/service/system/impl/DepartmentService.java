@@ -83,9 +83,11 @@ public class DepartmentService implements DepartmentManager {
         departmentBean.setTenantId(Jurisdiction.getTenant());
         List<DepartmentBean> headMans = departmentMapper.findByHeadMan(departmentBean);
         DepartmentListVo newDepartmentListVo = new DepartmentListVo();
+        newDepartmentListVo.setKey("");
+        newDepartmentListVo.setLabel("部门结构");
         if (headMans != null && headMans.size() > 0) {
             for (DepartmentBean headMan : headMans) {
-                newDepartmentListVo = DepartmentConvert.departmentBeanToDepartmentVo(headMan);
+                newDepartmentListVo.getNodes().add(DepartmentConvert.departmentBeanToDepartmentVo(headMan));
                 String departmentId = headMan.getDepartmentId();
                 List<DepartmentListVo> departmentListVos = listAllDepartmentToSelect(departmentId);
                 newDepartmentListVo.getNodes().addAll(departmentListVos);

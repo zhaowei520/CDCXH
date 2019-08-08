@@ -108,14 +108,27 @@ public class GShangChangeService implements GShangChangeManager {
         //设置租户ID
         gShangChangeBean.setTenantId(Jurisdiction.getTenant());
         PageHelper.startPage(followUpQueryVo);
-        List<GShangChangeBean> gShangChangeBeanPageBean =
-                gShangChangeMapper.listProcessByDepartmentId(gShangChangeBean);
+        List<GShangChangeBean> gShangChangeBeanPageBean;
+        //如果没有勾选部门，那么就查找当前登录人的数据
+        if(!StringUtils.isEmpty(gShangChangeBean.getDepartmentId())){
+            gShangChangeBeanPageBean = gShangChangeMapper.listProcessByDepartmentId(gShangChangeBean);
+        }else{
+            gShangChangeBean.setSignMan(Jurisdiction.getU_name());
+            gShangChangeBeanPageBean = gShangChangeMapper.listProcessByUser(gShangChangeBean);
+        }
         MyPageInfo<String,Integer,FollowUpQueryVo> myPageInfo = new MyPageInfo(gShangChangeBeanPageBean);
         //DO转VO
         List<FollowUpQueryVo> followUpQueryVoList =
                 FollowUpConvert.gShangChangeProcessBeanToFollowUpVo(gShangChangeBeanPageBean);
         //统计所有工单数量
-        Map<String, Integer> allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
+        Map<String, Integer> allProcessNumber;
+        if(!StringUtils.isEmpty(gShangChangeBean.getDepartmentId())){
+            allProcessNumber = followUpService.countAllProcessNumberByDepartmentId(followUpQueryVo);
+        }else{
+            followUpQueryVo.setStaffName(Jurisdiction.getU_name());
+            allProcessNumber = followUpService.countAllProcessNumber(followUpQueryVo);
+        }
+
         myPageInfo.setMap(allProcessNumber);
         myPageInfo.setList(followUpQueryVoList);
         myPageInfo.setPageSize(followUpQueryVo.getPageSize());
