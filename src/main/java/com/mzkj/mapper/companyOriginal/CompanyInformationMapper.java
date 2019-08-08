@@ -45,6 +45,10 @@ public interface CompanyInformationMapper{
 	 */
 	public CompanyInformationBean findById(String companyInformationId)throws Exception;
 
-
+	/**根据公司名称查询公司信息
+	 * @param companyInformation
+	 * @throws Exception
+	 */
+	public CompanyInformationBean findCompanyInformationByCompanyName(CompanyInformationBean companyInformation)throws Exception;
 }
 

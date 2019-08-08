@@ -20,6 +20,18 @@ public class OriginalProcessRecords implements Serializable {
     private String updateDate;
     private String updateUser;
     private String tenantId;
+    private String originalType;
+
+    public String getOriginalType() {
+        return originalType;
+    }
+
+    public void setOriginalType(String originalType) {
+        this.originalType = originalType;
+    }
+
+
+
 
     public String getOriginalProcessRecordsId() {
         return originalProcessRecordsId;

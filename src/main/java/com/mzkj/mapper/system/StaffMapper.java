@@ -49,5 +49,11 @@ public interface StaffMapper{
      * @throws Exception
      */
     public StaffBean findOneById(StaffBean staffBean);
+
+	/**根据username查询员工信息
+	 * @param staffBean
+	 * @throws Exception
+	 */
+	public StaffBean findOneByUserName(StaffBean staffBean);
 }
 

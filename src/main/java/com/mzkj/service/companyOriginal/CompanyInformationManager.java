@@ -1,8 +1,10 @@
 package com.mzkj.service.companyOriginal;
 
+import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.CompanyInformationBean;
 import com.mzkj.bean.OriginalBean;
+import com.mzkj.facade.vo.Result;
 import com.mzkj.vo.companyOriginal.CompanyInformationQueryVo;
 import com.mzkj.vo.companyOriginal.CompanyInformationVo;
 
@@ -18,10 +20,10 @@ import java.util.Map;
 public interface CompanyInformationManager{
 
 	/**新增
-	 * @param companyinformationVo
+	 * @param companyinformationVoList
 	 * @throws Exception
 	 */
-	public CompanyInformationVo save(CompanyInformationVo companyinformationVo)throws Exception;
+	public Result save(List<CompanyInformationVo> companyinformationVoList)throws Exception;
 	
 	/**删除
 	 * @param CompanyInformationId
@@ -52,5 +54,15 @@ public interface CompanyInformationManager{
 	public CompanyInformationVo findById(String CompanyInformationId)throws Exception;
 
 	public Map<String, Integer> holdCountAndToBeConfirmedCountAndOutgoingCountAndLoanInCount() throws Exception;
+
+	/*
+	* 从Excel数据里获取并执行批量更新或保存
+	* */
+	public StringBuffer readExcelBusinessDatasSaveOrUpdate(List<PageData> excelDatas) throws Exception;
+
+	/*
+	 * 从Excel数据里获取并执行批量更新或保存
+	 * */
+	public StringBuffer readExcelFinanceDatasSaveOrUpdate(List<PageData> excelDatas) throws Exception;
 }
 

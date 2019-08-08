@@ -1,6 +1,7 @@
 package com.mzkj.service.customer;
 
 import com.github.pagehelper.PageInfo;
+import com.mzkj.bean.CustomerBean;
 import com.mzkj.vo.customer.CustomerQueryVo;
 import com.mzkj.vo.customer.CustomerVo;
 
@@ -46,6 +47,14 @@ public interface CustomerManager{
 	 * Date 2019-05-15 9:59
 	 */
 	public List<CustomerQueryVo> listAll(CustomerQueryVo customerQueryVo)throws Exception;
-	
+
+	/**
+	 * 通过公司名称查询公司信息
+	 * return
+	 * Author dzw
+	 * param
+	 * Date 2019-08-6
+	 */
+	public List<CustomerBean> queryCompanyInformationByCompanyName(CustomerBean customerBean)throws Exception;
 }
 

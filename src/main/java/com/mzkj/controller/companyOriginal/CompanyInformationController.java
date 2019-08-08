@@ -7,8 +7,9 @@ import com.mzkj.facade.vo.Result;
 import com.mzkj.service.companyOriginal.CompanyInformationManager;
 import com.mzkj.service.system.impl.UserService;
 import com.mzkj.util.Const;
+import com.mzkj.util.ExcelRead;
+import com.mzkj.util.HttpUtils;
 import com.mzkj.util.Jurisdiction;
-import com.mzkj.util.UuidUtil;
 import com.mzkj.vo.companyOriginal.CompanyInformationQueryVo;
 import com.mzkj.vo.companyOriginal.CompanyInformationVo;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
@@ -21,8 +22,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +54,7 @@ public class CompanyInformationController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ApiOperation(value = "保存companyinformation", notes = "保存companyinformation")
-    public Result<CompanyInformationVo> save(CompanyInformationVo companyinformationVo) {
+    public Result<CompanyInformationVo> save(List <CompanyInformationVo> companyinformationVoList) {
         logger.info(Jurisdiction.getUsername() + "查询原件管理客户信息");
         Result<CompanyInformationVo> result = new Result<>();
         if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
@@ -60,10 +62,8 @@ public class CompanyInformationController {
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
-        companyinformationVo.setCompanyInformationId(UuidUtil.get32UUID());
         try {
-            companyinformationVo = companyinformationService.save(companyinformationVo);
-            result.setData(companyinformationVo);
+            result = companyinformationService.save(companyinformationVoList);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
@@ -239,6 +239,29 @@ public class CompanyInformationController {
     }
 
     /**
+     * 查询所有正式公司名称
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-23 8:46
+     */
+    @RequestMapping(value = "/requeyAllFormalCompany", method = RequestMethod.GET)
+    @ApiOperation(value = "根据ID查询CompanyInformation", notes = "根据ID查询CompanyInformation")
+    public Result queryAllFormalCompany() {
+        logger.info(Jurisdiction.getUsername() + "查询所有正式或自己创建的公司信息");
+        Result result = new Result();
+        try {
+            result.setData(HttpUtils.doGetRequest("/springBoot/springBootFormalCompany",Jurisdiction.getSession().getId().toString()));
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
      * 统计当前登录人持有原件数量、需确认条数、出库中数量、待借入数量
      * return
      * Author luosc
@@ -258,6 +281,44 @@ public class CompanyInformationController {
             result.setStatus(HttpCode.ERROR.getCode());
             result.setSuccess(false);
             result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
+    /**导入数据
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/importBusinessExcel", method = RequestMethod.POST)
+    @ApiOperation(value = "导入客户信息及原件与原件交接流程", notes = "导入客户信息及原件与原件交接流程")
+    public Result importBusinessExcel(@RequestParam(value="xlsx",required=false) MultipartFile file) throws Exception{
+        Result result = new Result();
+        if (null != file && !file.isEmpty()) {
+            String filePath = ExcelRead.getClasspath() + Const.FILEPATHFILE;								//文件上传路径
+            String fileName =  ExcelRead.fileUp(file, filePath, "accountExcel");					//执行上传
+            //读取Excel文件
+            List<PageData> excelDatas = (List)ExcelRead.readExcel(filePath, fileName, 2, 0, 0);		//执行读EXCEL操作,读出的数据导入List 2:从第3行开始；0:从第A列开始；0:第0个sheet
+            result.setData(companyinformationService.readExcelBusinessDatasSaveOrUpdate(excelDatas));
+        }
+        return result;
+    }
+
+    /**导入数据
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/importFinanceExcel", method = RequestMethod.POST)
+    @ApiOperation(value = "导入财务原件", notes = "导入财务原件")
+    public Result importFinanceExcel(@RequestParam(value="xlsx",required=false) MultipartFile file) throws Exception{
+        Result result = new Result();
+        if (null != file && !file.isEmpty()) {
+            String filePath = ExcelRead.getClasspath() + Const.FILEPATHFILE;								//文件上传路径
+            String fileName =  ExcelRead.fileUp(file, filePath, "accountExcel");					//执行上传
+            //读取Excel文件
+            List<PageData> excelDatas = (List)ExcelRead.readExcel(filePath, fileName, 2, 0, 0);		//执行读EXCEL操作,读出的数据导入List 2:从第3行开始；0:从第A列开始；0:第0个sheet
+            result.setData(companyinformationService.readExcelFinanceDatasSaveOrUpdate(excelDatas));
         }
         return result;
     }

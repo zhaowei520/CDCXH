@@ -44,5 +44,11 @@ public interface StaffManager {
      * 根据id查询员工
      */
     public StaffBean findOneById(StaffBean staffBean) throws Exception;
+
+    /**根据username查询员工信息
+     * @param staffBean
+     * @throws Exception
+     */
+    public StaffBean findOneByUserName(StaffBean staffBean) throws Exception;
 }
 

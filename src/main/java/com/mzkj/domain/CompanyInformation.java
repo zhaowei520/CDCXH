@@ -17,6 +17,7 @@ public class CompanyInformation implements Serializable {
     private String updateDate;
     private String updateUser;
     private String tenantId;
+    private String customerId;
 
     public String getCompanyInformationId() {
         return companyInformationId;
@@ -90,6 +91,12 @@ public class CompanyInformation implements Serializable {
         this.tenantId = tenantId;
     }
 
+    public String getCustomerId() {
+        return customerId;
+    }
 
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 }
 

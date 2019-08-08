@@ -24,6 +24,43 @@ public class Original implements Serializable {
     private String updateDate;
     private String updateUser;
     private String tenantId;
+    private String OtherFinance;
+
+    public String getOtherFinance() {
+        return OtherFinance;
+    }
+
+    public void setOtherFinance(String otherFinance) {
+        OtherFinance = otherFinance;
+    }
+
+    public String getOtherBusiness() {
+        return OtherBusiness;
+    }
+
+    public void setOtherBusiness(String otherBusiness) {
+        OtherBusiness = otherBusiness;
+    }
+
+    public String getFinanceEffectiveTime() {
+        return financeEffectiveTime;
+    }
+
+    public void setFinanceEffectiveTime(String financeEffectiveTime) {
+        this.financeEffectiveTime = financeEffectiveTime;
+    }
+
+    public String getOriginalType() {
+        return OriginalType;
+    }
+
+    public void setOriginalType(String originalType) {
+        OriginalType = originalType;
+    }
+
+    private String OtherBusiness;
+    private String financeEffectiveTime;
+    private String OriginalType;
 
     public String getOriginalId() {
         return originalId;

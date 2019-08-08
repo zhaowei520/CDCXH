@@ -53,22 +53,24 @@ public class OriginalService implements OriginalManager {
      * 新增
      */
     @Override
-    public OriginalVo save(OriginalVo originalVo) throws Exception {
-        OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
-        //如果原件持有状态为在公司内部，设置原件持有人为当前登录人
-        if (!StringUtils.isEmpty(originalBean.getOriginalHoldStatus()) && originalBean.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_2)) {
-            originalBean.setOriginalHolder(Jurisdiction.getUsername());
-            originalBean.setOriginalHolderDepartment(Jurisdiction.getDEPARTMENT_ID());
+    public List<OriginalVo> save(List<OriginalVo> originalVoList) throws Exception {
+        for(OriginalVo originalVo :originalVoList) {
+            OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
+            //如果原件持有状态为在公司内部，设置原件持有人为当前登录人
+            if (!StringUtils.isEmpty(originalBean.getOriginalHoldStatus()) && originalBean.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_2)) {
+                originalBean.setOriginalHolder(Jurisdiction.getUsername());
+                originalBean.setOriginalHolderDepartment(Jurisdiction.getDEPARTMENT_ID());
+            }
+            //公司名称
+            originalBean.setCompanyName(companyInformationMapper.findById(originalBean.getCompanyInformationId()).getCompanyName());
+            originalBean.setOriginalId(UuidUtil.get32UUID());
+            originalBean.setCreateDate(DateUtil.getTime());
+            originalBean.setCreateUser(Jurisdiction.getUsername());
+            originalBean.setTenantId(Jurisdiction.getTenant());
+            originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_2);//原件流转状态设为入库
+            originalMapper.save(originalBean);
         }
-        //公司名称
-        originalBean.setCompanyName(companyInformationMapper.findById(originalBean.getCompanyInformationId()).getCompanyName());
-        originalBean.setCreateDate(DateUtil.getTime());
-        originalBean.setCreateUser(Jurisdiction.getUsername());
-        originalBean.setTenantId(Jurisdiction.getTenant());
-        originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_2);//原件流转状态设为入库
-        originalMapper.save(originalBean);
-        originalVo = ConvertUtil.objectCopyParams(originalBean, OriginalVo.class);
-        return originalVo;
+        return originalVoList;
     }
 
     /**

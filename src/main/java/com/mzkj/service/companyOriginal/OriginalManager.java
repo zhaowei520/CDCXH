@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalVo;
 
+import java.util.List;
+
 /**
  * 说明： 公司原件详情接口
  * 创建人：CDCXH
@@ -14,7 +16,7 @@ public interface OriginalManager {
     /**
      * 新增
      */
-    public OriginalVo save(OriginalVo originalVo) throws Exception;
+    public List<OriginalVo> save(List<OriginalVo>  originalVoList) throws Exception;
 
     /**
      * 根据ID查询

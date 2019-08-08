@@ -92,5 +92,12 @@ public class StaffService implements StaffManager {
         return staffMapper.findOneById(staffBean);
     }
 
+    /**根据username查询员工信息
+     * @param staffBean
+     * @throws Exception
+     */
+    public StaffBean findOneByUserName(StaffBean staffBean) throws Exception {
+        return staffMapper.findOneByUserName(staffBean);
+    };
 }
 

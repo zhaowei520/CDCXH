@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -41,18 +43,16 @@ public class OriginalController {
 	 */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ApiOperation(value = "查询original", notes = "保存original")
-	public Result<OriginalVo> save(OriginalVo originalVo) {
+	public Result<List<OriginalVo>> save(List<OriginalVo> originalVoList) {
         logger.info(Jurisdiction.getUsername()+"查询公司原件详情");
-        Result<OriginalVo> result = new Result<>();
+        Result<List<OriginalVo>> result = new Result<>();
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){
             result.setMsg("没有操作权限，请联系管理员");
             result.setStatus(HttpCode.UNAUTHORIZED.getCode());
             return result;
         }
-        originalVo.setOriginalId(UuidUtil.get32UUID());
         try {
-            originalVo = originalService.save(originalVo);
-            result.setData(originalVo);
+            result.setData(originalService.save(originalVoList));
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
