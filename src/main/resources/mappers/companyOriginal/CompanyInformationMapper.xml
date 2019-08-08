@@ -16,6 +16,29 @@
         <result column="CUSTOMER_ID" javaType="String" property="customerId"/>
     </resultMap>
 
+    <resultMap id="originalMap" type="com.mzkj.bean.OriginalBean">
+        <id column="ORIGINAL_ID" javaType="string" property="originalId"/>
+        <result column="COMPANY_INFORMATION_ID" javaType="String" property="companyInformationId"/>
+        <result column="COMPANY_NAME" javaType="String" property="companyName"/>
+        <result column="ORIGINAL_NAME" javaType="String" property="originalName"/>
+        <result column="ORIGINAL_AMOUNT" javaType="String" property="originalAmount"/>
+        <result column="ORIGINAL_HOLDER" javaType="String" property="originalHolder"/>
+        <result column="ORIGINAL_HOLDER_DEPARTMENT" javaType="String"
+                property="originalHolderDepartment"/>
+        <result column="ORIGINAL_OUT_TO" javaType="String" property="originalOutTo"/>
+        <result column="ORIGINAL_HOLD_STATUS" javaType="String" property="originalHoldStatus"/>
+        <result column="ORIGINAL_OUT_STATUS" javaType="String" property="originalOutStatus"/>
+        <result column="REMARK" javaType="String" property="remark"/>
+        <result column="CREATE_DATE" javaType="String" property="createDate"/>
+        <result column="CREATE_USER" javaType="String" property="createUser"/>
+        <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
+        <result column="UPDATE_USER" javaType="String" property="updateUser"/>
+        <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="OTHER_FINANCE" javaType="String" property="otherFinance"/>
+        <result column="OTHER_BUSINESS" javaType="String" property="otherBusiness"/>
+        <result column="FINANCE_EFFECTIVE_TIME" javaType="String" property="financeEffectiveTime"/>
+        <result column="ORIGINAL_TYPE" javaType="String" property="originalType"/>
+    </resultMap>
 
     <!--表名 -->
     <sql id="tableName">
