@@ -57,7 +57,7 @@ public class OriginalService implements OriginalManager {
         for(OriginalVo originalVo :originalVoList) {
             OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
             //如果原件持有状态为在公司内部，设置原件持有人为当前登录人
-            if (!StringUtils.isEmpty(originalBean.getOriginalHoldStatus()) && originalBean.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_2)) {
+            if (!StringUtils.isEmpty(originalBean.getOriginalHoldStatus()) && originalBean.getOriginalHoldStatus().equals("2")) {
                 originalBean.setOriginalHolder(Jurisdiction.getUsername());
                 originalBean.setOriginalHolderDepartment(Jurisdiction.getDEPARTMENT_ID());
             }
@@ -67,7 +67,7 @@ public class OriginalService implements OriginalManager {
             originalBean.setCreateDate(DateUtil.getTime());
             originalBean.setCreateUser(Jurisdiction.getUsername());
             originalBean.setTenantId(Jurisdiction.getTenant());
-            originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_2);//原件流转状态设为入库
+            originalBean.setOriginalOutStatus("2");//原件流转状态设为入库
             originalMapper.save(originalBean);
         }
         return originalVoList;
@@ -126,7 +126,7 @@ public class OriginalService implements OriginalManager {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
         originalBean.setTenantId(Jurisdiction.getTenant());
         String originalHoldStatus =originalBean.getOriginalHoldStatus();
-        if (!StringUtils.isEmpty(originalHoldStatus) && originalHoldStatus.equals(Const.ORIGINAL_HOLD_STATUS_2)) {
+        if (!StringUtils.isEmpty(originalHoldStatus) && originalHoldStatus.equals("2")) {
             originalBean.setOriginalHolder(Jurisdiction.getUsername());
         } else {
             originalBean.setOriginalHolder("");
@@ -144,7 +144,7 @@ public class OriginalService implements OriginalManager {
     @Override
     public void loanOut(OriginalVo originalVo) throws Exception {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
-        originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_1);
+        originalBean.setOriginalOutStatus("1");
         //插入原件流转记录表
         initOriginalProcessRecords(originalBean, Const.LOAN_OUT);
         originalMapper.loanOut(originalBean);
@@ -163,7 +163,7 @@ public class OriginalService implements OriginalManager {
         //插入原件流转记录表
         initOriginalProcessRecords(originalBean, Const.LOAN_OUT_CONFIRMED);
         originalBean =originalMapper.findById(originalBean);
-        originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_2);
+        originalBean.setOriginalOutStatus("2");
         originalBean.setOriginalHolder(originalBean.getOriginalOutTo());//借入人确认，当前持有人变成当前借出对象
         originalBean.setOriginalOutTo(null);
 
@@ -182,7 +182,7 @@ public class OriginalService implements OriginalManager {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
         //插入原件流转记录表
         initOriginalProcessRecords(originalBean, Const.REJECT);
-        originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_2);
+        originalBean.setOriginalOutStatus("2");
         originalBean.setOriginalOutTo(null);
         originalMapper.reject(originalBean);
     }
@@ -197,7 +197,7 @@ public class OriginalService implements OriginalManager {
     @Override
     public void loanIn(OriginalVo originalVo) throws Exception {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
-        originalBean.setOriginalOutStatus(Const.ORIGINAL_OUT_STATUS_3);//状态修改为待借入
+        originalBean.setOriginalOutStatus("3");//状态修改为待借入
         originalBean.setOriginalOutTo(Jurisdiction.getUsername());//借入人为当前登录人
         //插入原件流转记录表
         initOriginalProcessRecords(originalBean, Const.LOAN_IN);
@@ -262,24 +262,24 @@ public class OriginalService implements OriginalManager {
             for (OriginalQueryVo originalQueryVo : originalQueryVoList
                     ) {
                 //如果原件持有状态为在公司内部时才执行
-                if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus()) && originalQueryVo.getOriginalHoldStatus().equals(Const.ORIGINAL_HOLD_STATUS_2)) {
+                if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus()) && originalQueryVo.getOriginalHoldStatus().equals("2")) {
                     //判断原件持有人和当前登录人是否相同
                     if (!StringUtils.isEmpty(originalQueryVo.getOriginalHolder()) && originalQueryVo.getOriginalHolder().equals(Jurisdiction.getUsername())) {
                         //如果原件持有人和当前登录人相同
                         //如果当前原件流转状态状态=入库
-                        if (originalQueryVo.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)) {
+                        if (originalQueryVo.getOriginalOutStatus().equals("2")) {
                             originalQueryVo.setHasLoanOutAuthorized(true);
                         } //借入，待原件持有人确认
-                        else if (originalQueryVo.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_3)) {
+                        else if (originalQueryVo.getOriginalOutStatus().equals("3")) {
                             originalQueryVo.setHasLoanOutConfirmed(true);
                         }
                     } else {
                         //主动借入
                         //如果当前原件持有状态状态=入库
-                        if (originalQueryVo.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_2)) {
+                        if (originalQueryVo.getOriginalOutStatus().equals("2")) {
                             originalQueryVo.setHasLoanInAuthorized(true);
                         } //借出，待接受对象确认
-                        if (originalQueryVo.getOriginalOutStatus().equals(Const.ORIGINAL_OUT_STATUS_1)) {
+                        if (originalQueryVo.getOriginalOutStatus().equals("1")) {
                             //当前借出对象和当前登录人相同时，执行
                             if (!StringUtils.isEmpty(originalQueryVo.getOriginalOutTo()) && originalQueryVo.getOriginalOutTo().equals(Jurisdiction.getUsername())) {
                                 originalQueryVo.setHasLoanOutConfirmed(true);
