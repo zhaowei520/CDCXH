@@ -21,8 +21,11 @@
         <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
         <result column="UPDATE_USER" javaType="String" property="updateUser"/>
         <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="OTHER_FINANCE" javaType="String" property="otherFinance"/>
+        <result column="OTHER_BUSINESS" javaType="String" property="otherBusiness"/>
+        <result column="FINANCE_EFFECTIVE_TIME" javaType="String" property="financeEffectiveTime"/>
+        <result column="ORIGINAL_TYPE" javaType="String" property="originalType"/>
     </resultMap>
-
 
     <!--表名 -->
     <sql id="tableName">
@@ -46,7 +49,11 @@
 		f.UPDATE_DATE,	
 		f.UPDATE_USER,	
 		f.TENANT_ID_,	
-		f.ORIGINAL_ID
+		f.ORIGINAL_ID,
+		f.OTHER_FINANCE,
+        f.OTHER_BUSINESS,
+        f.FINANCE_EFFECTIVE_TIME,
+        f.ORIGINAL_TYPE
 	</sql>
 
     <!-- 字段用于新增 -->
@@ -66,7 +73,11 @@
 		UPDATE_DATE,	
 		UPDATE_USER,	
 		TENANT_ID_,	
-		ORIGINAL_ID
+		ORIGINAL_ID,
+		OTHER_FINANCE,
+        OTHER_BUSINESS,
+        FINANCE_EFFECTIVE_TIME,
+        ORIGINAL_TYPE
 	</sql>
 
     <!-- 字段值 -->
@@ -86,7 +97,11 @@
 		#{updateDate},
 		#{updateUser},
 		#{tenantId},
-		#{originalId}
+		#{originalId},
+		#{otherFinance},
+        #{otherBusiness},
+        #{financeEffectiveTime},
+        #{originalType}
 	</sql>
 
     <!-- 新增-->

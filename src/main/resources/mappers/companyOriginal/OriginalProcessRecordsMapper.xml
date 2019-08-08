@@ -15,6 +15,7 @@
             <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
             <result column="UPDATE_USER" javaType="String" property="updateUser"/>
             <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+			<result column="ORIGINAL_TYPE" javaType="String" property="originalType"/>
     </resultMap>
 
 
@@ -36,7 +37,8 @@
 		f.UPDATE_DATE,	
 		f.UPDATE_USER,	
 		f.TENANT_ID_,	
-		f.ORIGINALPROCESSRECORDS_ID
+		f.ORIGINALPROCESSRECORDS_ID,
+		f.ORIGINAL_TYPE
 	</sql>
 	
 	<!-- 字段用于新增 -->
@@ -52,7 +54,8 @@
 		UPDATE_DATE,	
 		UPDATE_USER,	
 		TENANT_ID_,	
-		ORIGINALPROCESSRECORDS_ID
+		ORIGINALPROCESSRECORDS_ID,
+		ORIGINAL_TYPE
 	</sql>
 	
 	<!-- 字段值 -->
@@ -68,7 +71,8 @@
 		#{updateDate},
 		#{updateUser},
 		#{tenantId},
-		#{originalProcessRecordsId}
+		#{originalProcessRecordsId},
+		#{originalType}
 	</sql>
 	
 	<!-- 新增-->

@@ -58,7 +58,6 @@
             <result column="FILED_MANAGER" javaType="String" property="filedManager"/>
     </resultMap>
 
-
 	<!--表名 -->
 	<sql id="tableName">
 		TB_CUSTOMER
@@ -323,6 +322,7 @@
 		from 
 		<include refid="tableName"></include> f
 	</select>
+
 	<!--获取所有客户-->
 	<select id="listAll" parameterType="com.mzkj.bean.CustomerBean" resultMap="customerMap">
 		select
@@ -331,4 +331,12 @@
 		<include refid="tableName"></include> f
 	</select>
 
+	<!--通过公司名称查询公司信息-->
+	<select id="queryCompanyInformationByCompanyName" parameterType="com.mzkj.bean.CustomerBean" resultMap="customerMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include> f
+		where f.COMPANY_NAME = #{companyName}
+	</select>
 </mapper>
