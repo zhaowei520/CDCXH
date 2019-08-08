@@ -13,6 +13,7 @@
         <result column="UPDATE_DATE" javaType="String" property="updateDate"/>
         <result column="UPDATE_USER" javaType="String" property="updateUser"/>
         <result column="TENANT_ID_" javaType="String" property="tenantId"/>
+        <result column="CUSTOMER_ID" javaType="String" property="customerId"/>
     </resultMap>
 
 
@@ -31,7 +32,8 @@
 		f.UPDATE_DATE,	
 		f.UPDATE_USER,	
 		f.TENANT_ID_,	
-		f.COMPANYINFORMATION_ID
+		f.COMPANYINFORMATION_ID,
+		f.CUSTOMER_ID
 	</sql>
 
     <!-- 字段用于新增 -->
@@ -44,7 +46,8 @@
 		UPDATE_DATE,	
 		UPDATE_USER,	
 		TENANT_ID_,	
-		COMPANYINFORMATION_ID
+		COMPANYINFORMATION_ID,
+		CUSTOMER_ID
 	</sql>
 
     <!-- 字段值 -->
@@ -57,7 +60,8 @@
 		#{updateDate},
 		#{updateUser},
 		#{tenantId},
-		#{companyInformationId}
+		#{companyInformationId},
+		#{customerId}
 	</sql>
 
     <!-- 新增-->
