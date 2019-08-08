@@ -231,7 +231,7 @@
 		select
 		<include refid="Field"></include>
 		from 
-		<include refid="tableName"></include> f
+		<include refid="tableName"></include> f where f.STATUS = '0'
 	</select>
 
     <!-- 根据部门id查询员工列表 -->
@@ -249,6 +249,7 @@
             )
         </if>
         and f.DEPARTMENT_ID = #{departmentId}
+		and f.STATUS = '0'
     </select>
 
     <!-- 根据id查询员工 -->
@@ -267,6 +268,7 @@
 		from
 		<include refid="tableName"></include> f
 		where f.USER_ID = #{userId}
+		and f.STATUS = '0'
 	</select>
 
 </mapper>

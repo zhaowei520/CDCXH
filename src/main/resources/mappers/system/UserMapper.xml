@@ -188,6 +188,7 @@
 		<if test="name != null and name != ''">
 			and f.NAME like CONCAT(CONCAT('%',#{name}),'%')
 		</if>
+		and f.STATUS='0'
         ORDER BY convert(f.`NAME` using gbk)
 	</select>
 
@@ -198,6 +199,7 @@
 		from
 		<include refid="tableName"></include> f
 		where f.USERNAME = #{username}
+		and f.STATUS='0'
 	</select>
 
     <!-- 根据用户组查用户 -->
@@ -214,6 +216,7 @@
         and mapping.master_value=#{usergroupId}
         and mapping.access_value=f.user_id
         and mapping.deleted='0'
+		and f.STATUS='0'
     </select>
 
 	<!-- 根据用户组查未选中用户 -->
@@ -230,6 +233,7 @@
 		and mapping.access_value=f.user_id
 		and mapping.deleted='0'
 		where mapping.master_access_operation_mapping_id IS null
+		and f.STATUS='0'
 	</select>
 
     <!-- 根据权限查用户 -->
@@ -245,6 +249,7 @@
 		and mapping.master_value=f.user_id
 		and mapping.access_value=#{privilegeId}
 		and mapping.deleted='0'
+		and f.STATUS='0'
 	</select>
 
 	<!-- 根据权限查未选中用户 -->
@@ -261,6 +266,7 @@
 		and mapping.access_value=#{usergroupId}
 		and mapping.deleted='0'
 		where mapping.master_access_operation_mapping_id IS null
+		and f.STATUS='0'
 	</select>
 	
 </mapper>
