@@ -24,22 +24,24 @@ public class Original implements Serializable {
     private String updateDate;
     private String updateUser;
     private String tenantId;
-    private String OtherFinance;
-
-    public String getOtherFinance() {
-        return OtherFinance;
+    private String otherFinance;
+    private String otherBusiness;
+    private String financeEffectiveTime;
+    private String originalType;
+    public String getotherFinance() {
+        return otherFinance;
     }
 
-    public void setOtherFinance(String otherFinance) {
-        OtherFinance = otherFinance;
+    public void setotherFinance(String otherFinance) {
+        otherFinance = otherFinance;
     }
 
-    public String getOtherBusiness() {
-        return OtherBusiness;
+    public String getotherBusiness() {
+        return otherBusiness;
     }
 
-    public void setOtherBusiness(String otherBusiness) {
-        OtherBusiness = otherBusiness;
+    public void setotherBusiness(String otherBusiness) {
+        otherBusiness = otherBusiness;
     }
 
     public String getFinanceEffectiveTime() {
@@ -50,17 +52,15 @@ public class Original implements Serializable {
         this.financeEffectiveTime = financeEffectiveTime;
     }
 
-    public String getOriginalType() {
-        return OriginalType;
+    public String getoriginalType() {
+        return originalType;
     }
 
-    public void setOriginalType(String originalType) {
-        OriginalType = originalType;
+    public void setoriginalType(String originalType) {
+        originalType = originalType;
     }
 
-    private String OtherBusiness;
-    private String financeEffectiveTime;
-    private String OriginalType;
+
 
     public String getOriginalId() {
         return originalId;

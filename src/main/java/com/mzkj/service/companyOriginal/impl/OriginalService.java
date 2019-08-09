@@ -336,9 +336,8 @@ public class OriginalService implements OriginalManager {
     /**
      * 更新原件表交接原件、并且插入原件交接流程
      */
-    public Result handoverOriginal(String holder, String fromHolder, List originalIds) throws Exception {
+    public void handoverOriginal(String holder, String fromHolder, List originalIds) throws Exception {
         SimpleDateFormat dateRule = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Result result = new Result();
         for(Object originalId : originalIds) {
             originalMapper.handoverOriginalByHolderAndOriginalId(holder,(String) originalId);
             OriginalBean originalBean = new OriginalBean();
@@ -346,7 +345,6 @@ public class OriginalService implements OriginalManager {
             originalBean = originalMapper.findById(originalBean);
             insertOriginalProcess(holder,fromHolder,originalBean,dateRule);
         }
-        return result;
     };
     //插入原件交接流程
     private void insertOriginalProcess(String holder, String fromHolder,OriginalBean originalBean,SimpleDateFormat dateRule) throws Exception{

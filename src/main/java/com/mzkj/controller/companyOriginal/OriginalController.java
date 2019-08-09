@@ -1,5 +1,6 @@
 package com.mzkj.controller.companyOriginal;
 
+import com.alibaba.fastjson.JSONArray;
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.facade.enums.HttpCode;
@@ -33,7 +34,6 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/original")
 @Api(tags = "OriginalController", description = "公司原件详情接口")
 public class OriginalController {
-
     private static Logger logger = LogManager.getLogger(OriginalController.class);
 	String menuUrl = "/original"; //菜单地址(权限用)
     @Autowired
@@ -263,9 +263,9 @@ public class OriginalController {
      * param holder,
      * Date 2019-08-8
      */
-    @RequestMapping(value="/handoverOriginal/{holder}/{fromHolder}/{originalIds}", method = RequestMethod.POST)
+    @RequestMapping(value="/handoverOriginalByHolderAndFromHolderAndOriginalIds", method = RequestMethod.POST)
     @ApiOperation(value = "交接原件", notes = "交接原件")
-    public Result handoverOriginal(@PathVariable("holder") String holder,@PathVariable("fromHolder") String  fromHolder,@PathVariable("originalIds")List originalIds) {
+    public Result handoverOriginal(String holder,String  fromHolder,List originalIds) {
         logger.info(Jurisdiction.getUsername()+"交接原件");
         Result result = new Result();
         try {
