@@ -300,6 +300,9 @@ public class CompanyInformationService implements CompanyInformationManager {
                  companyName = exceldata.getString("var1")==null?"":exceldata.getString("var1").trim();
             }
             saveData.put("COMPANY_NAME",companyName);
+            if(!companyNameNotEmpty(saveData)) {
+                continue;
+            }
             index++;
             if(companyNameNotEmpty(saveData) && takeOutRepeat(takeOutRepeatDatas,companyName)) {
                 takeOutRepeatDatas.put(companyName,"1");
@@ -312,9 +315,6 @@ public class CompanyInformationService implements CompanyInformationManager {
                     saveData.put("REMARK",exceldata.getString("var17")==null?"":exceldata.getString("var17").trim());
                     saveData.put("ORIGINAL",returnOriginal(original,exceldata));
                 }else {
-                    if(!companyNameNotEmpty(saveData)) {
-                        continue;
-                    }
                     //财税原件读取
                     HashMap original = new HashMap();
                     saveData.put("ORIGINAL_HOLDER",exceldata.getString("var3")==null?"":exceldata.getString("var3").trim());
@@ -424,7 +424,8 @@ public class CompanyInformationService implements CompanyInformationManager {
                 originalbean.setOriginalAmount("1");//默认其他原件数量为1
             }else {
                 originalbean.setOriginalName((String)key);
-                originalbean.setOriginalAmount((String)original.get(key));
+                originalbean.setOriginalAmount("1");
+                originalbean.setFinanceEffectiveTime((String)original.get(key));
             }
             originalMapper.save(originalbean);
             //assemblyOriginalprocessrecordsAndInsert(originalbean,originalprocess);
@@ -529,8 +530,13 @@ public class CompanyInformationService implements CompanyInformationManager {
             String [] originalNumber= financeOriginal.split(",");
             if(originalNumber.length > 0) {
                 for(String originalFinance : originalNumber) {
-                    String [] originalData = originalFinance.split(":");
-                    original.put(originalData[0],originalData[1]);
+                    if(!StringUtils.isEmpty(originalFinance.trim())) {
+                        String [] originalData = originalFinance.trim().split(":");
+                        if(originalData.length < 2) {
+                            originalData = originalFinance.trim().split("：");
+                        }
+                        original.put(originalData[0],originalData[1]);
+                    }
                 }
             }
         }
