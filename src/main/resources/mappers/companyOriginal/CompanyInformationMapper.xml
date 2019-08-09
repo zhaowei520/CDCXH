@@ -151,6 +151,7 @@
         from
         <include refid="tableName"></include>
         f LEFT JOIN tb_original o on f.COMPANYINFORMATION_ID=o.COMPANY_INFORMATION_ID
+        left join tb_customer c on c.CUSTOMER_ID = f.CUSTOMER_ID
         where 1=1
         <if test="tenantId != null and tenantId != ''">
             AND f.TENANT_ID_= #{tenantId}
