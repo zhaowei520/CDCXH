@@ -1,5 +1,6 @@
 package com.mzkj.controller.companyOriginal;
 
+import com.alibaba.fastjson.JSONArray;
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.OriginalBean;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
@@ -269,20 +271,21 @@ public class CompanyInformationController {
     }
 
     /**
-     * 根据ID查询
+     * 根据customerId及持holder查询公司持有原件数
      * return
-     * Author luosc
+     * Author dzw
      * param
-     * Date 2019-04-23 8:46
+     * Date 2019-08-8 8:46
      */
-    @RequestMapping(value = "/findOrigni/{customerId}/{holder}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findOriginalByCustomerIdAndHolder")
     @ApiOperation(value = "根据customerId及持holder查询公司持有原件数", notes = "根据customerId及持holder查询公司持有原件数")
-    public Result findOrigninalNumber(@PathVariable("customerId") String customerId,@PathVariable("holder") String holder) {
+    public Result findOrigninalNumber(String customerId,String holder) {
         logger.info(Jurisdiction.getUsername() + "findOrigninalNumber查看公司持有人持有原件");
         Result result = new Result();
         try {
             List<OriginalBean>  original= companyinformationService.findOriginalNumberByCustomerIdAndHolder(customerId,holder);
-            result.setData(original);
+            result.setSuccess(true);
+            result.setData(JSONArray.toJSONString(original));
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());

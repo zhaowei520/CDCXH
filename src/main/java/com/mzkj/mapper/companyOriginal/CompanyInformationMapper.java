@@ -4,6 +4,7 @@ import com.mzkj.bean.CompanyInformationBean;
 import com.mzkj.bean.OriginalBean;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public interface CompanyInformationMapper{
 	 * @param cutomerId,userName
 	 * @throws Exception
 	 */
-	public List<OriginalBean> findOriginalNumberByCustomerIdAndHolder(String cutomerId, String userName)throws Exception;
+	public List<OriginalBean> findOriginalNumberByCustomerIdAndHolder(@Param("customerId") String customerId, @Param("holder") String holder)throws Exception;
 
 	/**
 	 * 根据customerId 查询公司原件信息

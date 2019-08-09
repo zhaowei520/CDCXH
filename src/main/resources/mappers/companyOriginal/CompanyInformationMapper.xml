@@ -151,7 +151,6 @@
         from
         <include refid="tableName"></include>
         f LEFT JOIN tb_original o on f.COMPANYINFORMATION_ID=o.COMPANY_INFORMATION_ID
-         LEFT JOIN tb_customer c ON f.CUSTOMER_ID = c.CUSTOMER_ID
         where 1=1
         <if test="tenantId != null and tenantId != ''">
             AND f.TENANT_ID_= #{tenantId}
@@ -188,6 +187,16 @@
     </select>
     <select id="findCompanyInformationByCustomerId" parameterType="String" resultMap="companyInformationMap">
         select <include refid="Field"></include> from <include refid="tableName"></include> f where f.CUSTOMER_ID = #{customerId}
+    </select>
+
+    <!-- 根据ID查询 -->
+    <select id="findCompanyInformationByCompanyName" parameterType="String" resultMap="companyInformationMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+
+        WHERE COMPANY_NAME = #{COMPANY_NAME}
     </select>
 
 </mapper>
