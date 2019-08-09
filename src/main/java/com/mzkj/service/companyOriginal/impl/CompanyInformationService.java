@@ -345,7 +345,7 @@ public class CompanyInformationService implements CompanyInformationManager {
     private void insetOrUpdateToCompanyinformation(List<Map> existDatas) throws Exception{
         for(Map everyCompany : existDatas) {
             CompanyInformationBean company = (CompanyInformationBean)everyCompany.get("companyData");
-            PageData original = (PageData)everyCompany.get("original");
+            HashMap original = (HashMap)everyCompany.get("original");
             //检查是否存在数据
             CompanyInformationBean existData = companyinformationMapper.findCompanyInformationByCompanyName(company);
             OriginalProcessRecordsBean originalprocess = (OriginalProcessRecordsBean)everyCompany.get("originalProcessRecords");
@@ -439,7 +439,7 @@ public class CompanyInformationService implements CompanyInformationManager {
      * param original ,company,originalprocess
      * Date 2019-08-7
      */
-    private void assemblyOriginalAndInsert(PageData original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
+    private void assemblyOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
         OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
         originalbean.setCompanyInformationId(company.getCompanyInformationId());
         //放入持有人及归还人,查询持有人部门并放入
