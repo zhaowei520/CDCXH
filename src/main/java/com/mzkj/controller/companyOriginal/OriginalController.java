@@ -265,7 +265,7 @@ public class OriginalController {
      */
     @RequestMapping(value="/handoverOriginalByHolderAndFromHolderAndOriginalIds", method = RequestMethod.POST)
     @ApiOperation(value = "交接原件", notes = "交接原件")
-    public Result handoverOriginal(String holder,String  fromHolder,List originalIds) {
+    public Result handoverOriginal(String holder,String  fromHolder,String originalIds) {
         logger.info(Jurisdiction.getUsername()+"交接原件");
         Result result = new Result();
         try {
