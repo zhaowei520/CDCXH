@@ -34,15 +34,15 @@ public class Const {
     public static final int MENU_CLASSIFICATION_SPRINGBOOT = 2;
 
     //原件流转状态
-    public static final String ORIGINAL_OUT_STATUS_1 = "ORIGINAL_OUT_STATUS_1";//出库中
-    public static final String ORIGINAL_OUT_STATUS_2 = "ORIGINAL_OUT_STATUS_2";//入库
-    public static final String ORIGINAL_OUT_STATUS_3 = "ORIGINAL_OUT_STATUS_3";//待借入
-    public static final String ORIGINAL_OUT_STATUS_4 = "ORIGINAL_OUT_STATUS_4";//被驳回
+    public static final String ORIGINAL_OUT_STATUS_1 = "1";//出库中
+    public static final String ORIGINAL_OUT_STATUS_2 = "2";//入库
+    public static final String ORIGINAL_OUT_STATUS_3 = "3";//待借入
+    public static final String ORIGINAL_OUT_STATUS_4 = "4";//被驳回
 
     //原件持有状态
-    public static final String ORIGINAL_HOLD_STATUS_0 = "ORIGINAL_HOLD_STATUS_0";//无
-    public static final String ORIGINAL_HOLD_STATUS_1 = "ORIGINAL_HOLD_STATUS_1";//在客户处
-    public static final String ORIGINAL_HOLD_STATUS_2 = "ORIGINAL_HOLD_STATUS_2";//在公司内部
+    public static final String ORIGINAL_HOLD_STATUS_0 = "0";//无
+    public static final String ORIGINAL_HOLD_STATUS_1 = "1";//在客户处
+    public static final String ORIGINAL_HOLD_STATUS_2 = "2";//在公司内部
 
     //原件操作类型
     public static final String LOAN_OUT = "loanOut";

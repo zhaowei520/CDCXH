@@ -130,7 +130,7 @@ public class OriginalService implements OriginalManager {
         OriginalBean originalBean = ConvertUtil.objectCopyParams(originalVo, OriginalBean.class);
         originalBean.setTenantId(Jurisdiction.getTenant());
         String originalHoldStatus =originalBean.getOriginalHoldStatus();
-        if (!StringUtils.isEmpty(originalHoldStatus) && originalHoldStatus.equals("2")) {
+        if (!StringUtils.isEmpty(originalHoldStatus) && originalHoldStatus.equals(Const.ORIGINAL_OUT_STATUS_2)) {
             originalBean.setOriginalHolder(Jurisdiction.getUsername());
         } else {
             originalBean.setOriginalHolder("");
