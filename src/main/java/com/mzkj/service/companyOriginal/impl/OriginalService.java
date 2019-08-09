@@ -291,13 +291,6 @@ public class OriginalService implements OriginalManager {
                         }
                     }
                 }
-                //将持有状态编码转成name
-                if (!StringUtils.isEmpty(originalQueryVo.getOriginalHoldStatus())) {
-                    DictionariesBean dictionariesBean= new DictionariesBean();
-                    dictionariesBean.setBianma(originalQueryVo.getOriginalHoldStatus());
-                    dictionariesBean = dictionariesMapper.findByBianma(dictionariesBean);
-                    originalQueryVo.setOriginalHoldStatus(dictionariesBean.getName());
-                }
             }
         }
     }
