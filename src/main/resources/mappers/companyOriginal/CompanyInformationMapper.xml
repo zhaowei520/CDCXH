@@ -195,9 +195,9 @@
         select
         <include refid="Field"></include>
         from
-        <include refid="tableName"></include>
+        <include refid="tableName"></include> f
 
-        WHERE COMPANY_NAME = #{COMPANY_NAME}
+        WHERE f.COMPANY_NAME = #{companyName}
     </select>
 
 </mapper>
