@@ -312,6 +312,9 @@ public class CompanyInformationService implements CompanyInformationManager {
                     saveData.put("REMARK",exceldata.getString("var17")==null?"":exceldata.getString("var17").trim());
                     saveData.put("ORIGINAL",returnOriginal(original,exceldata));
                 }else {
+                    if(!companyNameNotEmpty(saveData)) {
+                        continue;
+                    }
                     //财税原件读取
                     HashMap original = new HashMap();
                     saveData.put("ORIGINAL_HOLDER",exceldata.getString("var3")==null?"":exceldata.getString("var3").trim());
@@ -323,7 +326,7 @@ public class CompanyInformationService implements CompanyInformationManager {
         result.put("preInsetDatas",preInsetDatas);
         return  result;
     }
-    //公司在数据库中是否存在
+    //读取到的公司名称不为空
     private boolean companyNameNotEmpty(PageData resouce) {
         if(!StringUtils.isEmpty(resouce.getString("COMPANY_NAME"))) {
             return true;
@@ -332,7 +335,7 @@ public class CompanyInformationService implements CompanyInformationManager {
     }
     //筛选重复数据
     private boolean takeOutRepeat(Map<String,String> takeOutRepeatDatas,String companyName) {
-        if(takeOutRepeatDatas.get(companyName) != "") {
+        if(takeOutRepeatDatas.get(companyName) != "1") {
             return true;
         }
         return  false;
@@ -342,7 +345,7 @@ public class CompanyInformationService implements CompanyInformationManager {
     private void insetOrUpdateToCompanyinformation(List<Map> existDatas) throws Exception{
         for(Map everyCompany : existDatas) {
             CompanyInformationBean company = (CompanyInformationBean)everyCompany.get("companyData");
-            PageData original = (PageData)everyCompany.get("original");
+            HashMap original = (HashMap)everyCompany.get("original");
             //检查是否存在数据
             CompanyInformationBean existData = companyinformationMapper.findCompanyInformationByCompanyName(company);
             OriginalProcessRecordsBean originalprocess = (OriginalProcessRecordsBean)everyCompany.get("originalProcessRecords");
@@ -351,6 +354,7 @@ public class CompanyInformationService implements CompanyInformationManager {
                 assemblyOriginalAndInsert(original,company,originalprocess);
             }else {
                 companyinformationMapper.edit(company);
+                assemblyOriginalAndInsert(original,existData,originalprocess);
             }
         }
     }
@@ -359,12 +363,16 @@ public class CompanyInformationService implements CompanyInformationManager {
     private void insetOriginalFinance(List<Map> existDatas) throws Exception{
         for(Map everyCompany : existDatas) {
             CompanyInformationBean company = (CompanyInformationBean)everyCompany.get("companyData");
-            PageData original = (PageData)everyCompany.get("original");
+            HashMap original = (HashMap)everyCompany.get("original");
             //检查是否存在数据
             CompanyInformationBean existData = companyinformationMapper.findCompanyInformationByCompanyName(company);
             OriginalProcessRecordsBean originalprocess = (OriginalProcessRecordsBean)everyCompany.get("originalProcessRecords");
-            if(existData != null) {
+            if(existData == null) {
+                companyinformationMapper.save(company);
                 assemblyFinanceOriginalAndInsert(original,company,originalprocess);
+            }else {
+                companyinformationMapper.edit(company);
+                assemblyFinanceOriginalAndInsert(original,existData,originalprocess);
             }
         }
     }
@@ -393,7 +401,7 @@ public class CompanyInformationService implements CompanyInformationManager {
      * param original ,company,originalprocess
      * Date 2019-08-7
      */
-    private void assemblyFinanceOriginalAndInsert(PageData original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
+    private void assemblyFinanceOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
         OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
         originalbean.setCompanyInformationId(company.getCompanyInformationId());
         //放入持有人及归还人,查询持有人部门并放入
@@ -410,7 +418,7 @@ public class CompanyInformationService implements CompanyInformationManager {
         }
         for(Object key: original.keySet()) {
             originalbean.setOriginalId(UuidUtil.get32UUID());
-            if("其它".equals((String)key)) {
+            if("其他".equals((String)key)) {
                 originalbean.setotherFinance((String)original.get(key));
                 originalbean.setoriginalType("0");//默认0为其它原件
                 originalbean.setOriginalAmount("1");//默认其他原件数量为1
@@ -431,7 +439,7 @@ public class CompanyInformationService implements CompanyInformationManager {
      * param original ,company,originalprocess
      * Date 2019-08-7
      */
-    private void assemblyOriginalAndInsert(PageData original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
+    private void assemblyOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
         OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
         originalbean.setCompanyInformationId(company.getCompanyInformationId());
         //放入持有人及归还人,查询持有人部门并放入
@@ -448,7 +456,7 @@ public class CompanyInformationService implements CompanyInformationManager {
         }
        for(Object key: original.keySet()) {
            originalbean.setOriginalId(UuidUtil.get32UUID());
-           if("其它".equals((String)key)) {
+           if("其他".equals((String)key)) {
                originalbean.setotherBusiness((String)original.get(key));
                originalbean.setoriginalType("0");//默认0为其它原件
                originalbean.setOriginalAmount("1");
