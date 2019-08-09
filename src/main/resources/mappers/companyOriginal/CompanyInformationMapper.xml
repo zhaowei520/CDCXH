@@ -177,5 +177,14 @@
         and o.ORIGINAL_HOLDER = #{holder}
     </select>
 
+    <!-- 根据ID查询 -->
+    <select id="findCompanyInformationByCompanyName" parameterType="String" resultMap="companyInformationMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+
+        WHERE COMPANY_NAME = #{COMPANY_NAME}
+    </select>
 
 </mapper>
