@@ -58,17 +58,18 @@ public class CompanyInformationService implements CompanyInformationManager {
      * 新增
      */
     @Override
-    public Result save(List<CompanyInformationVo> companyinformationVoList) throws Exception {
+    public Result save(CompanyInformationVo companyinformationVo) throws Exception {
         CompanyInformationBean companyinformationBean = new CompanyInformationBean();
         Result result = new Result();
-        List existCompany = new ArrayList();
-        for(CompanyInformationVo companyinformationVo : companyinformationVoList) {
+//        List existCompany = new ArrayList();
             companyinformationBean = ConvertUtil.objectCopyParams(companyinformationVo, CompanyInformationBean.class);
             //验证新增公司数据是否已存在,若存在就放入公司名list中
-            CompanyInformationBean companyInformation = companyinformationMapper.findCompanyInformationByCompanyName(companyinformationBean);
+            CompanyInformationBean companyInformation = companyinformationMapper.findCompanyInformationByCustomerId(companyinformationBean.getCustomerId());
             if(companyInformation != null) {
-                existCompany.add(companyInformation.getCompanyName());
-                continue;
+//                existCompany.add(companyInformation.getCompanyName());
+                result.setSuccess(false);
+                result.setMsg("已存在");
+                return result;
             }
             //设置租户ID`
             companyinformationBean.setCompanyInformationId(UuidUtil.get32UUID());
@@ -76,8 +77,8 @@ public class CompanyInformationService implements CompanyInformationManager {
             companyinformationBean.setCreateUser(Jurisdiction.getUsername());
             companyinformationBean.setCreateDate(DateUtil.getTime());
             companyinformationMapper.save(companyinformationBean);
-        }
-        result.setData(existCompany);
+        CompanyInformationVo companyInformationVo = ConvertUtil.objectCopyParams(companyinformationBean, CompanyInformationVo.class);
+        result.setData(companyInformationVo);
         return result;
     }
 

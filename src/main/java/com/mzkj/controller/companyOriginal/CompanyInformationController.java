@@ -59,7 +59,7 @@ public class CompanyInformationController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ApiOperation(value = "保存companyinformation", notes = "保存companyinformation")
-    public Result<CompanyInformationVo> save(List <CompanyInformationVo> companyinformationVoList) {
+    public Result<CompanyInformationVo> save(CompanyInformationVo companyinformationVo) {
         logger.info(Jurisdiction.getUsername() + "查询原件管理客户信息");
         Result<CompanyInformationVo> result = new Result<>();
 //        if (!Jurisdiction.buttonJurisdiction(menuUrl, "add")) {
@@ -68,7 +68,7 @@ public class CompanyInformationController {
 //            return result;
 //        }
         try {
-            result = companyinformationService.save(companyinformationVoList);
+            result = companyinformationService.save(companyinformationVo);
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());

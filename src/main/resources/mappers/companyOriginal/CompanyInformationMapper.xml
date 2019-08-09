@@ -138,10 +138,20 @@
     <select id="list" parameterType="com.mzkj.bean.CompanyInformationBean"
             resultMap="companyInformationMap">
         select
-        <include refid="Field"></include>
+        c.COMPANY_NAME,
+        f.CUSTOMER_USERNAME,
+        f.REMARK,
+        f.CREATE_DATE,
+        f.CREATE_USER,
+        f.UPDATE_DATE,
+        f.UPDATE_USER,
+        f.TENANT_ID_,
+        f.COMPANYINFORMATION_ID,
+        f.CUSTOMER_ID
         from
         <include refid="tableName"></include>
         f LEFT JOIN tb_original o on f.COMPANYINFORMATION_ID=o.COMPANY_INFORMATION_ID
+         LEFT JOIN tb_customer c ON f.CUSTOMER_ID = c.CUSTOMER_ID
         where 1=1
         <if test="tenantId != null and tenantId != ''">
             AND f.TENANT_ID_= #{tenantId}
@@ -176,6 +186,8 @@
         WHERE f.CUSTOMER_ID = #{customerId}
         and o.ORIGINAL_HOLDER = #{holder}
     </select>
-
+    <select id="findCompanyInformationByCustomerId" parameterType="String" resultMap="companyInformationMap">
+        select <include refid="Field"></include> from <include refid="tableName"></include> f where f.CUSTOMER_ID = #{customerId}
+    </select>
 
 </mapper>

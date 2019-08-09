@@ -17,7 +17,15 @@ public class CompanyInformationVo {
     private String updateDate;
     private String updateUser;
     private String tenantId;
+    private String customerId;
 
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
     public String getCompanyInformationId() {
         return companyInformationId;

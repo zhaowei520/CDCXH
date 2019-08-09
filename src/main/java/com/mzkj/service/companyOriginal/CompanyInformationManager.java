@@ -20,10 +20,10 @@ import java.util.Map;
 public interface CompanyInformationManager{
 
 	/**新增
-	 * @param companyinformationVoList
+	 * @param companyinformationVo
 	 * @throws Exception
 	 */
-	public Result save(List<CompanyInformationVo> companyinformationVoList)throws Exception;
+	public Result save(CompanyInformationVo companyinformationVo)throws Exception;
 	
 	/**删除
 	 * @param CompanyInformationId

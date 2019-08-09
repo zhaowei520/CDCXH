@@ -59,5 +59,14 @@ public interface CompanyInformationMapper{
 	 */
 	public List<OriginalBean> findOriginalNumberByCustomerIdAndHolder(String cutomerId, String userName)throws Exception;
 
+	/**
+	 * 根据customerId 查询公司原件信息
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-08-09 14:48
+	 */
+	public CompanyInformationBean findCompanyInformationByCustomerId(String customerId);
+
 }
 
