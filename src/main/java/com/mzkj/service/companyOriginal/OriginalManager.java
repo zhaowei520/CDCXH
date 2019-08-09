@@ -80,6 +80,6 @@ public interface OriginalManager {
     /**
      * 交接原价
      */
-    public void handoverOriginal(String holder,String fromHolder,List originalIds) throws Exception;
+    public void handoverOriginal(String holder,String fromHolder,String originalIds) throws Exception;
 }
 

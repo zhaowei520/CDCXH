@@ -1,6 +1,7 @@
 package com.mzkj.service.companyOriginal.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.DictionariesBean;
 import com.mzkj.bean.OriginalBean;
@@ -329,9 +330,9 @@ public class OriginalService implements OriginalManager {
     /**
      * 更新原件表交接原件、并且插入原件交接流程
      */
-    public void handoverOriginal(String holder, String fromHolder, List originalIds) throws Exception {
+    public void handoverOriginal(String holder, String fromHolder, String originalIds) throws Exception {
         SimpleDateFormat dateRule = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for(Object originalId : originalIds) {
+        for(Object originalId : JSONArray.parseArray(originalIds)) {
             originalMapper.handoverOriginalByHolderAndOriginalId(holder,(String) originalId);
             OriginalBean originalBean = new OriginalBean();
             originalBean.setOriginalId((String)originalId);
@@ -341,7 +342,6 @@ public class OriginalService implements OriginalManager {
     };
     //插入原件交接流程
     private void insertOriginalProcess(String holder, String fromHolder,OriginalBean originalBean,SimpleDateFormat dateRule) throws Exception{
-
         OriginalProcessRecordsBean originalProcessRecord = ConvertUtil.objectCopyParams(originalBean,OriginalProcessRecordsBean.class);
         originalProcessRecord.setOriginalFromUsername(holder);
         originalProcessRecord.setOriginalOutUsername(fromHolder);
