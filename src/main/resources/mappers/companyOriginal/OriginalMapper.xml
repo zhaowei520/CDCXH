@@ -224,7 +224,7 @@
         where f.TENANT_ID_=#{tenantId}
     </select>
     <!-- 根据交接人与原件ID更新持有人 -->
-    <update id="handoverOriginalByHolderAndOriginalId" parameterType="String">
+    <update id="handoverOriginalByHolderAndOriginalId" >
         update
         <include refid="tableName"></include>
         set

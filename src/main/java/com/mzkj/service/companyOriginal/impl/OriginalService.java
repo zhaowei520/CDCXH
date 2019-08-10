@@ -2,6 +2,7 @@ package com.mzkj.service.companyOriginal.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.DictionariesBean;
 import com.mzkj.bean.OriginalBean;
@@ -34,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 说明： 公司原件详情
@@ -332,10 +334,11 @@ public class OriginalService implements OriginalManager {
      */
     public void handoverOriginal(String holder, String fromHolder, String originalIds) throws Exception {
         SimpleDateFormat dateRule = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for(Object originalId : JSONArray.parseArray(originalIds)) {
-            originalMapper.handoverOriginalByHolderAndOriginalId(holder,(String) originalId);
+        JSONArray objects = JSONArray.parseArray(originalIds);
+        for(int i=0;i<objects.size();i++){
+            originalMapper.handoverOriginalByHolderAndOriginalId(holder,objects.getJSONObject(i).getString("originalId"));
             OriginalBean originalBean = new OriginalBean();
-            originalBean.setOriginalId((String)originalId);
+            originalBean.setOriginalId(objects.getJSONObject(i).getString("originalId"));
             originalBean = originalMapper.findById(originalBean);
             insertOriginalProcess(holder,fromHolder,originalBean,dateRule);
         }
@@ -343,6 +346,7 @@ public class OriginalService implements OriginalManager {
     //插入原件交接流程
     private void insertOriginalProcess(String holder, String fromHolder,OriginalBean originalBean,SimpleDateFormat dateRule) throws Exception{
         OriginalProcessRecordsBean originalProcessRecord = ConvertUtil.objectCopyParams(originalBean,OriginalProcessRecordsBean.class);
+        originalProcessRecord.setOriginalProcessRecordsId(UuidUtil.get32UUID());
         originalProcessRecord.setOriginalFromUsername(holder);
         originalProcessRecord.setOriginalOutUsername(fromHolder);
         originalProcessRecord.setOriginalFromTime(dateRule.format(new Date()));
