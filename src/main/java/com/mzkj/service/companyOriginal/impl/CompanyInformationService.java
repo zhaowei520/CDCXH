@@ -409,11 +409,11 @@ public class CompanyInformationService implements CompanyInformationManager {
             originalbean.setOriginalHolder(originalprocess.getOriginalFromUsername());
             StaffBean staffBean = new StaffBean();
             staffBean.setUserId(originalprocess.getOriginalFromUsername());
-            staffBean = staffService.findOneByUserName(staffBean);
+            StaffBean staff = staffService.findOneByUserName(staffBean);
             originalbean.setOriginalHoldStatus("2");//持有人在公司内部
             originalbean.setOriginalOutStatus("2");//流转状态入库
             originalbean.setOriginalType("2");//财务原件
-            originalbean.setOriginalHolderDepartment(staffBean.getDepartmentId());
+            originalbean.setOriginalHolderDepartment(staff.getDepartmentId());
             originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
         }
         for(Object key: original.keySet()) {
@@ -448,17 +448,17 @@ public class CompanyInformationService implements CompanyInformationManager {
             originalbean.setOriginalHolder(originalprocess.getOriginalFromUsername());
             StaffBean staffBean = new StaffBean();
             staffBean.setUserId(originalprocess.getOriginalFromUsername());
-            staffBean = staffService.findOneByUserName(staffBean);
+            StaffBean staff = staffService.findOneByUserName(staffBean);
             originalbean.setOriginalHoldStatus("2");//持有人在公司内部
             originalbean.setOriginalOutStatus("2");//流转状态入库
             originalbean.setOriginalType("1");//工商原件
-            originalbean.setOriginalHolderDepartment(staffBean.getDepartmentId());
+            originalbean.setOriginalHolderDepartment(staff.getDepartmentId());
             originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
         }
        for(Object key: original.keySet()) {
            originalbean.setOriginalId(UuidUtil.get32UUID());
            if("其他".equals((String)key)) {
-               originalbean.setotherBusiness((String)original.get(key));
+               originalbean.setOtherBusiness((String)original.get(key));
                originalbean.setOriginalType("0");//默认0为其它原件
                originalbean.setOriginalAmount("1");
            }else {
