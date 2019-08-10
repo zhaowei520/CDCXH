@@ -532,7 +532,7 @@ public class CompanyInformationService implements CompanyInformationManager {
     private HashMap returnFinanceOriginal(HashMap original,PageData exceldata) {
         String financeOriginal = exceldata.getString("var2")==null?"":exceldata.getString("var2").trim();
         if(!"".equals(financeOriginal)) {
-            String [] originalNumber= financeOriginal.replaceAll("\\s+", "").split(",|,");
+            String [] originalNumber= financeOriginal.replaceAll("\\s+", "").split(",|，");
             if(originalNumber.length > 2) {
                 for(String originalFinance : originalNumber) {
                     //判断数据不为空,如果是其他就直接存入,否则拆分
