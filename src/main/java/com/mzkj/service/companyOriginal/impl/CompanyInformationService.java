@@ -421,10 +421,10 @@ public class CompanyInformationService implements CompanyInformationManager {
             originalbean.setOriginalName("");
             originalbean.setOriginalId(UuidUtil.get32UUID());
             if("其他".equals((String)key)) {
-                originalbean.setOtherFinance((String)original.get(key));
+                originalbean.setOtherFinance(((String)original.get(key)).trim());
                 originalbean.setOriginalAmount("1");//默认其他原件数量为1
             }else {
-                originalbean.setOriginalName((String)key);
+                originalbean.setOriginalName((String)((String) key).trim());
                 originalbean.setOriginalAmount("1");
                 originalbean.setFinanceEffectiveTime((String)original.get(key));
             }
@@ -461,10 +461,10 @@ public class CompanyInformationService implements CompanyInformationManager {
            originalbean.setOriginalName("");
            originalbean.setOriginalId(UuidUtil.get32UUID());
            if("其他".equals((String)key)) {
-               originalbean.setOtherBusiness((String)original.get(key));
+               originalbean.setOtherBusiness(((String)original.get(key)).trim());
                originalbean.setOriginalAmount("1");
            }else {
-               originalbean.setOriginalName((String)key);
+               originalbean.setOriginalName((String)((String) key).trim());
                originalbean.setOriginalAmount((String)original.get(key));
            }
            originalMapper.save(originalbean);
