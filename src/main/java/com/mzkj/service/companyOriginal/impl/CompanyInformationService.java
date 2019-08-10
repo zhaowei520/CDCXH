@@ -417,8 +417,10 @@ public class CompanyInformationService implements CompanyInformationManager {
             originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
         }
         for(Object key: original.keySet()) {
-            //制空
+            //财务制空
             originalbean.setOriginalName("");
+            originalbean.setFinanceEffectiveTime("");
+            originalbean.setOtherFinance("");
             originalbean.setOriginalId(UuidUtil.get32UUID());
             if("其他".equals((String)key)) {
                 originalbean.setOtherFinance(((String)original.get(key)).trim());
@@ -459,6 +461,7 @@ public class CompanyInformationService implements CompanyInformationManager {
        for(Object key: original.keySet()) {
             //制空
            originalbean.setOriginalName("");
+           originalbean.setOtherBusiness("");
            originalbean.setOriginalId(UuidUtil.get32UUID());
            if("其他".equals((String)key)) {
                originalbean.setOtherBusiness(((String)original.get(key)).trim());
@@ -529,21 +532,13 @@ public class CompanyInformationService implements CompanyInformationManager {
     private HashMap returnFinanceOriginal(HashMap original,PageData exceldata) {
         String financeOriginal = exceldata.getString("var2")==null?"":exceldata.getString("var2").trim();
         if(!"".equals(financeOriginal)) {
-            String [] originalNumber= financeOriginal.split(",");
-            //区分中英文逗号
-            if(originalNumber.length < 2) {
-                originalNumber= financeOriginal.split("，");
-            }
+            String [] originalNumber= financeOriginal.split(",|,");
             if(originalNumber.length > 2) {
                 for(String originalFinance : originalNumber) {
                     //判断数据不为空,如果是其他就直接存入,否则拆分
                     if(!StringUtils.isEmpty(originalFinance.trim())) {
                         if(!originalFinance.contains("其他") && !originalFinance.contains("其它")) {
-                            String [] originalData = originalFinance.trim().split(":");
-                            //区分中英文逗号
-                            if(originalData.length < 2) {
-                                originalData = originalFinance.trim().split("：");
-                            }
+                            String [] originalData = originalFinance.trim().split(":|：");
                             original.put(originalData[0],originalData[1]);
                         }else {
                             original.put("其他",originalFinance);
