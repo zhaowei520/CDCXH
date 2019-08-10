@@ -52,15 +52,29 @@ public class Original implements Serializable {
         this.financeEffectiveTime = financeEffectiveTime;
     }
 
-    public String getoriginalType() {
+    public String getOtherFinance() {
+        return otherFinance;
+    }
+
+    public void setOtherFinance(String otherFinance) {
+        this.otherFinance = otherFinance;
+    }
+
+    public String getOtherBusiness() {
+        return otherBusiness;
+    }
+
+    public void setOtherBusiness(String otherBusiness) {
+        this.otherBusiness = otherBusiness;
+    }
+
+    public String getOriginalType() {
         return originalType;
     }
 
-    public void setoriginalType(String originalType) {
-        originalType = originalType;
+    public void setOriginalType(String originalType) {
+        this.originalType = originalType;
     }
-
-
 
     public String getOriginalId() {
         return originalId;
