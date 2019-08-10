@@ -530,12 +530,17 @@ public class CompanyInformationService implements CompanyInformationManager {
             String [] originalNumber= financeOriginal.split(",");
             if(originalNumber.length > 0) {
                 for(String originalFinance : originalNumber) {
+                    //判断数据不为空,如果是其他就直接存入,否则拆分
                     if(!StringUtils.isEmpty(originalFinance.trim())) {
-                        String [] originalData = originalFinance.trim().split(":");
-                        if(originalData.length < 2) {
-                            originalData = originalFinance.trim().split("：");
+                        if(!originalFinance.contains("其他") && !originalFinance.contains("其它")) {
+                            String [] originalData = originalFinance.trim().split(":");
+                            if(originalData.length < 2) {
+                                originalData = originalFinance.trim().split("：");
+                            }
+                            original.put(originalData[0],originalData[1]);
+                        }else {
+                            original.put("其他",originalFinance);
                         }
-                        original.put(originalData[0],originalData[1]);
                     }
                 }
             }
