@@ -55,7 +55,7 @@ public interface CompanyInformationMapper{
 	public CompanyInformationBean findCompanyInformationByCompanyName(CompanyInformationBean companyInformation)throws Exception;
 
 	/**根据customerId与原件持有人查询出持有人所拥有的原件
-	 * @param cutomerId,userName
+	 * @param customerId,userName
 	 * @throws Exception
 	 */
 	public List<OriginalBean> findOriginalNumberByCustomerIdAndHolder(@Param("customerId") String customerId, @Param("holder") String holder)throws Exception;
