@@ -528,12 +528,17 @@ public class CompanyInformationService implements CompanyInformationManager {
         String financeOriginal = exceldata.getString("var2")==null?"":exceldata.getString("var2").trim();
         if(!"".equals(financeOriginal)) {
             String [] originalNumber= financeOriginal.split(",");
-            if(originalNumber.length > 0) {
+            //区分中英文逗号
+            if(originalNumber.length < 2) {
+                originalNumber= financeOriginal.split("，");
+            }
+            if(originalNumber.length > 2) {
                 for(String originalFinance : originalNumber) {
                     //判断数据不为空,如果是其他就直接存入,否则拆分
                     if(!StringUtils.isEmpty(originalFinance.trim())) {
                         if(!originalFinance.contains("其他") && !originalFinance.contains("其它")) {
                             String [] originalData = originalFinance.trim().split(":");
+                            //区分中英文逗号
                             if(originalData.length < 2) {
                                 originalData = originalFinance.trim().split("：");
                             }
