@@ -419,7 +419,7 @@ public class CompanyInformationService implements CompanyInformationManager {
         for(Object key: original.keySet()) {
             originalbean.setOriginalId(UuidUtil.get32UUID());
             if("其他".equals((String)key)) {
-                originalbean.setotherFinance((String)original.get(key));
+                originalbean.setOtherFinance((String)original.get(key));
                 originalbean.setOriginalType("0");//默认0为其它原件
                 originalbean.setOriginalAmount("1");//默认其他原件数量为1
             }else {
