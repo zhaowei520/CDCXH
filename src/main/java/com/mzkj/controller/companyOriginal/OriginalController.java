@@ -1,6 +1,9 @@
 package com.mzkj.controller.companyOriginal;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.facade.enums.HttpCode;
@@ -16,10 +19,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.swagger.annotations.Api;
@@ -265,11 +270,12 @@ public class OriginalController {
      */
     @RequestMapping(value="/handoverOriginalByHolderAndFromHolderAndOriginalIds", method = RequestMethod.POST)
     @ApiOperation(value = "交接原件", notes = "交接原件")
-    public Result handoverOriginal(String holder,String  fromHolder,String originalIds) {
+    public Result handoverOriginal(@RequestBody String parms) {
         logger.info(Jurisdiction.getUsername()+"交接原件");
         Result result = new Result();
+        HashMap parm = JSONObject.parseObject(parms,new TypeReference<HashMap>(){});
         try {
-            originalService.handoverOriginal(holder,fromHolder,originalIds);
+            originalService.handoverOriginal((String)parm.get("holder"),(String)parm.get("fromHolder"),(String)parm.get("originalIds"));
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
