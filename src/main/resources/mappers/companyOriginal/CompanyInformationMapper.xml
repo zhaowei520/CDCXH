@@ -177,7 +177,7 @@
     <!-- 根据ID查询 -->
     <select id="findOriginalNumberByCustomerIdAndHolder" parameterType="String" resultMap="originalMap">
         select
-        <include refid="Field"></include>,o.ORIGINAL_ID,o.ORIGINAL_NAME,o.ORIGINAL_AMOUNT,o.OTHER_BUSINESS,o.OTHER_FINANCE,o.FINANCE_EFFECTIVE_TIME,o.ORIGINAL_TYPE
+        <include refid="Field"></include>,o.*
         from
         <include refid="tableName"></include> f
         join

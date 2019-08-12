@@ -1,6 +1,8 @@
 package com.mzkj.controller.companyOriginal;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.fh.util.PageData;
 import com.github.pagehelper.PageInfo;
 import com.mzkj.bean.OriginalBean;
@@ -10,6 +12,7 @@ import com.mzkj.service.companyOriginal.CompanyInformationManager;
 import com.mzkj.service.customer.impl.CustomerService;
 import com.mzkj.service.system.RoleManager;
 import com.mzkj.service.system.impl.UserService;
+import com.mzkj.util.BuildExcel;
 import com.mzkj.util.Const;
 import com.mzkj.util.ExcelRead;
 import com.mzkj.util.HttpUtils;
@@ -21,15 +24,20 @@ import com.mzkj.vo.system.UserVo;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -279,11 +287,12 @@ public class CompanyInformationController {
      */
     @RequestMapping(value = "/findOriginalByCustomerIdAndHolder")
     @ApiOperation(value = "根据customerId及持holder查询公司持有原件数", notes = "根据customerId及持holder查询公司持有原件数")
-    public Result findOrigninalNumber(String customerId,String holder) {
+    public Result findOrigninalNumber(@RequestBody String parms) {
         logger.info(Jurisdiction.getUsername() + "findOrigninalNumber查看公司持有人持有原件");
         Result result = new Result();
+        HashMap parm = JSONObject.parseObject(parms,new TypeReference<HashMap>(){});
         try {
-            List<OriginalBean>  original= companyinformationService.findOriginalNumberByCustomerIdAndHolder(customerId,holder);
+            List<OriginalBean>  original= companyinformationService.findOriginalNumberByCustomerIdAndHolder((String)parm.get("customerId"),(String)parm.get("holder"));
             result.setSuccess(true);
             result.setData(JSONArray.toJSONString(original));
         } catch (Exception e) {
@@ -353,8 +362,27 @@ public class CompanyInformationController {
             //读取Excel文件
             List<PageData> excelDatas = (List)ExcelRead.readExcel(filePath, fileName, 2, 0, 0);		//执行读EXCEL操作,读出的数据导入List 2:从第3行开始；0:从第A列开始；0:第0个sheet
             result.setData(companyinformationService.readExcelFinanceDatasSaveOrUpdate(excelDatas));
+        }else {
+            String info = "文件内容为空或格式不对!";
+            result.setData(info);
+            result.setSuccess(false);
         }
         return result;
     }
 
+
+    /**导入数据
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/finance-excel-modle", method = RequestMethod.POST)
+    @ApiOperation(value = "财务原件EXCLE模板", notes = "财务原件EXCLE模板")
+    public ModelAndView downFinanceExcelModel() throws Exception{
+       ModelAndView mv = new ModelAndView();
+        BuildExcel a = new BuildExcel();
+        //创建HSSFWorkbook
+//        HSSFWorkbook wb= BuildExcel.buildExcel("财务原件导入模板", new HashMap(),);
+        return mv;
+    }
 }

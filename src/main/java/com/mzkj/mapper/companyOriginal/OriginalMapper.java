@@ -3,6 +3,7 @@ package com.mzkj.mapper.companyOriginal;
 import com.mzkj.bean.CompanyInformationBean;
 import com.mzkj.bean.OriginalBean;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -108,6 +109,6 @@ public interface OriginalMapper{
 	 * param
 	 * Date 2019-04-23 13:59
 	 */
-	public void handoverOriginalByHolderAndOriginalId(String holder,String originalId) throws Exception;
+	public void handoverOriginalByHolderAndOriginalId(@Param("holder") String holder,@Param("originalId")  String originalId) throws Exception;
 }
 

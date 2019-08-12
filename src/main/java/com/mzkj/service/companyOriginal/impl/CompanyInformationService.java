@@ -409,21 +409,24 @@ public class CompanyInformationService implements CompanyInformationManager {
             originalbean.setOriginalHolder(originalprocess.getOriginalFromUsername());
             StaffBean staffBean = new StaffBean();
             staffBean.setUserId(originalprocess.getOriginalFromUsername());
-            staffBean = staffService.findOneByUserName(staffBean);
+            StaffBean staff = staffService.findOneByUserName(staffBean);
             originalbean.setOriginalHoldStatus("2");//持有人在公司内部
             originalbean.setOriginalOutStatus("2");//流转状态入库
-            originalbean.setoriginalType("2");//财务原件
-            originalbean.setOriginalHolderDepartment(staffBean.getDepartmentId());
+            originalbean.setOriginalType("2");//财务原件
+            originalbean.setOriginalHolderDepartment(staff.getDepartmentId());
             originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
         }
         for(Object key: original.keySet()) {
+            //财务制空
+            originalbean.setOriginalName("");
+            originalbean.setFinanceEffectiveTime("");
+            originalbean.setOtherFinance("");
             originalbean.setOriginalId(UuidUtil.get32UUID());
             if("其他".equals((String)key)) {
-                originalbean.setotherFinance((String)original.get(key));
-                originalbean.setoriginalType("0");//默认0为其它原件
+                originalbean.setOtherFinance(((String)original.get(key)).trim());
                 originalbean.setOriginalAmount("1");//默认其他原件数量为1
             }else {
-                originalbean.setOriginalName((String)key);
+                originalbean.setOriginalName((String)((String) key).trim());
                 originalbean.setOriginalAmount("1");
                 originalbean.setFinanceEffectiveTime((String)original.get(key));
             }
@@ -448,21 +451,23 @@ public class CompanyInformationService implements CompanyInformationManager {
             originalbean.setOriginalHolder(originalprocess.getOriginalFromUsername());
             StaffBean staffBean = new StaffBean();
             staffBean.setUserId(originalprocess.getOriginalFromUsername());
-            staffBean = staffService.findOneByUserName(staffBean);
+            StaffBean staff = staffService.findOneByUserName(staffBean);
             originalbean.setOriginalHoldStatus("2");//持有人在公司内部
             originalbean.setOriginalOutStatus("2");//流转状态入库
-            originalbean.setoriginalType("1");//工商原件
-            originalbean.setOriginalHolderDepartment(staffBean.getDepartmentId());
+            originalbean.setOriginalType("1");//工商原件
+            originalbean.setOriginalHolderDepartment(staff.getDepartmentId());
             originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
         }
        for(Object key: original.keySet()) {
+            //制空
+           originalbean.setOriginalName("");
+           originalbean.setOtherBusiness("");
            originalbean.setOriginalId(UuidUtil.get32UUID());
            if("其他".equals((String)key)) {
-               originalbean.setotherBusiness((String)original.get(key));
-               originalbean.setoriginalType("0");//默认0为其它原件
+               originalbean.setOtherBusiness(((String)original.get(key)).trim());
                originalbean.setOriginalAmount("1");
            }else {
-               originalbean.setOriginalName((String)key);
+               originalbean.setOriginalName((String)((String) key).trim());
                originalbean.setOriginalAmount((String)original.get(key));
            }
            originalMapper.save(originalbean);
@@ -527,15 +532,17 @@ public class CompanyInformationService implements CompanyInformationManager {
     private HashMap returnFinanceOriginal(HashMap original,PageData exceldata) {
         String financeOriginal = exceldata.getString("var2")==null?"":exceldata.getString("var2").trim();
         if(!"".equals(financeOriginal)) {
-            String [] originalNumber= financeOriginal.split(",");
-            if(originalNumber.length > 0) {
+            String [] originalNumber= financeOriginal.replaceAll("\\s+", "").split(",|，");
+            if(originalNumber.length > 2) {
                 for(String originalFinance : originalNumber) {
+                    //判断数据不为空,如果是其他就直接存入,否则拆分
                     if(!StringUtils.isEmpty(originalFinance.trim())) {
-                        String [] originalData = originalFinance.trim().split(":");
-                        if(originalData.length < 2) {
-                            originalData = originalFinance.trim().split("：");
+                        if(!originalFinance.contains("其他") && !originalFinance.contains("其它")) {
+                            String [] originalData = originalFinance.trim().split(":|：");
+                            original.put(originalData[0],originalData[1]);
+                        }else {
+                            original.put("其他",originalFinance);
                         }
-                        original.put(originalData[0],originalData[1]);
                     }
                 }
             }

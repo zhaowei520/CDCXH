@@ -28,39 +28,6 @@ public class Original implements Serializable {
     private String otherBusiness;
     private String financeEffectiveTime;
     private String originalType;
-    public String getotherFinance() {
-        return otherFinance;
-    }
-
-    public void setotherFinance(String otherFinance) {
-        otherFinance = otherFinance;
-    }
-
-    public String getotherBusiness() {
-        return otherBusiness;
-    }
-
-    public void setotherBusiness(String otherBusiness) {
-        otherBusiness = otherBusiness;
-    }
-
-    public String getFinanceEffectiveTime() {
-        return financeEffectiveTime;
-    }
-
-    public void setFinanceEffectiveTime(String financeEffectiveTime) {
-        this.financeEffectiveTime = financeEffectiveTime;
-    }
-
-    public String getoriginalType() {
-        return originalType;
-    }
-
-    public void setoriginalType(String originalType) {
-        originalType = originalType;
-    }
-
-
 
     public String getOriginalId() {
         return originalId;
@@ -190,6 +157,36 @@ public class Original implements Serializable {
         this.tenantId = tenantId;
     }
 
+    public String getOtherFinance() {
+        return otherFinance;
+    }
 
+    public void setOtherFinance(String otherFinance) {
+        this.otherFinance = otherFinance;
+    }
+
+    public String getOtherBusiness() {
+        return otherBusiness;
+    }
+
+    public void setOtherBusiness(String otherBusiness) {
+        this.otherBusiness = otherBusiness;
+    }
+
+    public String getFinanceEffectiveTime() {
+        return financeEffectiveTime;
+    }
+
+    public void setFinanceEffectiveTime(String financeEffectiveTime) {
+        this.financeEffectiveTime = financeEffectiveTime;
+    }
+
+    public String getOriginalType() {
+        return originalType;
+    }
+
+    public void setOriginalType(String originalType) {
+        this.originalType = originalType;
+    }
 }
 
