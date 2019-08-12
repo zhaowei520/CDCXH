@@ -12,7 +12,6 @@ import com.mzkj.service.companyOriginal.CompanyInformationManager;
 import com.mzkj.service.customer.impl.CustomerService;
 import com.mzkj.service.system.RoleManager;
 import com.mzkj.service.system.impl.UserService;
-import com.mzkj.util.BuildExcel;
 import com.mzkj.util.Const;
 import com.mzkj.util.ExcelRead;
 import com.mzkj.util.HttpUtils;
@@ -380,7 +379,7 @@ public class CompanyInformationController {
     @ApiOperation(value = "财务原件EXCLE模板", notes = "财务原件EXCLE模板")
     public ModelAndView downFinanceExcelModel() throws Exception{
        ModelAndView mv = new ModelAndView();
-        BuildExcel a = new BuildExcel();
+        //BuildExcel a = new BuildExcel();
         //创建HSSFWorkbook
 //        HSSFWorkbook wb= BuildExcel.buildExcel("财务原件导入模板", new HashMap(),);
         return mv;
