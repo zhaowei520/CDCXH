@@ -402,38 +402,40 @@ public class CompanyInformationService implements CompanyInformationManager {
      * Date 2019-08-7
      */
     private void assemblyFinanceOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
-        OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
-        originalbean.setCompanyInformationId(company.getCompanyInformationId());
-        //放入持有人及归还人,查询持有人部门并放入
-        if(originalprocess.getOriginalFromUsername() != null || !"".equals(originalprocess.getOriginalFromUsername())) {
-            originalbean.setOriginalHolder(originalprocess.getOriginalFromUsername());
-            StaffBean staffBean = new StaffBean();
-            staffBean.setUserId(originalprocess.getOriginalFromUsername());
-            StaffBean staff = staffService.findOneByUserName(staffBean);
-            originalbean.setOriginalHoldStatus("2");//持有人在公司内部
-            originalbean.setOriginalOutStatus("2");//流转状态入库
-            originalbean.setOriginalType("2");//财务原件
-            originalbean.setOriginalHolderDepartment(staff.getDepartmentId());
-            originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
-        }
-        for(Object key: original.keySet()) {
-            //财务制空
-            originalbean.setOriginalName("");
-            originalbean.setFinanceEffectiveTime("");
-            originalbean.setOtherFinance("");
-            originalbean.setOriginalId(UuidUtil.get32UUID());
-            if("其他".equals((String)key)) {
-                originalbean.setOtherFinance(((String)original.get(key)).trim());
-                originalbean.setOriginalAmount("1");//默认其他原件数量为1
-            }else {
-                originalbean.setOriginalName((String)((String) key).trim());
-                originalbean.setOriginalAmount("1");
-                originalbean.setFinanceEffectiveTime((String)original.get(key));
-            }
-            originalMapper.save(originalbean);
-            //assemblyOriginalprocessrecordsAndInsert(originalbean,originalprocess);
-        }
-
+        //确定有原件才插入
+        if(original.size() != 0 ) {
+           OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
+           originalbean.setCompanyInformationId(company.getCompanyInformationId());
+           //放入持有人及归还人,查询持有人部门并放入
+           if(originalprocess.getOriginalFromUsername() != null || !"".equals(originalprocess.getOriginalFromUsername())) {
+               originalbean.setOriginalHolder(originalprocess.getOriginalFromUsername());
+               StaffBean staffBean = new StaffBean();
+               staffBean.setUserId(originalprocess.getOriginalFromUsername());
+               StaffBean staff = staffService.findOneByUserName(staffBean);
+               originalbean.setOriginalHoldStatus("2");//持有人在公司内部
+               originalbean.setOriginalOutStatus("2");//流转状态入库
+               originalbean.setOriginalType("2");//财务原件
+               originalbean.setOriginalHolderDepartment(staff.getDepartmentId());
+               originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
+           }
+           for(Object key: original.keySet()) {
+               //财务制空
+               originalbean.setOriginalName("");
+               originalbean.setFinanceEffectiveTime("");
+               originalbean.setOtherFinance("");
+               originalbean.setOriginalId(UuidUtil.get32UUID());
+               if("其他".equals((String)key)) {
+                   originalbean.setOtherFinance(((String)original.get(key)).trim());
+                   originalbean.setOriginalAmount("1");//默认其他原件数量为1
+               }else {
+                   originalbean.setOriginalName((String)((String) key).trim());
+                   originalbean.setOriginalAmount("1");
+                   originalbean.setFinanceEffectiveTime((String)original.get(key));
+               }
+               originalMapper.save(originalbean);
+               //assemblyOriginalprocessrecordsAndInsert(originalbean,originalprocess);
+           }
+       }
     }
 
     /**
@@ -444,36 +446,38 @@ public class CompanyInformationService implements CompanyInformationManager {
      * Date 2019-08-7
      */
     private void assemblyOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
-        OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
-        originalbean.setCompanyInformationId(company.getCompanyInformationId());
-        //放入持有人及归还人,查询持有人部门并放入
-        if(originalprocess.getOriginalFromUsername() != null || !"".equals(originalprocess.getOriginalFromUsername())) {
-            originalbean.setOriginalHolder(originalprocess.getOriginalFromUsername());
-            StaffBean staffBean = new StaffBean();
-            staffBean.setUserId(originalprocess.getOriginalFromUsername());
-            StaffBean staff = staffService.findOneByUserName(staffBean);
-            originalbean.setOriginalHoldStatus("2");//持有人在公司内部
-            originalbean.setOriginalOutStatus("2");//流转状态入库
-            originalbean.setOriginalType("1");//工商原件
-            originalbean.setOriginalHolderDepartment(staff.getDepartmentId());
-            originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
+        //确保有原件才插入
+        if(original.size() != 0) {
+            OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
+            originalbean.setCompanyInformationId(company.getCompanyInformationId());
+            //放入持有人及归还人,查询持有人部门并放入
+            if(originalprocess.getOriginalFromUsername() != null || !"".equals(originalprocess.getOriginalFromUsername())) {
+                originalbean.setOriginalHolder(originalprocess.getOriginalFromUsername());
+                StaffBean staffBean = new StaffBean();
+                staffBean.setUserId(originalprocess.getOriginalFromUsername());
+                StaffBean staff = staffService.findOneByUserName(staffBean);
+                originalbean.setOriginalHoldStatus("2");//持有人在公司内部
+                originalbean.setOriginalOutStatus("2");//流转状态入库
+                originalbean.setOriginalType("1");//工商原件
+                originalbean.setOriginalHolderDepartment(staff.getDepartmentId());
+                originalbean.setOriginalOutTo(originalprocess.getOriginalOutUsername());
+            }
+            for(Object key: original.keySet()) {
+                //制空
+                originalbean.setOriginalName("");
+                originalbean.setOtherBusiness("");
+                originalbean.setOriginalId(UuidUtil.get32UUID());
+                if("其他".equals((String)key)) {
+                    originalbean.setOtherBusiness(((String)original.get(key)).trim());
+                    originalbean.setOriginalAmount("1");
+                }else {
+                    originalbean.setOriginalName((String)((String) key).trim());
+                    originalbean.setOriginalAmount((String)original.get(key));
+                }
+                originalMapper.save(originalbean);
+                //assemblyOriginalprocessrecordsAndInsert(originalbean,originalprocess);
+            }
         }
-       for(Object key: original.keySet()) {
-            //制空
-           originalbean.setOriginalName("");
-           originalbean.setOtherBusiness("");
-           originalbean.setOriginalId(UuidUtil.get32UUID());
-           if("其他".equals((String)key)) {
-               originalbean.setOtherBusiness(((String)original.get(key)).trim());
-               originalbean.setOriginalAmount("1");
-           }else {
-               originalbean.setOriginalName((String)((String) key).trim());
-               originalbean.setOriginalAmount((String)original.get(key));
-           }
-           originalMapper.save(originalbean);
-           //assemblyOriginalprocessrecordsAndInsert(originalbean,originalprocess);
-       }
-
     }
     /**
      * 组装原件并返回
@@ -530,7 +534,7 @@ public class CompanyInformationService implements CompanyInformationManager {
      * Date 2019-08-7
      */
     private HashMap returnFinanceOriginal(HashMap original,PageData exceldata) {
-        String financeOriginal = exceldata.getString("var2")==null?"":exceldata.getString("var2").trim();
+        String financeOriginal = StringUtils.isEmpty(exceldata.getString("var2"))?"":exceldata.getString("var2").trim();
         if(!"".equals(financeOriginal)) {
             String [] originalNumber= financeOriginal.replaceAll("\\s+", "").split(",|，");
             if(originalNumber.length > 2) {
