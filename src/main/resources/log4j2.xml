@@ -6,7 +6,6 @@
         <property name="LOG_HOME">logs/</property>
         <property name="FILE_NAME">salary_log</property>
     </Properties>
-
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n" />
