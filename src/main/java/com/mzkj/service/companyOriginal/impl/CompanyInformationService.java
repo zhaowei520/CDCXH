@@ -483,40 +483,40 @@ public class CompanyInformationService implements CompanyInformationManager {
      * Date 2019-08-7
      */
     private HashMap returnOriginal(HashMap original,PageData exceldata) {
-        if(exceldata.getString("var4") != null || !"0".equals(exceldata.getString("var4"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var4")) && !"0".equals(exceldata.getString("var4"))) {
             original.put("执照正本",exceldata.getString("var4").trim());
         }
-        if(exceldata.getString("var5") != null || !"0".equals(exceldata.getString("var5"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var5")) && !"0".equals(exceldata.getString("var5"))) {
             original.put("执照副本",exceldata.getString("var5").trim());
         }
-        if(exceldata.getString("var6") != null || !"0".equals(exceldata.getString("var6"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var6")) && !"0".equals(exceldata.getString("var6"))) {
             original.put("公章",exceldata.getString("var6").trim());
         }
-        if(exceldata.getString("var7") != null || !"0".equals(exceldata.getString("var7"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var7")) && !"0".equals(exceldata.getString("var7"))) {
             original.put("财务章",exceldata.getString("var7").trim());
         }
-        if(exceldata.getString("var8") != null || !"0".equals(exceldata.getString("var8"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var8")) && !"0".equals(exceldata.getString("var8"))) {
             original.put("法人章",exceldata.getString("var8").trim());
         }
-        if(exceldata.getString("var9") != null || !"0".equals(exceldata.getString("var9"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var9")) && !"0".equals(exceldata.getString("var9"))) {
             original.put("发票章",exceldata.getString("var9").trim());
         }
-        if(exceldata.getString("var10") != null || !"0".equals(exceldata.getString("var10"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var10")) && !"0".equals(exceldata.getString("var10"))) {
             original.put("开许",exceldata.getString("var10").trim());
         }
-        if(exceldata.getString("var11") != null || !"0".equals(exceldata.getString("var11"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var11")) && !"0".equals(exceldata.getString("var11"))) {
             original.put("税控盘",exceldata.getString("var11").trim());
         }
-        if(exceldata.getString("var12") != null || !"0".equals(exceldata.getString("var12"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var12")) && !"0".equals(exceldata.getString("var12"))) {
             original.put("领购薄",exceldata.getString("var12").trim());
         }
-        if(exceldata.getString("var13") != null || !"0".equals(exceldata.getString("var13"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var13")) && !"0".equals(exceldata.getString("var13"))) {
             original.put("银行信用证",exceldata.getString("var13").trim());
         }
-        if(exceldata.getString("var14") != null || !"0".equals(exceldata.getString("var14"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var14")) && !"0".equals(exceldata.getString("var14"))) {
             original.put("法人身原件",exceldata.getString("var14").trim());
         }
-        if(exceldata.getString("var15") != null || !"0".equals(exceldata.getString("var15"))) {
+        if(!StringUtils.isEmpty(exceldata.getString("var15")) && !"0".equals(exceldata.getString("var15"))) {
             original.put("其他",exceldata.getString("var15").trim());
         }
         return original;
