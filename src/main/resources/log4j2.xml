@@ -20,8 +20,7 @@
             <!--<DefaultRolloverStrategy max="20"/>-->
         </RollingFile >
     </Appenders>
-    <appender name="INFO"
-              class="com.zlz.utils.DatedFileAppender">
+    <appender name="INFO" class="com.zlz.utils.DatedFileAppender">
     <param name="Encoding" value="UTF-8" />
     <!-- 事件日志文件存放在log/info目录下 -->
     <param name="File" value="${root}/WEB-INF/log/%yyyy/%mm/%dd/info.log" />
