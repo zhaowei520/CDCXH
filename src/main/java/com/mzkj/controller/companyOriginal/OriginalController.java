@@ -1,7 +1,5 @@
 package com.mzkj.controller.companyOriginal;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.fh.util.PageData;
@@ -11,7 +9,6 @@ import com.mzkj.facade.vo.Result;
 import com.mzkj.service.companyOriginal.OriginalManager;
 import com.mzkj.service.system.RoleManager;
 import com.mzkj.util.Jurisdiction;
-import com.mzkj.util.UuidUtil;
 import com.mzkj.vo.companyOriginal.OriginalQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalVo;
 
@@ -50,7 +47,7 @@ public class OriginalController {
 	 */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ApiOperation(value = "查询original", notes = "保存original")
-	public Result<List<OriginalVo>> save(List<OriginalVo> originalVoList) {
+	public Result<List<OriginalVo>> save( String param) {
         logger.info(Jurisdiction.getUsername()+"查询公司原件详情");
         Result<List<OriginalVo>> result = new Result<>();
 //		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){
@@ -59,7 +56,8 @@ public class OriginalController {
 //            return result;
 //        }
         try {
-            result.setData(originalService.save(originalVoList));
+            List<OriginalVo> gameList = JSONObject.parseArray(param, OriginalVo.class);
+            result.setData(originalService.save(gameList));
         } catch (Exception e) {
             logger.error(e.toString(), e);
             result.setStatus(HttpCode.ERROR.getCode());
