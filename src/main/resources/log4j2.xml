@@ -18,7 +18,7 @@
                 <SizeBasedTriggeringPolicy size="50 MB"/>
             </Policies>
             <!--<DefaultRolloverStrategy max="20"/>-->
-        </RollingFile >
+        </RollingFile>
     </Appenders>
     <appender name="INFO" class="com.zlz.utils.DatedFileAppender">
     <param name="Encoding" value="UTF-8" />
