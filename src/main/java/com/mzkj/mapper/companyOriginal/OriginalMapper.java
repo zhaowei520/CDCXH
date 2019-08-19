@@ -84,6 +84,15 @@ public interface OriginalMapper{
 	public List<OriginalBean> list(OriginalBean originalBean)throws Exception;
 
 	/**
+	 * 根据公司原件名称查询
+	 * return
+	 * Author luosc
+	 * param
+	 * Date 2019-04-23 13:59
+	 */
+	public OriginalBean findByOriginalName(OriginalBean originalName) throws Exception;
+
+	/**
 	 * 根据公司信息ID查询
 	 * return
 	 * Author luosc

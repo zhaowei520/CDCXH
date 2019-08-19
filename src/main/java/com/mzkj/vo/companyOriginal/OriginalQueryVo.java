@@ -28,6 +28,43 @@ public class OriginalQueryVo extends BaseVo {
     private String updateDate;
     private String updateUser;
     private String tenantId;
+    private String originalType;
+    private String otherBusiness;
+    private String otherFinance;
+
+    public String getOriginalType() {
+        return originalType;
+    }
+
+    public void setOriginalType(String originalType) {
+        this.originalType = originalType;
+    }
+
+    public String getOtherBusiness() {
+        return otherBusiness;
+    }
+
+    public void setOtherBusiness(String otherBusiness) {
+        this.otherBusiness = otherBusiness;
+    }
+
+    public String getOtherFinance() {
+        return otherFinance;
+    }
+
+    public void setOtherFinance(String otherFinance) {
+        this.otherFinance = otherFinance;
+    }
+
+    public String getFinanceEffectiveTime() {
+        return financeEffectiveTime;
+    }
+
+    public void setFinanceEffectiveTime(String financeEffectiveTime) {
+        this.financeEffectiveTime = financeEffectiveTime;
+    }
+
+    private String financeEffectiveTime;
 
     private boolean hasLoanOutAuthorized = false;//借出权限
     private boolean hasLoanInAuthorized = false;//主动借入权限

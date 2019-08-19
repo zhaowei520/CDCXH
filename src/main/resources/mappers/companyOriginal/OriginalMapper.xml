@@ -232,4 +232,23 @@
         where
         ORIGINAL_ID = #{originalId}
     </update>
+
+    <select id="findByOriginalName" parameterType="com.mzkj.bean.OriginalBean" resultMap="originalMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        f
+        where 1=1
+        <if test="companyInformationId != null and companyInformationId != ''">
+            and f.COMPANY_INFORMATION_ID = #{companyInformationId}
+        </if>
+        <if test="companyInformationId != null and companyInformationId != ''">
+            and f.COMPANY_INFORMATION_ID = #{companyInformationId}
+        </if>
+        <if test="companyInformationId != null and companyInformationId != ''">
+            and f.COMPANY_INFORMATION_ID = #{companyInformationId}
+        </if>
+    </select>
+
 </mapper>

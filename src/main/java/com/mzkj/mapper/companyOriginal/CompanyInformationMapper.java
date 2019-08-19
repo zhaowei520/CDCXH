@@ -69,5 +69,13 @@ public interface CompanyInformationMapper{
 	 */
 	public CompanyInformationBean findCompanyInformationByCustomerId(String customerId);
 
+	/**
+	 * 根据登录人查询出公司原件持有人是登录人的公司数量
+	 * return
+	 * Author dzw
+	 * param
+	 * Date 2019-8-18
+	 */
+	public int getCompanyCountByloginer(@Param("loginPerson") String loginPerson)throws Exception;
 }
 

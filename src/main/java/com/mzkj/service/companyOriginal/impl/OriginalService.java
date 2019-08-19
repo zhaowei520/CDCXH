@@ -27,6 +27,7 @@ import com.mzkj.vo.companyOriginal.OriginalQueryVo;
 import com.mzkj.vo.companyOriginal.OriginalVo;
 import com.mzkj.vo.system.UserVo;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -353,5 +354,16 @@ public class OriginalService implements OriginalManager {
         originalProcessRecord.setOriginalOutTime(dateRule.format(new Date()));
         originalProcessRecordsMapper.save(originalProcessRecord);
     }
+
+    /**
+     * 根据公司原件名称查询
+     * return
+     * Author dzw
+     * param
+     * Date 2019-08-19 15:08
+     */
+    public OriginalBean findByOriginalName(OriginalBean original) throws Exception {
+        return originalMapper.findByOriginalName(original);
+    };
 }
 

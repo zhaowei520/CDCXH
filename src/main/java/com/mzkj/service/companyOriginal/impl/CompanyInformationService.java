@@ -22,6 +22,7 @@ import com.mzkj.util.UuidUtil;
 import com.mzkj.vo.companyOriginal.CompanyInformationQueryVo;
 import com.mzkj.vo.companyOriginal.CompanyInformationVo;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -383,7 +384,7 @@ public class CompanyInformationService implements CompanyInformationManager {
             for(int index = 0;index<notExistCompanyInCustomer.size();index++) {
                 CompanyInformationBean notExistCompany = (CompanyInformationBean)notExistCompanyInCustomer.get(index).get("company");
                 if(index == notExistCompanyInCustomer.size()) {
-                    errorInfor.append(notExistCompany.getCompanyName()+",这些公司不存在,前先添加客户信息!");
+                    errorInfor.append(notExistCompany.getCompanyName()+",这些公司不存在,请先添加客户信息!");
                 }else {
                     errorInfor.append(notExistCompany.getCompanyName()+",");
                 }
@@ -432,7 +433,12 @@ public class CompanyInformationService implements CompanyInformationManager {
                    originalbean.setOriginalAmount("1");
                    originalbean.setFinanceEffectiveTime((String)original.get(key));
                }
-               originalMapper.save(originalbean);
+               OriginalBean oldOriginalbean = originalMapper.findByOriginalName(originalbean);
+               if(StringUtils.isEmpty(oldOriginalbean)) {
+                   originalMapper.save(originalbean);
+               }else {
+
+               }
                //assemblyOriginalprocessrecordsAndInsert(originalbean,originalprocess);
            }
        }
@@ -585,6 +591,17 @@ public class CompanyInformationService implements CompanyInformationManager {
         Map assemblyInfo = assemblyDatas(excelDatas,"finance");
         List<Map> notExistCompanyInCustomer =  ReturnNotExistDatasAndInsert((List<PageData>) assemblyInfo.get("preInsetDatas"),"finance");
         return returnResultInformation(notExistCompanyInCustomer);
+    };
+
+    /**
+     * 根据登录人查询出公司原件持有人是登录人的公司数量
+     * return
+     * Author dzw
+     * param
+     * Date 2019-8-18
+     */
+    public int getCompanyCountByloginer(String loginPerson)throws Exception {
+        return companyinformationMapper.getCompanyCountByloginer(loginPerson);
     };
 }
 

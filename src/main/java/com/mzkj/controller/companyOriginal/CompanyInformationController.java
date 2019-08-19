@@ -12,6 +12,7 @@ import com.mzkj.service.companyOriginal.CompanyInformationManager;
 import com.mzkj.service.customer.impl.CustomerService;
 import com.mzkj.service.system.RoleManager;
 import com.mzkj.service.system.impl.UserService;
+import com.mzkj.util.BuildExcel;
 import com.mzkj.util.Const;
 import com.mzkj.util.ExcelRead;
 import com.mzkj.util.HttpUtils;
@@ -25,6 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,9 +38,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -327,6 +333,29 @@ public class CompanyInformationController {
         return result;
     }
 
+    /**
+     * 统计当前登录人持有原件的公司数量
+     * return
+     * Author luosc
+     * param
+     * Date 2019-04-30 17:15
+     */
+    @RequestMapping(value = "/getCompanyCount", method = RequestMethod.GET)
+    @ApiOperation(value = "统计持有人公司数量", notes = "统计持有人公司数量")
+    public Result<Map<String, Integer>> getCompanyCountByloginer() {
+        Result result = new Result();
+        try {
+            Integer CompanyNum = companyinformationService.getCompanyCountByloginer(Jurisdiction.getUsername());
+            result.setData(CompanyNum);
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+            result.setStatus(HttpCode.ERROR.getCode());
+            result.setSuccess(false);
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
     /**导入数据
      * @param file
      * @return
@@ -370,18 +399,27 @@ public class CompanyInformationController {
     }
 
 
-    /**导入数据
-     * @param file
+    /**数据模板下载
+     * @param
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/finance-excel-modle", method = RequestMethod.POST)
     @ApiOperation(value = "财务原件EXCLE模板", notes = "财务原件EXCLE模板")
-    public ModelAndView downFinanceExcelModel() throws Exception{
-       ModelAndView mv = new ModelAndView();
-        //BuildExcel a = new BuildExcel();
-        //创建HSSFWorkbook
-//        HSSFWorkbook wb= BuildExcel.buildExcel("财务原件导入模板", new HashMap(),);
-        return mv;
+    @ResponseBody
+    public void downFinanceExcelModel(HttpServletResponse response) throws Exception{
+         BuildExcel.fileDownload(response,getClass().getResource("/filed/financeModle.xls").getPath(),"financeModle");
+    }
+
+    /**数据模板下载
+     * @param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/business-excel-modle", method = RequestMethod.POST)
+    @ApiOperation(value = "工商原件EXCLE模板", notes = "工商原件EXCLE模板")
+    @ResponseBody
+    public void downBusinessExcelModel(HttpServletResponse response) throws Exception{
+        BuildExcel.fileDownload(response,getClass().getResource("/filed/businessModle.xls").getPath(),"businessModle");
     }
 }

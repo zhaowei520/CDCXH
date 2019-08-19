@@ -200,4 +200,15 @@
         WHERE f.COMPANY_NAME = #{companyName}
     </select>
 
+    <!-- 根据登录人查询原件持有人是自己的公司数量 -->
+    <select id="getCompanyCountByloginer" parameterType="String" resultMap="int">
+        select
+        count(distinct f.COMPANY_NAME)
+        from
+        <include refid="tableName"></include> f
+        inner join
+        <include refid="original"></include> o
+        on f.COMPANYINFORMATION_ID = o.COMPANY_INFORMATION_ID
+        WHERE o.ORIGINAL_HOLDER = #{loginPerson}
+    </select>
 </mapper>

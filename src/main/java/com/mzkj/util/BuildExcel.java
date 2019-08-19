@@ -9,6 +9,15 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -90,5 +99,64 @@ public class BuildExcel {
     private static void setText(HSSFCell cell, String text) {
         cell.setCellType(1);
         cell.setCellValue(text);
+    }
+
+    /**
+     * @param response
+     * @param filePath		//文件完整路径(包括文件名和扩展名)
+     * @param fileName		//下载后看到的文件名
+     * @return  文件名
+     */
+    public static void fileDownload(final HttpServletResponse response, String filePath, String fileName) throws Exception{
+        byte[] data = toByteArray2(filePath);
+        fileName = URLEncoder.encode(fileName, "UTF-8");
+        response.reset();
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + ".xls\"");
+        response.addHeader("Content-Length", "" + data.length);
+        response.setContentType("application/octet-stream;charset=UTF-8");
+        OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+        outputStream.write(data);
+        outputStream.flush();
+        outputStream.close();
+        response.flushBuffer();
+    }
+    /**
+     * 读取到字节数组2
+     *
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
+    private static byte[] toByteArray2(String filePath) throws IOException {
+        File f = new File(filePath);
+        if (!f.exists()) {
+            throw new FileNotFoundException(filePath);
+        }
+        FileChannel channel = null;
+        FileInputStream fs = null;
+        try {
+            fs = new FileInputStream(f);
+            channel = fs.getChannel();
+            ByteBuffer byteBuffer = ByteBuffer.allocate((int) channel.size());
+            while ((channel.read(byteBuffer)) > 0) {
+                // do nothing
+                // System.out.println("reading");
+            }
+            return byteBuffer.array();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                channel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                fs.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
