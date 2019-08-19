@@ -201,7 +201,7 @@
     </select>
 
     <!-- 根据登录人查询原件持有人是自己的公司数量 -->
-    <select id="getCompanyCountByloginer" parameterType="String" resultMap="int">
+    <select id="getCompanyCountByloginer" parameterType="String" resultType="int">
         select
         count(distinct f.COMPANY_NAME)
         from
