@@ -440,7 +440,7 @@ public class CompanyInformationService implements CompanyInformationManager {
                        originalMapper.save(originalbean);
                        continue;
                    }else {
-                       originalbean.setOriginalAmount((Integer.valueOf(oldOriginalbean.getOriginalAmount())+Integer.valueOf(originalbean.getOriginalAmount()).toString()));
+                       originalbean.setOriginalAmount(((Integer)(Integer.valueOf(oldOriginalbean.getOriginalAmount())+Integer.valueOf(originalbean.getOriginalAmount()))).toString());
                        originalMapper.updateOriginalByOriginalName(originalbean);
                        continue;
                    }
@@ -494,7 +494,7 @@ public class CompanyInformationService implements CompanyInformationManager {
                         originalMapper.save(originalbean);
                         continue;
                     }else {
-                        originalbean.setOriginalAmount((Integer.valueOf(oldOriginalbean.getOriginalAmount())+Integer.valueOf(originalbean.getOriginalAmount()).toString()));
+                        originalbean.setOriginalAmount(((Integer)(Integer.valueOf(oldOriginalbean.getOriginalAmount())+Integer.valueOf(originalbean.getOriginalAmount()))).toString());
                         originalMapper.updateOriginalByOriginalName(originalbean);
                         continue;
                     }

@@ -256,7 +256,7 @@
         update
         <include refid="tableName"></include>
         set
-        ORIGINAL_HOLDER =#{originalHolder},
+        ORIGINAL_HOLDER = #{originalHolder},
         REMARK = #{remark},
         ORIGINAL_AMOUNT  = #{originalAmount},
         UPDATE_DATE  = #{updateDate},
