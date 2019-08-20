@@ -111,9 +111,10 @@ public class BuildExcel {
         byte[] data = toByteArray2(filePath);
         fileName = URLEncoder.encode(fileName, "UTF-8");
         response.reset();
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + ".xls\"");
+        response.setHeader("Content-disposition","attachment;filename=\"" + fileName + ".xls\"");
         response.addHeader("Content-Length", "" + data.length);
-        response.setContentType("application/octet-stream;charset=UTF-8");
+        response.setContentType("application/ms-excel");
+        response.setCharacterEncoding("utf-8");
         OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
         outputStream.write(data);
         outputStream.flush();

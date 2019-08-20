@@ -119,5 +119,11 @@ public interface OriginalMapper{
 	 * Date 2019-04-23 13:59
 	 */
 	public void handoverOriginalByHolderAndOriginalId(@Param("holder") String holder,@Param("originalId")  String originalId) throws Exception;
+
+	/**根据原件名称更新原件信息
+	 * @param originalBean
+	 * @throws Exception
+	 */
+	public void updateOriginalByOriginalName(OriginalBean originalBean)throws Exception;
 }
 

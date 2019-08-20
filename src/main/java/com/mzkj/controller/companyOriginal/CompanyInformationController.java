@@ -371,6 +371,10 @@ public class CompanyInformationController {
             //读取Excel文件
             List<PageData> excelDatas = (List)ExcelRead.readExcel(filePath, fileName, 2, 0, 0);		//执行读EXCEL操作,读出的数据导入List 2:从第3行开始；0:从第A列开始；0:第0个sheet
             result.setData(companyinformationService.readExcelBusinessDatasSaveOrUpdate(excelDatas));
+        }else {
+            String info = "文件内容为空或格式不对!";
+            result.setData(info);
+            result.setSuccess(false);
         }
         return result;
     }

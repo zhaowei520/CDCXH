@@ -240,15 +240,29 @@
         <include refid="tableName"></include>
         f
         where 1=1
-        <if test="companyInformationId != null and companyInformationId != ''">
-            and f.COMPANY_INFORMATION_ID = #{companyInformationId}
+        <if test="originalName != null and originalName != ''">
+            and f.ORIGINAL_NAME = #{originalName}
         </if>
-        <if test="companyInformationId != null and companyInformationId != ''">
-            and f.COMPANY_INFORMATION_ID = #{companyInformationId}
+        <if test="otherFinance != null and otherFinance != ''">
+            and f.OTHER_FINANCE = #{otherFinance}
         </if>
-        <if test="companyInformationId != null and companyInformationId != ''">
-            and f.COMPANY_INFORMATION_ID = #{companyInformationId}
+        <if test="otherBusiness != null and otherBusiness != ''">
+            and f.OTHER_BUSINESS = #{otherBusiness}
         </if>
     </select>
+
+    <!-- 修改 -->
+    <update id="updateOriginalByOriginalName" parameterType="com.mzkj.bean.OriginalBean">
+        update
+        <include refid="tableName"></include>
+        set
+        ORIGINAL_HOLDER =#{originalHolder},
+        REMARK = #{remark},
+        ORIGINAL_AMOUNT  = #{originalAmount},
+        UPDATE_DATE  = #{updateDate},
+        UPDATE_USER  = #{updateUser}
+        where
+        ORIGINAL_NAME = #{originalName}
+    </update>
 
 </mapper>

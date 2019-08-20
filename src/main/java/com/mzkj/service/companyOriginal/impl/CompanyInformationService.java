@@ -352,10 +352,10 @@ public class CompanyInformationService implements CompanyInformationManager {
             OriginalProcessRecordsBean originalprocess = (OriginalProcessRecordsBean)everyCompany.get("originalProcessRecords");
             if(existData == null) {
                 companyinformationMapper.save(company);
-                assemblyOriginalAndInsert(original,company,originalprocess);
+                assemblyOriginalAndInsert(original,company,originalprocess,false);
             }else {
                 companyinformationMapper.edit(company);
-                assemblyOriginalAndInsert(original,existData,originalprocess);
+                assemblyOriginalAndInsert(original,existData,originalprocess,true);
             }
         }
     }
@@ -370,10 +370,10 @@ public class CompanyInformationService implements CompanyInformationManager {
             OriginalProcessRecordsBean originalprocess = (OriginalProcessRecordsBean)everyCompany.get("originalProcessRecords");
             if(existData == null) {
                 companyinformationMapper.save(company);
-                assemblyFinanceOriginalAndInsert(original,company,originalprocess);
+                assemblyFinanceOriginalAndInsert(original,company,originalprocess,false);
             }else {
                 companyinformationMapper.edit(company);
-                assemblyFinanceOriginalAndInsert(original,existData,originalprocess);
+                assemblyFinanceOriginalAndInsert(original,existData,originalprocess,true);
             }
         }
     }
@@ -402,7 +402,7 @@ public class CompanyInformationService implements CompanyInformationManager {
      * param original ,company,originalprocess
      * Date 2019-08-7
      */
-    private void assemblyFinanceOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
+    private void assemblyFinanceOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess,Boolean whetherUpdate) throws Exception{
         //确定有原件才插入
         if(original.size() != 0 ) {
            OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
@@ -433,12 +433,19 @@ public class CompanyInformationService implements CompanyInformationManager {
                    originalbean.setOriginalAmount("1");
                    originalbean.setFinanceEffectiveTime((String)original.get(key));
                }
-               OriginalBean oldOriginalbean = originalMapper.findByOriginalName(originalbean);
-               if(StringUtils.isEmpty(oldOriginalbean)) {
-                   originalMapper.save(originalbean);
-               }else {
-
+               //判断公司否是存在,从而从不同的方法中进入的,如果为true则公司存在,可能有原件
+               if(whetherUpdate) {
+                   OriginalBean oldOriginalbean = originalMapper.findByOriginalName(originalbean);
+                   if(StringUtils.isEmpty(oldOriginalbean)) {
+                       originalMapper.save(originalbean);
+                       continue;
+                   }else {
+                       originalbean.setOriginalAmount((Integer.valueOf(oldOriginalbean.getOriginalAmount())+Integer.valueOf(originalbean.getOriginalAmount()).toString()));
+                       originalMapper.updateOriginalByOriginalName(originalbean);
+                       continue;
+                   }
                }
+               originalMapper.save(originalbean);
                //assemblyOriginalprocessrecordsAndInsert(originalbean,originalprocess);
            }
        }
@@ -451,7 +458,7 @@ public class CompanyInformationService implements CompanyInformationManager {
      * param original ,company,originalprocess
      * Date 2019-08-7
      */
-    private void assemblyOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess) throws Exception{
+    private void assemblyOriginalAndInsert(HashMap original,CompanyInformationBean company,OriginalProcessRecordsBean originalprocess,Boolean whetherUpdate) throws Exception{
         //确保有原件才插入
         if(original.size() != 0) {
             OriginalBean originalbean = ConvertUtil.objectCopyParams(company,OriginalBean.class);
@@ -479,6 +486,18 @@ public class CompanyInformationService implements CompanyInformationManager {
                 }else {
                     originalbean.setOriginalName((String)((String) key).trim());
                     originalbean.setOriginalAmount((String)original.get(key));
+                }
+                //判断公司否是存在,从而从不同的方法中进入的,如果为true则公司存在,可能有原件
+                if(whetherUpdate) {
+                    OriginalBean oldOriginalbean = originalMapper.findByOriginalName(originalbean);
+                    if(StringUtils.isEmpty(oldOriginalbean)) {
+                        originalMapper.save(originalbean);
+                        continue;
+                    }else {
+                        originalbean.setOriginalAmount((Integer.valueOf(oldOriginalbean.getOriginalAmount())+Integer.valueOf(originalbean.getOriginalAmount()).toString()));
+                        originalMapper.updateOriginalByOriginalName(originalbean);
+                        continue;
+                    }
                 }
                 originalMapper.save(originalbean);
                 //assemblyOriginalprocessrecordsAndInsert(originalbean,originalprocess);
