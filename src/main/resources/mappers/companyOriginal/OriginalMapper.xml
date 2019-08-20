@@ -239,7 +239,8 @@
         from
         <include refid="tableName"></include>
         f
-        where 1=1
+        where
+        f.COMPANY_NAME = #{companyName}
         <if test="originalName != null and originalName != ''">
             and f.ORIGINAL_NAME = #{originalName}
         </if>
@@ -263,6 +264,8 @@
         UPDATE_USER  = #{updateUser}
         where
         ORIGINAL_NAME = #{originalName}
+        and
+        COMPANY_NAME = #{companyName}
     </update>
 
 </mapper>
