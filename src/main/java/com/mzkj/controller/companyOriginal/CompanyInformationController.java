@@ -96,7 +96,7 @@ public class CompanyInformationController {
     /**
      * 删除
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "删除template", notes = "删除template")
     public Result delete(@PathVariable("id") String companyInformationId) {
         logger.info(Jurisdiction.getUsername() + "删除原件管理客户信息");

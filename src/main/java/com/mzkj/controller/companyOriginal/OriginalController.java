@@ -69,7 +69,7 @@ public class OriginalController {
 
 	/**删除
 	 */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "删除template", notes = "删除template")
 	public Result delete(@PathVariable("id") String originalId) {
         logger.info(Jurisdiction.getUsername()+"删除公司原件详情");
